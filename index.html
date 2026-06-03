@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StawpBy — Postpartum Care Marketplace (V3)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #5C2D6E;
+    --rose-d: #2D1238;
+    --rose-l: #EEE0F5;
+    --lavender: #D4839A;
+    --lavender-l: #FDF0F8;
+    --peach: #D4839A;
+    --peach-l: #FDF0F8;
+    --mint: #8A4FA0;
+    --mint-l: #EEE0F5;
+    --dark: #2D1238;
+    --gray: #F7F0FA;
+    --border: #E8D5EE;
+    --text: #2D1238;
+    --muted: #9A7AAA;
+    --white: #ffffff;
+    --radius: 12px;
+    --shadow: 0 4px 20px rgba(92,45,110,0.10);
+    --shadow-lg: 0 8px 40px rgba(92,45,110,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: #F7F0FA; }
+  a { text-decoration: none; color: inherit; }
+  img { max-width: 100%; }
+
+  .hidden { display: none !important; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 12px 24px; border-radius: 8px; font-size: 15px;
+    font-weight: 600; cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--rose); color: #fff; }
+  .btn-primary:hover { background: var(--rose-d); transform: translateY(-1px); box-shadow: var(--shadow); }
+  .btn-outline { background: transparent; color: var(--rose); border: 2px solid var(--rose); }
+  .btn-outline:hover { background: var(--rose-l); }
+  .btn-peach { background: var(--peach); color: #fff; }
+  .btn-peach:hover { background: #B86880; }
+  .btn-mint { background: var(--mint); color: #fff; }
+  .btn-mint:hover { background: #5C2D6E; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  }
+  .badge-rose { background: var(--rose-l); color: var(--rose); }
+  .badge-peach { background: var(--peach-l); color: #B86880; }
+  .badge-mint { background: var(--mint-l); color: #5C2D6E; }
+  .badge-lavender { background: var(--lavender-l); color: #5C2D6E; }
+  .star { color: var(--peach); }
+  .tag {
+    display: inline-block; padding: 4px 12px; border-radius: 20px;
+    background: #F7F0FA; color: var(--muted); font-size: 13px; font-weight: 500;
+  }
+  .tag.active { background: var(--rose); color: #fff; }
+  .section-title { font-size: 28px; font-weight: 700; color: var(--dark); }
+  .section-sub { font-size: 16px; color: var(--muted); margin-top: 8px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+    border-bottom: 1px solid #E8D5EE; box-shadow: 0 2px 16px rgba(92,45,110,0.07);
+    padding: 14px 0;
+  }
+  nav .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 20px; font-weight: 800; color: var(--rose); letter-spacing: -0.5px; font-family: 'Dancing Script', cursive; }
+  .logo span { color: var(--peach); }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-link { padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+  .nav-link:hover, .nav-link.active { background: var(--rose-l); color: var(--rose); }
+  .market-toggle {
+    display: flex; align-items: center; gap: 4px;
+    background: #F7F0FA; border-radius: 8px; padding: 4px;
+  }
+  .market-btn {
+    padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; color: var(--muted); background: transparent; border: none;
+  }
+  .market-btn.active { background: var(--rose); color: #fff; }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #1A0828 0%, #2D1238 40%, #451855 75%, #5C2D6E 100%);
+    padding: 80px 0 100px; color: #fff; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 80% 10%, rgba(212,131,154,0.14) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 60% at 5% 80%, rgba(196,157,212,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 40% at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .hero .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; }
+  .hero h1 { font-size: 44px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+  .hero h1 span { color: var(--peach); }
+  .hero p { font-size: 17px; opacity: 0.9; line-height: 1.7; margin-bottom: 32px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-card {
+    background: rgba(255,255,255,0.10); backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.20); border-radius: 20px; padding: 28px;
+  }
+  .hero-stat { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.10); }
+  .hero-stat:last-child { border-bottom: none; }
+  .stat-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .stat-text strong { display: block; font-size: 18px; font-weight: 700; }
+  .stat-text span { font-size: 13px; opacity: 0.8; }
+  .trust-bar { display: flex; gap: 20px; align-items: center; margin-top: 20px; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 6px; font-size: 14px; opacity: 0.85; }
+
+  /* ── SEARCH BAR ── */
+  .search-bar-wrap {
+    background: #fff; box-shadow: 0 8px 40px rgba(92,45,110,0.12);
+    border-radius: 16px; padding: 20px 24px; margin: -40px auto 0;
+    max-width: 960px; position: relative; z-index: 10;
+  }
+  .search-row { display: flex; gap: 12px; align-items: center; }
+  .search-field { display: flex; flex-direction: column; flex: 1; }
+  .search-field label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .search-field select, .search-field input {
+    border: none; outline: none; font-size: 15px; color: var(--dark); font-weight: 500;
+    background: transparent; padding: 4px 0;
+  }
+  .search-divider { width: 1px; height: 40px; background: var(--border); }
+  .culture-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+
+  /* ── TIER PILLS ── */
+  .tier-pills { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .tier-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    border: 2px solid transparent; transition: all 0.2s;
+  }
+  .tier-pill-qa { background: var(--mint-l); color: #5C2D6E; border-color: var(--mint); }
+  .tier-pill-virtual { background: var(--lavender-l); color: #5C2D6E; border-color: var(--lavender); }
+  .tier-pill-home { background: var(--rose-l); color: var(--rose); border-color: var(--rose); }
+  .tier-pill.active { opacity: 1; }
+
+  /* ── SECTION ── */
+  .section { padding: 72px 0; }
+  .section-header { text-align: center; margin-bottom: 48px; }
+
+  /* ── AVATAR SILHOUETTE ── */
+  .avatar-silhouette {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, #E8E4CC 0%, #D4C890 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .avatar-silhouette svg { width: 42px; height: 42px; }
+  .avatar-silhouette-lg {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .avatar-silhouette-lg svg { width: 72px; height: 72px; }
+  .card-avatar-wrap {
+    height: 160px; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .card-avatar-circle {
+    width: 88px; height: 88px; border-radius: 50%;
+    background: linear-gradient(135deg, #E8E0D0 0%, #D4C0A0 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-avatar-circle svg { width: 52px; height: 52px; }
+
+  /* ── EXPERT MOM CARD ── */
+  .caregiver-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .c-card {
+    background: #fff; border-radius: var(--radius); border: 1px solid var(--border);
+    overflow: hidden; cursor: pointer; transition: all 0.25s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .c-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(92,45,110,0.15); border-color: var(--rose); border-color: #8A4FA0; }
+  .c-card-img {
+    height: 160px; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .c-card-img .verified-badge {
+    position: absolute; bottom: 10px; right: 10px;
+    background: var(--rose); color: #fff; border-radius: 6px;
+    padding: 3px 8px; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .c-card-body { padding: 16px 18px 20px; }
+  .c-card-name { font-size: 17px; font-weight: 700; color: var(--dark); }
+  .c-card-culture { font-size: 13px; color: var(--rose); font-weight: 600; margin-top: 2px; }
+  .c-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .c-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .c-price { font-size: 16px; font-weight: 700; color: var(--dark); }
+  .c-price span { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .c-rating { font-size: 14px; color: var(--muted); }
+
+  /* ── 3-TIER HOW IT WORKS ── */
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tier-card {
+    border-radius: 16px; padding: 28px; text-align: center;
+    border: 2px solid transparent; transition: all 0.2s;
+  }
+  .tier-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .tier-card.qa { background: var(--mint-l); border-color: #A8B4E0; }
+  .tier-card.virtual { background: var(--lavender-l); border-color: #C4B878; }
+  .tier-card.home { background: var(--rose-l); border-color: #E8D8A8; }
+  .tier-icon { font-size: 40px; margin-bottom: 16px; }
+  .tier-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .tier-label.qa { color: var(--mint); }
+  .tier-label.virtual { color: var(--lavender); }
+  .tier-label.home { color: var(--rose); }
+  .tier-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+  .tier-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .tier-price { font-size: 15px; font-weight: 700; margin-top: 14px; padding: 8px 14px; border-radius: 8px; display: inline-block; }
+  .tier-price.qa { background: var(--mint); color: #fff; }
+  .tier-price.virtual { background: var(--lavender); color: #fff; }
+  .tier-price.home { background: var(--rose); color: #fff; }
+
+  /* ── Q&A COMMUNITY ── */
+  .qa-section { background: linear-gradient(135deg, var(--mint-l) 0%, #fff 100%); }
+  .qa-question {
+    background: #fff; border-radius: 12px; padding: 20px 24px;
+    border: 1px solid #C0C8E8; margin-bottom: 14px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .qa-question:hover { border-color: var(--mint); box-shadow: 0 4px 16px rgba(74,74,122,0.12); }
+  .qa-q-text { font-size: 15px; font-weight: 600; color: var(--dark); margin-bottom: 10px; }
+  .qa-meta { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--muted); }
+  .qa-answer-preview { font-size: 14px; color: var(--muted); line-height: 1.6; margin-top: 8px; padding-top: 8px; border-top: 1px solid #E8ECF8; }
+  .qa-answerer { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .qa-answerer-dot { width: 28px; height: 28px; border-radius: 50%; background: var(--mint-l); display: flex; align-items: center; justify-content: center; }
+  .qa-answerer-name { font-size: 13px; font-weight: 600; color: var(--mint); }
+
+  /* ── PROFILE PAGE ── */
+  .profile-hero { background: linear-gradient(160deg,#1A0828 0%,#2D1238 45%,#451855 80%,#5C2D6E 100%) !important;
+    background: linear-gradient(135deg, var(--rose) 0%, #8A4FA0 100%);
+    padding: 40px 0; color: #fff;
+  }
+  .profile-inner { display: flex; gap: 32px; align-items: flex-start; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .profile-info h1 { font-size: 30px; font-weight: 800; }
+  .profile-info .culture-tag { font-size: 15px; opacity: 0.9; margin: 4px 0 16px; }
+  .profile-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+  .meta-item { display: flex; align-items: center; gap: 6px; font-size: 14px; opacity: 0.9; }
+  .profile-body { max-width: 1100px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 1fr 360px; gap: 32px; }
+  .profile-section { margin-bottom: 32px; }
+  .profile-section h2 { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--rose-l); }
+  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .service-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; background: var(--rose-l); border-radius: 8px; font-size: 14px; }
+  .review-card { padding: 16px; background: #F7F0FA; border-radius: 10px; margin-bottom: 12px; }
+  .review-author { font-weight: 700; font-size: 14px; }
+  .review-text { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+
+  /* ── AVAILABILITY CALENDAR ── */
+  .availability-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .avail-day { text-align: center; padding: 8px 4px; border-radius: 8px; font-size: 12px; }
+  .avail-day .day-name { font-weight: 700; color: var(--muted); font-size: 11px; margin-bottom: 4px; }
+  .avail-day .day-num { font-size: 14px; font-weight: 600; }
+  .avail-day.open { background: var(--mint-l); }
+  .avail-day.open .day-num { color: #5C2D6E; }
+  .avail-day.busy { background: #F7F0FA; }
+  .avail-day.busy .day-num { color: var(--muted); }
+  .avail-day.partial { background: var(--peach-l); }
+  .avail-day.partial .day-num { color: #B86880; }
+
+  /* ── BOOKING BOX ── */
+  .booking-box {
+    background: #fff; border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px; box-shadow: var(--shadow); position: sticky; top: 80px;
+  }
+  .booking-box h3 { font-size: 19px; font-weight: 700; color: var(--dark); margin-bottom: 18px; }
+  .booking-type-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .booking-type-btn { padding: 10px; text-align: center; border-radius: 8px; border: 2px solid var(--border); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: #fff; color: var(--muted); }
+  .booking-type-btn.active { border-color: var(--rose); background: var(--rose-l); color: var(--rose); }
+  .booking-type-btn.virtual-btn.active { border-color: var(--lavender); background: var(--lavender-l); color: var(--lavender); }
+  .form-field { margin-bottom: 14px; }
+  .form-field label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .form-field input, .form-field select, .form-field textarea {
+    width: 100%; padding: 10px 14px; border-radius: 8px;
+    border: 1.5px solid var(--border); font-size: 14px; color: var(--dark);
+    outline: none; transition: border-color 0.2s; background: #fff;
+  }
+  .form-field input:focus, .form-field select:focus { border-color: var(--rose); }
+  .price-summary { background: #F7F0FA; border-radius: 10px; padding: 14px; margin: 16px 0; }
+  .price-line { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+  .price-line.total { font-weight: 700; color: var(--dark); font-size: 16px; border-top: 1px solid var(--border); padding-top: 8px; margin-top: 8px; }
+  .safety-note {
+    display: flex; gap: 8px; align-items: flex-start;
+    background: var(--mint-l); border-radius: 8px; padding: 10px 12px; margin-top: 12px;
+    font-size: 12px; color: #2A2A6A; line-height: 1.5;
+  }
+
+  /* ── CAREGIVER SIGNUP ── */
+  .signup-hero { background: linear-gradient(160deg, #1A0828 0%, #2D1238 40%, #451855 75%, #5C2D6E 100%); color: #fff; padding: 60px 0; text-align: center; }
+  .signup-hero h1 { font-size: 38px; font-weight: 800; margin-bottom: 12px; }
+  .signup-hero p { font-size: 17px; opacity: 0.8; max-width: 600px; margin: 0 auto; }
+  .signup-body { max-width: 760px; margin: 48px auto; padding: 0 24px 60px; }
+  .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 48px; }
+  .si-step { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .si-circle { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--muted); background: #fff; position: relative; z-index: 1; }
+  .si-circle.done { background: var(--rose); border-color: var(--rose); color: #fff; }
+  .si-circle.current { border-color: var(--rose); color: var(--rose); }
+  .si-label { font-size: 11px; font-weight: 600; color: var(--muted); }
+  .si-line { width: 80px; height: 2px; background: var(--border); margin-bottom: 22px; }
+  .si-line.done { background: var(--rose); }
+  .form-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 32px; box-shadow: var(--shadow); }
+  .form-card h2 { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 24px; }
+  .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .checkbox-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+  .checkbox-item:hover { border-color: var(--rose); background: var(--rose-l); }
+  .checkbox-item.checked { border-color: var(--rose); background: var(--rose-l); }
+  .checkbox-item .ci-icon { font-size: 20px; }
+  .checkbox-item .ci-text { font-size: 13px; font-weight: 600; }
+  .earnings-preview { background: linear-gradient(135deg, var(--rose-l) 0%, #fff 100%); border: 1.5px solid var(--rose); border-radius: 12px; padding: 20px; margin: 20px 0; }
+  .ep-title { font-size: 14px; font-weight: 700; color: var(--rose); margin-bottom: 12px; }
+  .ep-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text); margin-bottom: 6px; }
+  .ep-row strong { font-weight: 700; color: var(--rose); }
+
+  /* ── MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #fff; border-radius: 20px; padding: 36px; max-width: 500px; width: 90%; position: relative; }
+  .modal h2 { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
+  .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--muted); }
+
+  /* ── Q&A MODAL ── */
+  .qa-modal-full { max-width: 640px; }
+  .qa-full-q { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 20px; line-height: 1.4; }
+  .qa-answer-card { background: var(--mint-l); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+  .qa-answer-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .qa-answer-name { font-weight: 700; font-size: 14px; color: var(--dark); }
+  .qa-answer-badge { font-size: 11px; background: var(--mint); color: #fff; border-radius: 10px; padding: 2px 8px; font-weight: 600; }
+  .qa-answer-body { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .qa-ask-box { margin-top: 20px; }
+  .qa-ask-box textarea { width: 100%; padding: 12px 14px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 14px; resize: vertical; height: 80px; outline: none; }
+  .qa-ask-box textarea:focus { border-color: var(--mint); }
+
+  /* ── FOOTER ── */
+  footer { background: linear-gradient(160deg, #1A0828 0%, #2D1238 55%, #451855 100%); color: rgba(255,255,255,0.8); padding: 48px 0 24px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1100px; margin: 0 auto; padding: 0 24px 32px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .footer-brand .logo { font-size: 20px; color: #fff; margin-bottom: 12px; }
+  .footer-col h4 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .footer-col a { display: block; font-size: 13px; margin-bottom: 8px; cursor: pointer; }
+  .footer-col a:hover { color: var(--peach); }
+  .footer-bottom { text-align: center; font-size: 13px; padding: 20px 24px 0; max-width: 1100px; margin: 0 auto; }
+
+  @media (max-width: 768px) {
+    .hero .inner, .profile-body, .footer-grid { grid-template-columns: 1fr; }
+    .caregiver-grid, .tier-grid, .grid-3 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 30px; }
+    .search-row { flex-direction: column; }
+    .search-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <div style="display:inline-block;text-align:center;line-height:1;cursor:pointer;" onclick="showPage('home')">
+  <svg width="52" height="26" viewBox="0 0 52 26" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 0px;">
+    <path d="M17 7 C17 4.5 15 2 12.5 2 C10 2 8 4.5 8 7 C8 10.5 11.5 14 17 19 C22.5 14 26 10.5 26 7 C26 4.5 24 2 21.5 2 C19 2 17 4.5 17 7Z" stroke="#6B30BF" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M38 9 C38 7.5 37 6 35.5 6 C34 6 33 7.5 33 9 C33 11 35 13 38 15.5 C41 13 43 11 43 9 C43 7.5 42 6 40.5 6 C39 6 38 7.5 38 9Z" stroke="#6B30BF" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+  </svg>
+  <div style="font-family:'Dancing Script',cursive;font-size:28px;font-weight:700;color:#6B30BF;line-height:1;letter-spacing:-0.5px;">StawpBy</div>
+  <svg width="110" height="9" viewBox="0 0 110 9" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:1px auto 0;">
+    <path d="M5 4.5 C28 8 82 8 105 4.5" stroke="#6B30BF" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </svg>
+</div>
+    <div class="nav-links">
+      <div class="nav-link active" onclick="showPage('home')">Find an Expert Mom</div>
+      <div class="nav-link" onclick="showPage('community')">Community Q&amp;A</div>
+      <div class="nav-link" onclick="showPage('how')">How It Works</div>
+      <div class="nav-link" onclick="showPage('signup')">Become an Expert Mom</div>
+      <div class="market-toggle">
+        <button class="market-btn active" id="us-btn" onclick="setMarket('us')">🇺🇸 US</button>
+        <button class="market-btn" id="ca-btn" onclick="setMarket('ca')">🇨🇦 Canada</button>
+      </div>
+      <button class="btn btn-primary" style="padding:9px 18px;font-size:13px;" onclick="showPage('home')">Sign In</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════ HOME PAGE ═══════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="inner">
+      <div>
+        <div class="badge badge-peach" style="margin-bottom:16px;">🌎 Now in the US &amp; Canada</div>
+        <h1>Support from your <span>neighborhood</span>, for you and your baby</h1>
+        <p>Connect with experienced parents in your community who've been through it — ready to cook, care, comfort, and answer your questions at any hour.</p>
+        <div class="hero-actions">
+          <button class="btn btn-peach" onclick="scrollToSearch()">Find an Expert Mom</button>
+          <button class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.5);" onclick="showPage('community')">Browse Q&amp;A Forum</button>
+        </div>
+        <div class="trust-bar" style="margin-top:28px;">
+          <div class="trust-item">✅ Background verified</div>
+          <div class="trust-item">🔒 Secure payments</div>
+          <div class="trust-item">⭐ Rated community</div>
+          <div class="trust-item">💬 Free Q&amp;A community</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-stat">
+          <div class="stat-icon">💬</div>
+          <div class="stat-text">
+            <strong>Free Q&amp;A</strong>
+            <span>Ask anything — real answers from verified expert moms</span>
+          </div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-icon">📹</div>
+          <div class="stat-text">
+            <strong id="hero-stat1">$40 – $75 / session</strong>
+            <span>30–60 min virtual consultations</span>
+          </div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-icon">🏡</div>
+          <div class="stat-text">
+            <strong>In-Home Support</strong>
+            <span>Flexible hourly, daily, or monthly visits</span>
+          </div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-icon">🛡️</div>
+          <div class="stat-text">
+            <strong>Verified &amp; Safe</strong>
+            <span>Background checks + photo ID required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="container">
+    <div class="search-bar-wrap" id="search-area">
+      <div class="search-row">
+        <div class="search-field">
+          <label>Location</label>
+          <input type="text" id="loc-input" placeholder="Houston, TX" />
+        </div>
+        <div class="search-divider"></div>
+        <div class="search-field">
+          <label>Cultural background</label>
+          <select id="culture-select">
+            <option value="">Any background</option>
+            <option>Nigerian (Igbo)</option>
+            <option>Nigerian (Yoruba)</option>
+            <option>Mexican</option>
+            <option>Chinese</option>
+            <option>Ghanaian</option>
+            <option>Indian</option>
+            <option>Filipino</option>
+            <option>Caribbean</option>
+          </select>
+        </div>
+        <div class="search-divider"></div>
+        <div class="search-field">
+          <label>Support type</label>
+          <select id="booking-type-select">
+            <option>In-Home Visit</option>
+            <option>Virtual Session</option>
+            <option>Free Q&amp;A</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="doSearch()">Search</button>
+      </div>
+      <div class="culture-filters">
+        <span style="font-size:13px;font-weight:600;color:var(--muted);margin-right:4px;">Popular:</span>
+        <span class="tag active" onclick="filterCulture(this,'Nigerian')">🇳🇬 Nigerian</span>
+        <span class="tag" onclick="filterCulture(this,'Mexican')">🇲🇽 Mexican</span>
+        <span class="tag" onclick="filterCulture(this,'Chinese')">🇨🇳 Chinese</span>
+        <span class="tag" onclick="filterCulture(this,'Ghanaian')">🇬🇭 Ghanaian</span>
+        <span class="tag" onclick="filterCulture(this,'Indian')">🇮🇳 Indian</span>
+        <span class="tag" onclick="filterCulture(this,'Caribbean')">🌴 Caribbean</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THREE TIERS -->
+  <div class="section" style="padding-top:60px;padding-bottom:60px;">
+    <div class="container">
+      <div class="section-header" style="margin-bottom:32px;">
+        <div class="section-title">Three ways to get support</div>
+        <div class="section-sub">Start free. Go deeper when you need it.</div>
+      </div>
+      <div class="tier-grid">
+        <div class="tier-card qa" onclick="showPage('community')" style="cursor:pointer;">
+          <div class="tier-icon">💬</div>
+          <div class="tier-label qa">Free</div>
+          <div class="tier-title">Community Q&amp;A</div>
+          <div class="tier-desc">Post any question — feeding, recovery, sleep — and get answers from verified Expert Moms in your city. Named or anonymous — real either way.</div>
+          <div class="tier-price qa">Always Free</div>
+        </div>
+        <div class="tier-card virtual" onclick="scrollToSearch()" style="cursor:pointer;">
+          <div class="tier-icon">📹</div>
+          <div class="tier-label virtual">Virtual</div>
+          <div class="tier-title">Video Consultation</div>
+          <div class="tier-desc">Book a 30 or 60-minute one-on-one video session with an Expert Mom. Perfect for guidance, cultural advice, or lactation support from home.</div>
+          <div class="tier-price virtual" id="tier-virtual-price">$40 – $75 / session</div>
+        </div>
+        <div class="tier-card home" onclick="scrollToSearch()" style="cursor:pointer;">
+          <div class="tier-icon">🏡</div>
+          <div class="tier-label home">In-Home</div>
+          <div class="tier-title">In-Home Support</div>
+          <div class="tier-desc">Your Expert Mom stops by — for a few hours or a full month. Meals, baby care, belly binding, emotional support. Peer support; parent always present.</div>
+          <div class="tier-price home" id="tier-home-price">From $30/hr</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERT MOMS LISTING -->
+  <div class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">Expert Moms Near You</div>
+        <div class="section-sub" id="listing-sub">Showing verified Expert Moms in Houston, TX • 8 available</div>
+      </div>
+      <div class="caregiver-grid" id="caregiver-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Q&A COMMUNITY PREVIEW -->
+  <div class="section qa-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">Community Q&amp;A — free for everyone</div>
+        <div class="section-sub">Real questions. Real answers from expert moms in your city. Post named or anonymously.</div>
+      </div>
+      <div id="qa-preview">
+        <!-- Populated by JS -->
+      </div>
+      <div style="text-align:center;margin-top:32px;">
+        <button class="btn btn-mint" style="font-size:15px;padding:13px 30px;" onclick="showPage('community')">Browse All Questions →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title">What families are saying</div>
+      </div>
+      <div class="grid-3">
+        <div style="background:var(--lavender-l);border-radius:16px;padding:28px;">
+          <div style="font-size:20px;margin-bottom:4px;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size:15px;line-height:1.7;color:var(--text);margin:12px 0;">"Chidinma cooked the best pepper soup I've ever had — better than my own mother's! She knew exactly what I needed without me having to explain."</p>
+          <div style="font-size:13px;font-weight:700;color:var(--dark);">— Adaeze N., Houston TX</div>
+          <div class="badge badge-lavender" style="margin-top:8px;">Nigerian Igbo tradition</div>
+        </div>
+        <div style="background:#f8f6e8;border-radius:16px;padding:28px;border:1px solid #f0e4a8;">
+          <div style="font-size:20px;margin-bottom:4px;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size:15px;line-height:1.7;color:var(--text);margin:12px 0;">"I lost my mother two years ago and had no one to help with the baby. Rosa was like a second mother to me during my cuarentena. I cried when she left."</p>
+          <div style="font-size:13px;font-weight:700;color:var(--dark);">— María G., Houston TX</div>
+          <div class="badge badge-peach" style="margin-top:8px;">Mexican cuarentena</div>
+        </div>
+        <div style="background:var(--mint-l);border-radius:16px;padding:28px;">
+          <div style="font-size:20px;margin-bottom:4px;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size:15px;line-height:1.7;color:var(--text);margin:12px 0;">"My partner and I moved to NY from Lagos. Finding Funmilayo through StawpBy was a blessing — she did belly binding correctly and made us feel so supported."</p>
+          <div style="font-size:13px;font-weight:700;color:var(--dark);">— Temi A., New York NY</div>
+          <div class="badge badge-mint" style="margin-top:8px;">Nigerian Yoruba tradition</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERT MOM CTA -->
+  <div style="background:linear-gradient(160deg,#1A0828 0%,#2D1238 40%,#451855 75%,#5C2D6E 100%);padding:72px 0;color:#fff;">
+    <div class="container" style="text-align:center;">
+      <div style="font-size:42px;margin-bottom:16px;">🌟</div>
+      <h2 style="font-size:34px;font-weight:800;margin-bottom:12px;">Been through postpartum? Share what you know.</h2>
+      <p style="font-size:17px;opacity:0.8;max-width:580px;margin:0 auto 32px;">Join as an Expert Mom and earn <strong id="earn-highlight" style="color:var(--peach);">$200–$330/day</strong> doing what you already know how to do. Answer questions for free. Take paid sessions on your schedule.</p>
+      <button class="btn btn-peach" style="font-size:16px;padding:14px 32px;" onclick="showPage('signup')">Become an Expert Mom →</button>
+    </div>
+  </div>
+
+</div><!-- /home -->
+
+<!-- ═══════════ COMMUNITY Q&A PAGE ═══════════ -->
+<div id="page-community" class="page">
+  <div style="background:linear-gradient(135deg,var(--mint) 0%,#8A6820 100%);padding:56px 0;color:#fff;text-align:center;">
+    <div class="container">
+      <div class="badge" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:16px;font-size:13px;">Always Free</div>
+      <h1 style="font-size:40px;font-weight:800;margin-bottom:12px;">Community Q&amp;A</h1>
+      <p style="font-size:17px;opacity:0.88;max-width:580px;margin:0 auto 24px;">Ask anything about postpartum recovery, newborn care, feeding, or cultural practices. Get honest answers from Expert Moms — post under your name or anonymously.</p>
+      <button class="btn" style="background:#FFFFFF;color:var(--mint);font-size:15px;padding:12px 28px;" onclick="showModal('ask-modal')">+ Ask a Question</button>
+    </div>
+  </div>
+  <div class="section" style="background:var(--mint-l);padding-top:40px;">
+    <div class="container">
+      <div style="display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;">
+        <span class="tag active">All Topics</span>
+        <span class="tag" onclick="filterTag(this)">Feeding &amp; Lactation</span>
+        <span class="tag" onclick="filterTag(this)">Recovery</span>
+        <span class="tag" onclick="filterTag(this)">Newborn sleep</span>
+        <span class="tag" onclick="filterTag(this)">Cultural practices</span>
+        <span class="tag" onclick="filterTag(this)">Mental health</span>
+        <span class="tag" onclick="filterTag(this)">Nutrition</span>
+      </div>
+      <div id="qa-full-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+</div><!-- /community -->
+
+<!-- ═══════════ PROFILE PAGE ═══════════ -->
+<div id="page-profile" class="page">
+  <div class="profile-hero">
+    <div class="profile-inner">
+      <div class="avatar-silhouette-lg">
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="28" r="16" fill="rgba(255,255,255,0.6)"/>
+          <path d="M10 72c0-16.6 13.4-30 30-30s30 13.4 30 30" fill="rgba(255,255,255,0.6)"/>
+        </svg>
+      </div>
+      <div class="profile-info">
+        <h1 id="profile-name">Chidinma O.</h1>
+        <div class="culture-tag" id="profile-culture">🇳🇬 Nigerian (Igbo) • Speaks: Igbo, English</div>
+        <div id="profile-credentials-badge" style="display:none;margin-bottom:10px;"></div>
+        <div class="profile-meta">
+          <div class="meta-item">⭐ <strong id="profile-rating">4.9</strong> (47 reviews)</div>
+          <div class="meta-item">📍 <span id="profile-loc">Houston, TX</span></div>
+          <div class="meta-item">👶 12 yrs experience</div>
+          <div class="meta-item">🕐 Responds &lt; 2 hrs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-body">
+    <div class="profile-main">
+      <div class="profile-section">
+        <h2>About Me</h2>
+        <p id="profile-bio" style="font-size:15px;line-height:1.8;color:var(--text);">I'm a mother of five from Enugu State, Nigeria, based in Houston for 8 years. I've supported over 30 families through postpartum recovery. I practice traditional Igbo omugwo: belly wrapping, hot water baths, nourishing pepper soup, and the emotional warmth that only someone who's been through it can give. I believe every new parent deserves to be cared for.</p>
+      </div>
+
+      <!-- VIDEO INTRO -->
+      <div class="profile-section">
+        <h2>📹 Video Introduction</h2>
+        <div style="background:#F7F0FA;border-radius:12px;height:160px;display:flex;align-items:center;justify-content:center;border:2px dashed var(--border);cursor:pointer;" onclick="">
+          <div style="text-align:center;color:var(--muted);">
+            <div style="font-size:36px;margin-bottom:8px;">▶️</div>
+            <div style="font-size:14px;font-weight:600;">Watch Chidinma's 90-sec intro</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h2>Services Offered</h2>
+        <div class="services-grid" id="profile-services"></div>
+      </div>
+
+      <!-- AVAILABILITY CALENDAR -->
+      <div class="profile-section">
+        <h2>📅 Availability This Week</h2>
+        <div class="availability-grid" id="avail-calendar"></div>
+        <div style="display:flex;gap:16px;margin-top:12px;font-size:12px;">
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:3px;background:var(--mint-l);display:inline-block;border:1px solid #A8A8D8;"></span> Available</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:3px;background:var(--peach-l);display:inline-block;border:1px solid #E8D890;"></span> Partially booked</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:3px;background:#F7F0FA;display:inline-block;border:1px solid var(--border);"></span> Unavailable</span>
+        </div>
+      </div>
+
+      <!-- REVIEWS -->
+      <div class="profile-section">
+        <h2>Reviews (47)</h2>
+        <div id="profile-reviews" style="margin-top:14px;"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="booking-box">
+        <h3 id="booking-title">Stop by to see Chidinma</h3>
+        <div class="booking-type-row">
+          <button class="booking-type-btn" onclick="setBookingType(this,'virtual')">📹 Virtual</button>
+          <button class="booking-type-btn active" onclick="setBookingType(this,'hourly')">Hourly</button>
+          <button class="booking-type-btn" onclick="setBookingType(this,'daily')">Daily</button>
+          <button class="booking-type-btn" onclick="setBookingType(this,'monthly')">Monthly</button>
+        </div>
+
+        <!-- Virtual session info -->
+        <div id="virtual-info" class="hidden" style="background:var(--lavender-l);border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#8A6820;">
+          <strong>📹 Virtual Session</strong> — 30 or 60 min video call. Perfect for advice, feeding guidance, or a cultural check-in from wherever you are. Rate set by Expert Mom (can be free).
+        </div>
+
+        <div class="form-field">
+          <label>Date</label>
+          <input type="date" id="book-date" />
+        </div>
+        <div class="form-field" id="hours-field">
+          <label>Duration</label>
+          <select id="book-hours" onchange="updatePrice()">
+            <option value="1">1 hour (minimum)</option>
+            <option value="2">2 hours</option>
+            <option value="3">3 hours</option>
+            <option value="4">4 hours</option>
+            <option value="6">6 hours</option>
+            <option value="8">8 hours (full day)</option>
+          </select>
+        </div>
+        <div class="form-field" id="virtual-duration-field" style="display:none;">
+          <label>Session Length</label>
+          <select id="virtual-duration" onchange="updatePrice()">
+            <option value="30">30 minutes</option>
+            <option value="60">60 minutes</option>
+          </select>
+        </div>
+        <div class="price-summary">
+          <div class="price-line"><span id="calc-desc">4 hours × $35/hr</span><span id="calc-sub"></span></div>
+          <div class="price-line"><span>Platform fee (18%)</span><span id="calc-fee">$25.20</span></div>
+          <div class="price-line total"><span>Total</span><span id="calc-total">$165.20</span></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:16px;padding:14px;" onclick="showModal('confirm-modal')">Book Now — Pay Securely 🔒</button>
+        <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:10px;">Payment held in escrow until after service</p>
+        <div style="text-align:center;font-size:12px;color:var(--muted);margin-top:4px;">💡 Most Expert Moms charge $40–$55/hr</div>
+
+        <div id="safety-note-home" class="safety-note" style="margin-top:12px;">
+          <span>🛡️</span>
+          <span><strong>Peer support only.</strong> Expert Mom visits are not professional childcare. A parent or guardian must always be present during in-home visits.</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;background:var(--peach-l);border-radius:8px;padding:10px 14px;margin-top:12px;">
+          <span style="font-size:18px;">💬</span>
+          <span style="font-size:13px;color:#8A6820;">Message before booking — she usually responds in 2 hrs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /profile -->
+
+<!-- ═══════════ EXPERT MOM SIGNUP ═══════════ -->
+<div id="page-signup" class="page">
+  <div class="signup-hero">
+    <h1>Become an Expert Mom 💛</h1>
+    <p>You've been through it. Now help others — and earn <span id="signup-earn-highlight">$200–$330/day</span> on your own schedule.</p>
+  </div>
+  <div class="signup-body">
+    <div class="step-indicator">
+      <div class="si-step">
+        <div class="si-circle current" id="si-1">1</div>
+        <div class="si-label">Your Info</div>
+      </div>
+      <div class="si-line" id="si-line-1"></div>
+      <div class="si-step">
+        <div class="si-circle" id="si-2">2</div>
+        <div class="si-label">Services</div>
+      </div>
+      <div class="si-line" id="si-line-2"></div>
+      <div class="si-step">
+        <div class="si-circle" id="si-3">3</div>
+        <div class="si-label">Verify</div>
+      </div>
+      <div class="si-line" id="si-line-3"></div>
+      <div class="si-step">
+        <div class="si-circle" id="si-4">4</div>
+        <div class="si-label">Done!</div>
+      </div>
+    </div>
+
+    <!-- Step 1 -->
+    <div id="signup-step-1" class="form-card">
+      <h2>Tell us about yourself</h2>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>First Name</label>
+          <input type="text" placeholder="e.g. Chidinma" />
+        </div>
+        <div class="form-field">
+          <label>Last Name Initial</label>
+          <input type="text" placeholder="e.g. O." />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Cultural Background</label>
+        <select onchange="updateEarnings()">
+          <option>Nigerian (Igbo)</option>
+          <option>Nigerian (Yoruba)</option>
+          <option>Nigerian (Hausa)</option>
+          <option>Ghanaian</option>
+          <option>Mexican</option>
+          <option>Chinese</option>
+          <option>Indian</option>
+          <option>Filipino</option>
+          <option>Caribbean</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Languages Spoken</label>
+        <input type="text" placeholder="e.g. Igbo, English, Pidgin" />
+      </div>
+      <div class="form-field">
+        <label>City / Location</label>
+        <input type="text" placeholder="e.g. Houston, TX" />
+      </div>
+      <div class="form-field">
+        <label>Years of Experience (as a parent or caregiver)</label>
+        <select>
+          <option>1–3 years</option>
+          <option>4–7 years</option>
+          <option>8–15 years</option>
+          <option>15+ years</option>
+        </select>
+      </div>
+      <div class="form-field" style="margin-top:4px;">
+        <label>Medical or Healthcare Qualifications <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0;">(optional)</span></label>
+        <p style="font-size:12px;color:var(--muted);margin:4px 0 10px;font-weight:400;text-transform:none;letter-spacing:0;">We'll verify these separately and display a credential badge on your profile. It lets you charge higher rates for virtual sessions.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--rose);"> Registered Nurse</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--rose);"> Certified Midwife</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--rose);"> Lactation Specialist (IBCLC)</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--rose);"> Pediatrician</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--rose);"> Doula</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;"><input type="checkbox" style="width:14px;height:14px;accent-color:var(--rose);"> None</label>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>How would you like to support families?</label>
+        <div style="display:flex;gap:10px;margin-top:4px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;">
+            <input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--mint);"> Free Q&amp;A answers
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;">
+            <input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--lavender);"> Virtual sessions
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer;">
+            <input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--rose);"> In-home visits
+          </label>
+        </div>
+      </div>
+      <div class="earnings-preview">
+        <div class="ep-title">💰 Your estimated earnings on StawpBy</div>
+        <div class="ep-row"><span>Hourly in-home rate (you set)</span><strong id="ep-hourly">$30 – $75/hr (you set)</strong></div>
+        <div class="ep-row"><span>Virtual session (30 min)</span><strong>You set — can be free</strong></div>
+        <div class="ep-row"><span>Daily (8 hrs, 5 days/week)</span><strong id="ep-weekly">$1,050 – $1,575/week</strong></div>
+        <div class="ep-row"><span>Full monthly support</span><strong id="ep-monthly">$2,800 – $4,000/month</strong></div>
+        <div style="font-size:12px;color:var(--rose);margin-top:8px;">StawpBy keeps 18% — you keep 82%</div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="nextSignupStep(2)">Continue →</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="signup-step-2" class="form-card hidden">
+      <h2>What can you offer families?</h2>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Select all that apply — your profile will show these so families know what to expect</p>
+      <div class="checkbox-grid" id="services-checklist">
+        <!-- Populated by JS -->
+      </div>
+      <div class="form-field" style="margin-top:20px;">
+        <label>Tell families about your approach (optional)</label>
+        <textarea placeholder="e.g. I specialize in Igbo omugwo traditions — belly binding, pepper soup, hot water baths — and I bring all the warmth and patience of someone who's truly been there..." style="height:100px;resize:vertical;"></textarea>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button class="btn btn-outline" onclick="nextSignupStep(1)">← Back</button>
+        <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="nextSignupStep(3)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="signup-step-3" class="form-card hidden">
+      <h2>Identity &amp; background verification</h2>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Every Expert Mom on StawpBy must complete these steps before going live. No certification required — this is how we keep families safe.</p>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;gap:14px;padding:16px;border:1.5px solid var(--border);border-radius:10px;">
+          <div style="font-size:28px;">🪪</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:15px;">Government-issued ID</div>
+            <div style="font-size:13px;color:var(--muted);">Driver's license, passport, or national ID (SSN check for US · SIN for Canada)</div>
+          </div>
+          <button class="btn btn-outline" style="padding:8px 16px;font-size:13px;" onclick="this.textContent='✅ Uploaded';this.style.background='var(--rose-l)';">Upload ID</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:16px;border:1.5px solid var(--border);border-radius:10px;">
+          <div style="font-size:28px;">🔍</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:15px;">Background Check</div>
+            <div style="font-size:13px;color:var(--muted);">Criminal background screening (powered by Checkr US · Sterling Canada)</div>
+          </div>
+          <button class="btn btn-outline" style="padding:8px 16px;font-size:13px;" onclick="this.textContent='✅ Initiated';this.style.background='var(--rose-l)';">Start Check</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:16px;border:1.5px solid var(--border);border-radius:10px;">
+          <div style="font-size:28px;">🎥</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:15px;">Video Introduction</div>
+            <div style="font-size:13px;color:var(--muted);">A 1–2 minute video about yourself and your experience — visible to families on your profile</div>
+          </div>
+          <button class="btn btn-outline" style="padding:8px 16px;font-size:13px;" onclick="this.textContent='✅ Recorded';this.style.background='var(--rose-l)';">Record Video</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:16px;border:1.5px solid var(--border);border-radius:10px;">
+          <div style="font-size:28px;">📋</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:15px;">2 References</div>
+            <div style="font-size:13px;color:var(--muted);">Families you've supported before (informal is fine) — we'll send them a quick message</div>
+          </div>
+          <button class="btn btn-outline" style="padding:8px 16px;font-size:13px;" onclick="this.textContent='✅ Added';this.style.background='var(--rose-l)';">Add References</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:20px;">
+        <button class="btn btn-outline" onclick="nextSignupStep(2)">← Back</button>
+        <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="nextSignupStep(4)">Submit Application →</button>
+      </div>
+    </div>
+
+    <!-- Step 4 — Success -->
+    <div id="signup-step-4" class="form-card hidden" style="text-align:center;">
+      <div style="font-size:72px;margin-bottom:16px;">🎉</div>
+      <h2 style="font-size:26px;margin-bottom:12px;">Welcome to StawpBy!</h2>
+      <p style="color:var(--muted);line-height:1.7;margin-bottom:24px;">Your application is submitted. We'll review your documents within 24–48 hours. Your profile goes live once approved — free for your first 6 months.</p>
+      <div style="background:var(--rose-l);border-radius:12px;padding:20px;margin-bottom:24px;text-align:left;">
+        <div style="font-weight:700;color:var(--rose);margin-bottom:8px;">What happens next:</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.9;">
+          ✅ Background check completed (1–3 days)<br>
+          ✅ Profile reviewed and approved<br>
+          ✅ Profile reviewed and activated<br>
+          ✅ You appear in search results<br>
+          ✅ Families can find and book you
+        </div>
+      </div>
+      <button class="btn btn-primary" style="justify-content:center;" onclick="showPage('home')">← Back to Home</button>
+    </div>
+  </div>
+</div><!-- /signup -->
+
+<!-- ═══════════ HOW IT WORKS PAGE ═══════════ -->
+<div id="page-how" class="page">
+  <div style="background:var(--rose);padding:60px 0;color:#fff;text-align:center;">
+    <div class="container">
+      <h1 style="font-size:40px;font-weight:800;margin-bottom:12px;">How StawpBy Works</h1>
+      <p style="font-size:17px;opacity:0.85;max-width:600px;margin:0 auto 28px;">Different journeys for families and Expert Moms.</p>
+      <div style="display:inline-flex;background:rgba(255,255,255,0.15);border-radius:12px;padding:4px;gap:4px;">
+        <button id="how-tab-families" onclick="switchHowTab('families')" style="padding:11px 28px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:#FFFFFF;color:var(--rose);">👶 For Families</button>
+        <button id="how-tab-moms" onclick="switchHowTab('moms')" style="padding:11px 28px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:transparent;color:rgba(255,255,255,0.85);">💛 For Expert Moms</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOR FAMILIES ── -->
+  <div id="how-section-families">
+    <div class="section" style="padding-top:56px;">
+      <div class="container">
+        <div class="section-header" style="margin-bottom:40px;">
+          <div class="section-title">Three ways to get support</div>
+          <div class="section-sub">Start free. Go deeper when you need it.</div>
+        </div>
+        <div class="tier-grid" style="margin-bottom:60px;">
+          <div class="tier-card qa" onclick="showPage('community')" style="cursor:pointer;">
+            <div class="tier-icon">💬</div>
+            <div class="tier-label qa">Tier 1 — Free</div>
+            <div class="tier-title">Community Q&amp;A</div>
+            <div class="tier-desc">Post questions to the community. Expert Moms answer under their real names. Post named or anonymously — your choice.</div>
+            <div class="tier-price qa">$0 — Always Free</div>
+          </div>
+          <div class="tier-card virtual" onclick="showPage('home')" style="cursor:pointer;">
+            <div class="tier-icon">📹</div>
+            <div class="tier-label virtual">Tier 2 — Virtual</div>
+            <div class="tier-title">Video Consultation</div>
+            <div class="tier-desc">Book a 30 or 60-minute one-on-one video session. Ideal for lactation guidance, cultural questions, or emotional check-ins from anywhere.</div>
+            <div class="tier-price virtual" id="how-virtual-price">Expert Mom sets rate</div>
+          </div>
+          <div class="tier-card home" onclick="showPage('home')" style="cursor:pointer;">
+            <div class="tier-icon">🏡</div>
+            <div class="tier-label home">Tier 3 — In-Home</div>
+            <div class="tier-title">In-Home Support</div>
+            <div class="tier-desc">Your Expert Mom stops by for one hour or more. Meals, baby care, belly binding, emotional support. <em>Peer support only; parent or guardian must always be present.</em></div>
+            <div class="tier-price home" id="how-home-price">From $30/hr</div>
+          </div>
+        </div>
+        <div style="max-width:600px;margin:0 auto;">
+          <h2 style="font-size:22px;font-weight:800;color:var(--rose);margin-bottom:28px;text-align:center;">Your journey as a family 👶</h2>
+          <div style="display:flex;flex-direction:column;gap:28px;">
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:44px;height:44px;font-size:16px;flex-shrink:0;border-radius:50%;background:var(--mint);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;">1</div>
+              <div>
+                <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">Ask a question</h3>
+                <p style="font-size:14px;color:var(--muted);line-height:1.7;">Post to the Q&amp;A forum — no account required. Get answers from verified Expert Moms in your city. Post named or stay anonymous.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:44px;height:44px;font-size:16px;flex-shrink:0;border-radius:50%;background:var(--lavender);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;">2</div>
+              <div>
+                <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">Book a virtual or in-home session</h3>
+                <p style="font-size:14px;color:var(--muted);line-height:1.7;">Browse profiles, watch video intros, check availability, and book. Message first if you'd like. Pay securely.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:44px;height:44px;font-size:16px;flex-shrink:0;border-radius:50%;background:var(--rose);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;">3</div>
+              <div>
+                <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">Chat, receive care, then rate</h3>
+                <p style="font-size:14px;color:var(--muted);line-height:1.7;">Once booked, a private chat opens between you and your Expert Mom to coordinate. After the session ends, you both rate each other — like Uber.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:52px;">
+          <button class="btn btn-primary" style="font-size:16px;padding:14px 32px;" onclick="showPage('home')">Find an Expert Mom</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOR EXPERT MOMS ── -->
+  <div id="how-section-moms" style="display:none;">
+    <div class="section" style="padding-top:56px;">
+      <div class="container">
+        <div class="section-header" style="margin-bottom:40px;">
+          <div class="section-title">Join as an Expert Mom</div>
+          <div class="section-sub">Share your experience. Earn on your own schedule.</div>
+        </div>
+        <div style="max-width:600px;margin:0 auto;">
+          <div style="display:flex;flex-direction:column;gap:28px;">
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:var(--peach);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;">1</div>
+              <div>
+                <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">Create your free profile</h3>
+                <p style="font-size:14px;color:var(--muted);line-height:1.7;">List your background, services, languages, availability, and your own rate. Upload your video intro. Free to list for your first 6 months.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:var(--peach);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;">2</div>
+              <div>
+                <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">Complete background verification</h3>
+                <p style="font-size:14px;color:var(--muted);line-height:1.7;">Every Expert Mom must pass a background check, ID verification, and 2 references before going live. Mandatory — no exceptions. This is how we keep families safe.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:var(--peach);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;">3</div>
+              <div>
+                <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">Set your own rate</h3>
+                <p style="font-size:14px;color:var(--muted);line-height:1.7;"><strong>In-home:</strong> you set your rate with a $30/hr minimum. <strong>Virtual:</strong> set your own rate — or offer free sessions (minimum $0). Most Expert Moms charge $40–$55/hr in-home.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:var(--peach);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;">4</div>
+              <div>
+                <h3 style="font-size:17px;font-weight:700;margin-bottom:6px;">Answer questions, take sessions, earn</h3>
+                <p style="font-size:14px;color:var(--muted);line-height:1.7;">Answer free Q&amp;A questions to build profile visibility. Accept virtual and in-home bookings when it suits you. You keep 82% of every payment.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--rose-l) 0%,var(--lavender-l) 100%);border-radius:16px;padding:32px;margin-top:48px;text-align:center;border:1.5px solid var(--border);">
+          <h3 style="font-size:20px;font-weight:800;margin-bottom:8px;">Estimated earnings on StawpBy</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:24px;">Based on typical in-home rates</p>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:480px;margin:0 auto 28px;">
+            <div style="background:#FFFFFF;border-radius:10px;padding:16px;border:1px solid var(--border);">
+              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Per hour</div>
+              <div style="font-size:20px;font-weight:800;color:var(--rose);">$30–$75+</div>
+            </div>
+            <div style="background:#FFFFFF;border-radius:10px;padding:16px;border:1px solid var(--border);">
+              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Per day</div>
+              <div style="font-size:20px;font-weight:800;color:var(--rose);">$200–$400</div>
+            </div>
+            <div style="background:#FFFFFF;border-radius:10px;padding:16px;border:1px solid var(--border);">
+              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">You keep</div>
+              <div style="font-size:20px;font-weight:800;color:var(--rose);">82%</div>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="font-size:16px;padding:14px 32px;" onclick="showPage('signup')">Become an Expert Mom →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /how -->
+
+<!-- ASK MODAL -->
+<div class="modal-overlay" id="ask-modal">
+  <div class="modal qa-modal-full">
+    <button class="modal-close" onclick="closeModal('ask-modal')">×</button>
+    <h2>Ask the Community</h2>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Your question will be visible to verified Expert Moms in your area. Post under your name or stay anonymous. Expert Moms always post under their real names.</p>
+    <div class="form-field">
+      <label>Your Question</label>
+      <textarea placeholder="e.g. My baby is 10 days old and won't latch properly. What helped you get through early breastfeeding struggles?" style="height:100px;resize:vertical;width:100%;padding:12px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;outline:none;"></textarea>
+    </div>
+    <div class="form-field">
+      <label>Topic</label>
+      <select style="width:100%;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;outline:none;">
+        <option>Feeding &amp; Lactation</option>
+        <option>Recovery</option>
+        <option>Newborn sleep</option>
+        <option>Cultural practices</option>
+        <option>Mental health</option>
+        <option>Nutrition</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <label style="margin-bottom:0;">Post as</label>
+        <div style="display:flex;background:#F7F0FA;border-radius:8px;padding:3px;gap:2px;">
+          <button id="qa-named-btn" onclick="setQAAnon(false)" style="padding:6px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:var(--rose);color:#fff;">Named</button>
+          <button id="qa-anon-btn" onclick="setQAAnon(true)" style="padding:6px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:var(--muted);">Anonymous</button>
+        </div>
+      </div>
+      <div id="qa-name-field">
+        <input type="text" placeholder="Your first name (shown publicly, e.g. Adaeze)" style="width:100%;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;outline:none;" />
+      </div>
+      <div id="qa-anon-note" style="display:none;background:var(--mint-l);border-radius:8px;padding:10px 12px;font-size:13px;color:#2A2A6A;line-height:1.6;">
+        🎭 Your question will appear as "Community Member." Expert Moms can still see your city. You can switch to named any time.
+      </div>
+    </div>
+    <button class="btn btn-mint" style="width:100%;justify-content:center;font-size:15px;padding:13px;" onclick="closeModal('ask-modal')">Post Question →</button>
+  </div>
+</div>
+
+<!-- Q&A ANSWER MODAL -->
+<div class="modal-overlay" id="qa-answer-modal">
+  <div class="modal qa-modal-full">
+    <button class="modal-close" onclick="closeModal('qa-answer-modal')">×</button>
+    <div class="qa-full-q" id="qa-modal-question"></div>
+    <div id="qa-modal-answers"></div>
+    <div class="qa-ask-box">
+      <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Add your answer</div>
+      <textarea placeholder="Share what worked for you..."></textarea>
+      <button class="btn btn-mint" style="margin-top:10px;width:100%;justify-content:center;" onclick="closeModal('qa-answer-modal')">Post Answer</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('confirm-modal')">×</button>
+    <h2>Confirm Your Booking</h2>
+    <div style="background:#F7F0FA;border-radius:10px;padding:16px;margin:16px 0;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--rose-l);display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 40 40" width="26" height="26" fill="none">
+            <circle cx="20" cy="14" r="8" fill="#8A4FA0" opacity="0.4"/>
+            <path d="M4 38c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#8A4FA0" opacity="0.4"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-weight:700;" id="confirm-name">Chidinma O.</div>
+          <div style="font-size:13px;color:var(--muted);">⭐ 4.9 • Nigerian Igbo • Houston, TX</div>
+        </div>
+      </div>
+      <div class="price-line" style="border-top:1px solid var(--border);padding-top:10px;"><span>Service</span><span id="modal-service">4 hrs × $35/hr</span></div>
+      <div class="price-line"><span>Platform fee (18%)</span><span id="modal-fee">$25.20</span></div>
+      <div class="price-line total"><span>Total charged today</span><span id="modal-total">$165.20</span></div>
+    </div>
+    <div class="form-field">
+      <label>Payment Card</label>
+      <input type="text" placeholder="•••• •••• •••• 4242" />
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:15px;padding:13px;" onclick="confirmBooking()">Pay &amp; Confirm Booking 🔒</button>
+    <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:10px;">Funds held in escrow — released to Expert Mom 24hrs after service.</p>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal" style="text-align:center;">
+    <div style="font-size:64px;margin-bottom:16px;">🎉</div>
+    <h2>Booking Confirmed!</h2>
+    <p style="color:var(--muted);line-height:1.7;margin:12px 0 20px;">Your booking is confirmed. Use the chat below to coordinate with your Expert Mom before the session.</p>
+    <div style="background:var(--rose-l);border-radius:10px;padding:14px;font-size:14px;color:var(--rose);margin-bottom:20px;">
+      📱 Booking reference: <strong>#SB-20260525-0047</strong>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+      <button class="btn btn-mint" style="justify-content:center;width:100%;" onclick="closeModal('success-modal');openChatModal()">💬 Message your Expert Mom</button>
+      <button class="btn btn-outline" style="justify-content:center;width:100%;" onclick="closeModal('success-modal');showPage('home')">Back to Home</button>
+    </div>
+    <p style="font-size:12px;color:var(--muted);">After your session ends, you'll both be prompted to rate each other.</p>
+  </div>
+</div>
+
+<!-- CHAT MODAL (post-booking) -->
+<div class="modal-overlay" id="chat-modal">
+  <div class="modal" style="max-width:500px;padding:28px;">
+    <button class="modal-close" onclick="closeModal('chat-modal')">×</button>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);">
+      <div style="width:42px;height:42px;border-radius:50%;background:var(--rose-l);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg viewBox="0 0 40 40" width="24" height="24" fill="none">
+          <circle cx="20" cy="14" r="8" fill="#2D1238" opacity="0.55"/>
+          <path d="M4 38c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#2D1238" opacity="0.55"/>
+        </svg>
+      </div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:15px;" id="chat-expert-name">Chidinma O.</div>
+        <div style="font-size:12px;color:var(--muted);">Expert Mom · Booking #SB-20260525-0047</div>
+      </div>
+      <span style="background:var(--mint-l);color:#8A6820;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;">Booked</span>
+    </div>
+    <div id="chat-messages" style="height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px 0;margin-bottom:14px;">
+      <div style="display:flex;gap:8px;align-items:flex-end;">
+        <div style="width:26px;height:26px;border-radius:50%;background:var(--rose-l);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><circle cx="12" cy="8" r="5" fill="#2D1238" opacity="0.5"/><path d="M2 22c0-5.5 4.5-10 10-10s10 4.5 10 10" fill="#2D1238" opacity="0.5"/></svg>
+        </div>
+        <div style="background:#F7F0FA;border-radius:12px 12px 12px 0;padding:10px 14px;max-width:78%;font-size:14px;line-height:1.5;color:var(--dark);">
+          Hi! So excited to support you 🤗 Do you have any dietary restrictions I should know about for the meals?
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;padding-top:12px;border-top:1px solid var(--border);">
+      <input type="text" id="chat-input" placeholder="Type a message..." style="flex:1;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;outline:none;" onkeydown="if(event.key==='Enter')sendChatMsg()" />
+      <button onclick="sendChatMsg()" style="padding:10px 18px;background:var(--rose);color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:600;">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+<div style="display:inline-block;text-align:center;line-height:1;margin-bottom:12px;">
+  <svg width="60" height="28" viewBox="0 0 60 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 0px;">
+    <path d="M19 7.5 C19 5 17 2.5 14 2.5 C11 2.5 9 5 9 7.5 C9 11 12.5 14.5 19 20 C25.5 14.5 29 11 29 7.5 C29 5 27 2.5 24 2.5 C21 2.5 19 5 19 7.5Z" stroke="rgba(255,255,255,0.85)" stroke-width="2" fill="none" stroke-linejoin="round"/>
+    <path d="M42 10 C42 8.5 41 7 39.5 7 C38 7 37 8.5 37 10 C37 12 39 14 42 16.5 C45 14 47 12 47 10 C47 8.5 46 7 44.5 7 C43 7 42 8.5 42 10Z" stroke="rgba(255,255,255,0.65)" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+  </svg>
+  <div style="font-family:'Dancing Script',cursive;font-size:24px;font-weight:700;color:#fff;line-height:1;letter-spacing:-0.5px;">StawpBy</div>
+  <svg width="95" height="8" viewBox="0 0 95 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:2px auto 0;">
+    <path d="M4 4 C24 7.5 71 7.5 91 4" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  </svg>
+</div>
+
+      <div class="logo" style="color:#fff;">StawpBy</div>
+      <p style="margin-top:12px;font-size:14px;line-height:1.7;">Connecting new families with experienced cultural caregivers. Real people. Real care. Available in the US and Canada.</p>
+    </div>
+    <div class="footer-col">
+      <h4>For Families</h4>
+      <a onclick="showPage('home')">Find an Expert Mom</a>
+      <a onclick="showPage('community')">Community Q&amp;A</a>
+      <a onclick="showPage('how')">How It Works</a>
+      <a>Safety</a>
+    </div>
+    <div class="footer-col">
+      <h4>For Expert Moms</h4>
+      <a onclick="showPage('signup')">Become an Expert Mom</a>
+      <a>Earnings Calculator</a>
+      <a>Verification Process</a>
+      <a>Expert Mom Badge</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a>About Us</a>
+      <a>Our Mission</a>
+      <a>Press</a>
+      <a>Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 StawpBy Inc. • US &amp; Canada • All rights reserved
+  </div>
+</footer>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────
+const MARKET = { current: 'us' };
+
+// SVG silhouette helper
+const silhouetteSVG = (color1='#E8D8A0', color2='#D4B870') => `
+  <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="30" cy="20" r="12" fill="${color1}"/>
+    <path d="M6 54c0-13.3 10.7-24 24-24s24 10.7 24 24" fill="${color1}"/>
+  </svg>`;
+
+const expertMoms = [
+  { id:1, name:"Chidinma O.", culture:"Nigerian (Igbo)", flag:"🇳🇬", lang:"Igbo, English", rating:4.9, reviews:47, hourlyUS:35, hourlyCA:46, location:"Houston, TX", tags:["Belly binding","Pepper soup","Night care","Baby bathing"], yrs:12, verified:true, bgColor:"#F0E8C0" },
+  { id:2, name:"Rosa H.", culture:"Mexican", flag:"🇲🇽", lang:"Spanish, English", rating:4.8, reviews:31, hourlyUS:32, hourlyCA:42, location:"Houston, TX", tags:["Cuarentena meals","Herbal baths","Lactation Support","Newborn care"], yrs:9, verified:true, bgColor:"#FFF0C8" },
+  { id:3, name:"Li W.", culture:"Chinese", flag:"🇨🇳", lang:"Mandarin, English", rating:5.0, reviews:22, hourlyUS:38, hourlyCA:50, location:"Houston, TX", tags:["Chinese healing soup","Ginger therapy","Baby massage","Night care"], yrs:15, verified:true, bgColor:"#FFF8D8" },
+  { id:4, name:"Funmilayo A.", culture:"Nigerian (Yoruba)", flag:"🇳🇬", lang:"Yoruba, English", rating:4.7, reviews:58, hourlyUS:30, hourlyCA:39, location:"Houston, TX", tags:["Yoruba ogi","Hot water baths","Emotional support","Baby bathing"], yrs:11, verified:true, bgColor:"#E0E0F8" },
+  { id:5, name:"Priya S.", culture:"Indian", flag:"🇮🇳", lang:"Hindi, English", rating:4.9, reviews:19, hourlyUS:33, hourlyCA:43, location:"Houston, TX", tags:["Ayurvedic meals","Oil massage","Lactation Support","Newborn care"], yrs:8, verified:true, bgColor:"#F0ECC0" },
+  { id:6, name:"Abena M.", culture:"Ghanaian", flag:"🇬🇭", lang:"Twi, English", rating:4.8, reviews:26, hourlyUS:31, hourlyCA:41, location:"Houston, TX", tags:["Ghanaian soups","Herbal baths","Baby care","Night care"], yrs:10, verified:true, bgColor:"#FFF8D8" },
+];
+
+const allServices = [
+  { icon:"🍲", label:"Cultural healing meals" },
+  { icon:"🩹", label:"Belly binding/wrapping" },
+  { icon:"🛁", label:"Herbal/steam baths" },
+  { icon:"👶", label:"Newborn bathing" },
+  { icon:"🤱", label:"Lactation support" },
+  { icon:"🌙", label:"Night care" },
+  { icon:"🧸", label:"Umbilical cord care" },
+  { icon:"💆", label:"Baby massage" },
+  { icon:"💬", label:"Emotional support" },
+  { icon:"🏠", label:"Light housekeeping" },
+];
+
+const reviews = [
+  { author:"Adaeze N.", rating:5, text:"Chidinma cooked the best pepper soup I've ever had — better than my own mother's! She knew exactly what I needed without me having to explain. Will definitely book again.", culture:"Houston, TX" },
+  { author:"Jennifer O.", rating:5, text:"I was so nervous about postpartum alone in a new city. Chidinma made me feel so loved and supported. She did the belly binding every morning and it really helped my recovery.", culture:"Houston, TX" },
+  { author:"Blessing A.", rating:5, text:"Professional, warm, and incredibly experienced. She handled my newborn with such confidence and care. I slept properly for the first time in weeks on the nights she was with us.", culture:"Houston, TX" },
+];
+
+const qaQuestions = [
+  {
+    id: 1,
+    question: "My baby is 12 days old and not latching well — what finally worked for you?",
+    topic: "Lactation Support",
+    asker: "Amara T.",
+    city: "Houston, TX",
+    answers: 4,
+    upvotes: 18,
+    topAnswer: {
+      text: "Skin-to-skin time in the first hour after birth is the single biggest thing that helped me. If that window passed, nursing in a dark, quiet room while leaning back helped my baby latch more naturally. Don't hesitate to request a lactation consultant — most hospitals have them on call.",
+      expert: "Chidinma O.",
+      badge: "Expert Mom",
+      rating: 4.9
+    }
+  },
+  {
+    id: 2,
+    question: "Is it normal to feel really sad and overwhelmed in the first week even if everything went okay?",
+    topic: "Mental health",
+    asker: "Sarah K.",
+    city: "Austin, TX",
+    answers: 7,
+    upvotes: 34,
+    topAnswer: {
+      text: "Yes — completely normal. The 'baby blues' affect up to 80% of new parents in the first two weeks. Hormones drop dramatically after birth. If the sadness lasts more than two weeks or feels very dark, please speak with your doctor about postpartum depression. You are not alone in this.",
+      expert: "Priya S.",
+      badge: "Expert Mom",
+      rating: 4.9
+    }
+  },
+  {
+    id: 3,
+    question: "What foods helped your postpartum recovery the most? Looking for Nigerian and West African recipes.",
+    topic: "Nutrition",
+    asker: "Toyin A.",
+    city: "Maryland",
+    answers: 9,
+    upvotes: 42,
+    topAnswer: {
+      text: "Pepper soup with catfish or goat meat was my daily recovery staple — the spices help with circulation and the protein is incredible. Ofe onugbu (bitter leaf soup) is also packed with iron. For quick nutrition, akara with warm pap in the morning. Avoid cold foods for the first few weeks.",
+      expert: "Funmilayo A.",
+      badge: "Expert Mom",
+      rating: 4.7
+    }
+  },
+];
+
+const bookingPrices = {
+  us: { hourly: 35, daily: 280, weekly: 1200, monthly: 3800, virtual30: 45, virtual60: 75 },
+  ca: { hourly: 46, daily: 368, weekly: 1570, monthly: 4980, virtual30: 60, virtual60: 98 },
+};
+
+let currentBookingType = 'hourly';
+let checkedServices = new Set([0,1,2,3,4,5]);
+
+// ── INIT ─────────────────────────────────────────────────
+window.onload = function() {
+  renderExpertMoms();
+  renderQAPreview();
+  renderQAFull();
+  renderSignupServices();
+  renderAvailabilityCalendar();
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('book-date').value = today;
+  updatePrice();
+};
+
+// ── MARKET TOGGLE ─────────────────────────────────────────
+function setMarket(m) {
+  MARKET.current = m;
+  document.getElementById('us-btn').classList.toggle('active', m === 'us');
+  document.getElementById('ca-btn').classList.toggle('active', m === 'ca');
+  const isUS = m === 'us';
+  document.getElementById('hero-stat1').textContent = isUS ? '$40 – $75 / session' : 'CA$60 – $98 / session';
+  document.getElementById('earn-highlight').textContent = isUS ? '$200–$330/day' : 'CA$260–$430/day';
+  document.getElementById('signup-earn-highlight').textContent = isUS ? '$200–$330/day' : 'CA$260–$430/day';
+  document.getElementById('listing-sub').textContent = isUS
+    ? 'Showing verified Expert Moms in Houston, TX • 8 available'
+    : 'Showing verified Expert Moms in Toronto, ON • 11 available';
+  document.getElementById('tier-virtual-price').textContent = isUS ? '$40 – $75 / session' : 'CA$60 – $98 / session';
+  document.getElementById('tier-home-price').textContent = isUS ? 'From $30/hr' : 'From CA$39/hr';
+  if (document.getElementById('how-virtual-price'))
+    document.getElementById('how-virtual-price').textContent = isUS ? '$40 – $75 per session' : 'CA$60 – $98 per session';
+  if (document.getElementById('how-home-price'))
+    document.getElementById('how-home-price').textContent = isUS ? 'From $30/hr' : 'From CA$39/hr';
+  renderExpertMoms();
+  updatePrice();
+}
+
+// ── RENDER EXPERT MOMS ────────────────────────────────────
+function renderExpertMoms() {
+  const grid = document.getElementById('caregiver-grid');
+  const isUS = MARKET.current === 'us';
+  const curr = isUS ? '$' : 'CA$';
+  grid.innerHTML = expertMoms.map(c => `
+    <div class="c-card" onclick="openProfile(${c.id})">
+      <div class="c-card-img" style="background:linear-gradient(135deg,${c.bgColor}88,${c.bgColor}cc);">
+        <div class="card-avatar-circle">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="20" r="11" fill="rgba(74,74,122,0.55)"/>
+            <path d="M6 54c0-13.3 10.7-24 24-24s24 10.7 24 24" fill="rgba(74,74,122,0.55)"/>
+          </svg>
+        </div>
+        
+      </div>
+      <div class="c-card-body">
+        <div class="c-card-name">${c.name}</div>
+        <div class="c-card-culture">${c.flag} ${c.culture} • ${c.lang}</div>
+        <div class="c-card-tags">
+          ${c.tags.slice(0,3).map(t => `<span class="tag" style="font-size:11px;padding:3px 8px;">${t}</span>`).join('')}
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <span class="badge badge-mint" style="font-size:11px;">💬 Q&amp;A</span>
+          <span class="badge badge-lavender" style="font-size:11px;">📹 Virtual</span>
+          <span class="badge badge-rose" style="font-size:11px;">🏡 In-Home</span>
+        </div>
+        ${c.credentials ? `<div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:700;background:var(--lavender-l);color:#8A6820;padding:3px 8px;border-radius:10px;">🏥 ${c.credentials}</span></div>` : ''}
+        <div class="c-card-footer">
+          <div class="c-price">
+            ${curr}${isUS ? c.hourlyUS : c.hourlyCA}/hr <span>in-home</span>
+          </div>
+          <div class="c-rating">⭐ ${c.rating} (${c.reviews})</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Q&A RENDER ────────────────────────────────────────────
+function renderQAPreview() {
+  const container = document.getElementById('qa-preview');
+  container.innerHTML = qaQuestions.slice(0, 3).map(q => `
+    <div class="qa-question" onclick="openQA(${q.id})">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;">
+        <span class="badge badge-mint">${q.topic}</span>
+        <span style="font-size:12px;color:var(--muted);">💬 ${q.answers} answers · 👍 ${q.upvotes}</span>
+      </div>
+      <div class="qa-q-text">${q.question}</div>
+      <div class="qa-answer-preview">
+        <div class="qa-answerer">
+          <div class="qa-answerer-dot">
+            <svg viewBox="0 0 20 20" width="14" height="14" fill="none">
+              <circle cx="10" cy="7" r="4" fill="#8A4FA0" opacity="0.7"/>
+              <path d="M2 19c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="#8A4FA0" opacity="0.7"/>
+            </svg>
+          </div>
+          <span class="qa-answerer-name">${q.topAnswer.expert}</span>
+          <span class="badge badge-mint" style="font-size:10px;padding:2px 7px;">${q.topAnswer.badge}</span>
+          <span style="font-size:12px;color:var(--muted);">⭐ ${q.topAnswer.rating}</span>
+        </div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px;">"${q.topAnswer.text.substring(0,120)}..."</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderQAFull() {
+  const container = document.getElementById('qa-full-list');
+  if (!container) return;
+  container.innerHTML = qaQuestions.map(q => `
+    <div class="qa-question" onclick="openQA(${q.id})">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;">
+        <span class="badge badge-mint">${q.topic}</span>
+        <span style="font-size:12px;color:var(--muted);">💬 ${q.answers} answers · 👍 ${q.upvotes}</span>
+      </div>
+      <div class="qa-q-text">${q.question}</div>
+      <div class="qa-meta">
+        <span>Asked by ${q.asker}</span>
+        <span>📍 ${q.city}</span>
+      </div>
+      <div class="qa-answer-preview">
+        <div class="qa-answerer">
+          <div class="qa-answerer-dot">
+            <svg viewBox="0 0 20 20" width="14" height="14" fill="none">
+              <circle cx="10" cy="7" r="4" fill="#8A4FA0" opacity="0.7"/>
+              <path d="M2 19c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="#8A4FA0" opacity="0.7"/>
+            </svg>
+          </div>
+          <span class="qa-answerer-name">${q.topAnswer.expert}</span>
+          <span class="badge badge-mint" style="font-size:10px;padding:2px 7px;">${q.topAnswer.badge} · ⭐ ${q.topAnswer.rating}</span>
+        </div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px;">"${q.topAnswer.text.substring(0,140)}..."</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openQA(id) {
+  const q = qaQuestions.find(x => x.id === id);
+  if (!q) return;
+  document.getElementById('qa-modal-question').textContent = q.question;
+  document.getElementById('qa-modal-answers').innerHTML = `
+    <div class="qa-answer-card">
+      <div class="qa-answer-header">
+        <div class="qa-answerer-dot">
+          <svg viewBox="0 0 20 20" width="14" height="14" fill="none">
+            <circle cx="10" cy="7" r="4" fill="#8A4FA0" opacity="0.7"/>
+            <path d="M2 19c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="#8A4FA0" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="qa-answer-name">${q.topAnswer.expert}</div>
+        <span class="qa-answer-badge">${q.topAnswer.badge} · ⭐ ${q.topAnswer.rating}</span>
+      </div>
+      <div class="qa-answer-body">${q.topAnswer.text}</div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);text-align:center;padding:8px 0;">+ ${q.answers - 1} more answers</div>
+  `;
+  showModal('qa-answer-modal');
+}
+
+function filterTag(el) {
+  document.querySelectorAll('.page#page-community .tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── PROFILE ───────────────────────────────────────────────
+function openProfile(id) {
+  const c = expertMoms.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('profile-name').textContent = c.name;
+  document.getElementById('profile-culture').textContent = `${c.flag} ${c.culture} • Speaks: ${c.lang}`;
+  document.getElementById('profile-rating').textContent = c.rating;
+  document.getElementById('profile-loc').textContent = c.location;
+  document.getElementById('booking-title').textContent = `Stop by to see ${c.name.split(' ')[0]}`;
+  const credBadge = document.getElementById('profile-credentials-badge');
+  if (c.credentials) {
+    credBadge.style.display = 'block';
+    credBadge.innerHTML = `<span style="font-size:13px;font-weight:700;background:var(--lavender-l);color:#8A6820;padding:5px 12px;border-radius:20px;">🏥 ${c.credentials} · Credential verified</span>`;
+  } else { credBadge.style.display = 'none'; }
+  document.getElementById('confirm-name').textContent = c.name;
+
+  const services = document.getElementById('profile-services');
+  services.innerHTML = c.tags.concat(['Emotional support','Umbilical cord care']).map(s => `
+    <div class="service-item"><span>✅</span><span>${s}</span></div>
+  `).join('');
+
+  const revDiv = document.getElementById('profile-reviews');
+  revDiv.innerHTML = reviews.map(r => `
+    <div class="review-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="review-author">${r.author}</div>
+        <div class="star">${'⭐'.repeat(r.rating)}</div>
+      </div>
+      <div class="review-text">${r.text}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px;">${r.culture}</div>
+    </div>
+  `).join('');
+
+  currentBookingType = 'hourly';
+  // reset booking type buttons
+  document.querySelectorAll('.booking-type-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.booking-type-btn')[1].classList.add('active');
+  document.getElementById('virtual-info').classList.add('hidden');
+  document.getElementById('hours-field').style.display = 'block';
+  document.getElementById('virtual-duration-field').style.display = 'none';
+  document.getElementById('safety-note-home').style.display = 'flex';
+  updatePrice();
+  showPage('profile');
+}
+
+// ── AVAILABILITY CALENDAR ─────────────────────────────────
+function renderAvailabilityCalendar() {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const statuses = ['open','open','partial','busy','open','open','partial'];
+  const today = new Date();
+  const grid = document.getElementById('avail-calendar');
+  if (!grid) return;
+  grid.innerHTML = days.map((d, i) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - today.getDay() + i);
+    return `
+      <div class="avail-day ${statuses[i]}">
+        <div class="day-name">${d}</div>
+        <div class="day-num">${date.getDate()}</div>
+      </div>`;
+  }).join('');
+}
+
+// ── BOOKING ───────────────────────────────────────────────
+function setBookingType(el, type) {
+  document.querySelectorAll('.booking-type-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentBookingType = type;
+  const isVirtual = type === 'virtual';
+  document.getElementById('virtual-info').classList.toggle('hidden', !isVirtual);
+  document.getElementById('hours-field').style.display = (type === 'hourly') ? 'block' : 'none';
+  document.getElementById('virtual-duration-field').style.display = isVirtual ? 'block' : 'none';
+  document.getElementById('safety-note-home').style.display = isVirtual ? 'none' : 'flex';
+  updatePrice();
+}
+
+function updatePrice() {
+  const isUS = MARKET.current === 'us';
+  const prices = bookingPrices[MARKET.current];
+  const curr = isUS ? '$' : 'CA$';
+  const fmt = (n) => n.toLocaleString();
+
+  let base, desc;
+  if (currentBookingType === 'virtual') {
+    const dur = parseInt(document.getElementById('virtual-duration')?.value || 30);
+    base = dur === 30 ? prices.virtual30 : prices.virtual60;
+    desc = `${dur}-min video session — ${curr}${fmt(base)}`;
+  } else if (currentBookingType === 'hourly') {
+    const hrs = parseInt(document.getElementById('book-hours')?.value || 4);
+    base = prices.hourly * hrs;
+    desc = `${hrs} hours × ${curr}${prices.hourly}/hr`;
+  } else if (currentBookingType === 'daily') {
+    base = prices.daily; desc = `Full day (8 hrs) — ${curr}${fmt(prices.daily)}`;
+  } else {
+    base = prices.monthly; desc = `Monthly support — ${curr}${fmt(prices.monthly)}`;
+  }
+  const fee = Math.round(base * 0.18);
+  const total = base + fee;
+
+  const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setEl('calc-desc', desc);
+  setEl('calc-fee', `${curr}${fmt(fee)}`);
+  setEl('calc-total', `${curr}${fmt(total)}`);
+  setEl('modal-service', desc);
+  setEl('modal-fee', `${curr}${fmt(fee)}`);
+  setEl('modal-total', `${curr}${fmt(total)}`);
+}
+
+// ── SIGNUP ────────────────────────────────────────────────
+function renderSignupServices() {
+  const grid = document.getElementById('services-checklist');
+  grid.innerHTML = allServices.map((s, i) => `
+    <div class="checkbox-item ${checkedServices.has(i) ? 'checked' : ''}" onclick="toggleService(this,${i})">
+      <span class="ci-icon">${s.icon}</span>
+      <span class="ci-text">${s.label}</span>
+      <span style="margin-left:auto;color:var(--rose);font-size:18px;">${checkedServices.has(i) ? '✓' : ''}</span>
+    </div>
+  `).join('');
+}
+
+function toggleService(el, i) {
+  if (checkedServices.has(i)) { checkedServices.delete(i); el.classList.remove('checked'); el.lastElementChild.textContent = ''; }
+  else { checkedServices.add(i); el.classList.add('checked'); el.lastElementChild.textContent = '✓'; }
+}
+
+function nextSignupStep(step) {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById(`signup-step-${i}`).classList.toggle('hidden', i !== step);
+    const circle = document.getElementById(`si-${i}`);
+    if (i < step) { circle.classList.add('done'); circle.textContent = '✓'; }
+    else if (i === step) { circle.classList.add('current'); circle.classList.remove('done'); }
+    else { circle.classList.remove('done','current'); circle.textContent = i; }
+    if (i < 4) document.getElementById(`si-line-${i}`).classList.toggle('done', i < step);
+  }
+}
+
+function updateEarnings() {}
+
+// ── SEARCH ───────────────────────────────────────────────
+function scrollToSearch() {
+  document.getElementById('search-area').scrollIntoView({ behavior: 'smooth' });
+}
+
+function doSearch() {
+  showPage('home');
+  setTimeout(() => document.getElementById('caregiver-grid').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function filterCulture(el, culture) {
+  document.querySelectorAll('.culture-filters .tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── NAVIGATION ────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(`page-${name}`).classList.add('active');
+  window.scrollTo(0, 0);
+  const pageToNav = { home:0, community:1, how:2, signup:3 };
+  document.querySelectorAll('.nav-link').forEach((link, i) => {
+    link.classList.toggle('active', i === (pageToNav[name] ?? -1));
+  });
+}
+
+// ── MODALS ────────────────────────────────────────────────
+function showModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function confirmBooking() {
+  closeModal('confirm-modal');
+  setTimeout(() => showModal('success-modal'), 200);
+}
+
+// ── HOW IT WORKS TABS ─────────────────────────────────────────────────────
+function switchHowTab(tab) {
+  const isFam = tab === 'families';
+  document.getElementById('how-section-families').style.display = isFam ? 'block' : 'none';
+  document.getElementById('how-section-moms').style.display = isFam ? 'none' : 'block';
+  const activeStyle = 'padding:11px 28px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:#FFFFFF;color:var(--rose);';
+  const inactiveStyle = 'padding:11px 28px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:transparent;color:rgba(255,255,255,0.85);';
+  document.getElementById('how-tab-families').style.cssText = isFam ? activeStyle : inactiveStyle;
+  document.getElementById('how-tab-moms').style.cssText = isFam ? inactiveStyle : activeStyle;
+}
+
+// ── Q&A ANONYMOUS TOGGLE ──────────────────────────────────────────────────
+function setQAAnon(anon) {
+  document.getElementById('qa-name-field').style.display = anon ? 'none' : 'block';
+  document.getElementById('qa-anon-note').style.display = anon ? 'block' : 'none';
+  const on = 'padding:6px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:var(--rose);color:#fff;';
+  const off = 'padding:6px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:var(--muted);';
+  document.getElementById('qa-named-btn').style.cssText = anon ? off : on;
+  document.getElementById('qa-anon-btn').style.cssText = anon ? on : off;
+}
+
+// ── POST-BOOKING CHAT ─────────────────────────────────────────────────────
+function openChatModal() {
+  showModal('chat-modal');
+}
+function sendChatMsg() {
+  const inp = document.getElementById('chat-input');
+  const msg = inp.value.trim();
+  if (!msg) return;
+  const msgs = document.getElementById('chat-messages');
+  msgs.innerHTML += `<div style="display:flex;justify-content:flex-end;"><div style="background:var(--rose);color:#fff;border-radius:12px 12px 0 12px;padding:10px 14px;max-width:78%;font-size:14px;line-height:1.5;">${msg}</div></div>`;
+  inp.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+  // simulate reply after 1s
+  setTimeout(() => {
+    msgs.innerHTML += `<div style="display:flex;gap:8px;align-items:flex-end;"><div style="width:26px;height:26px;border-radius:50%;background:var(--rose-l);flex-shrink:0;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none"><circle cx="12" cy="8" r="5" fill="#2D1238" opacity="0.5"/><path d="M2 22c0-5.5 4.5-10 10-10s10 4.5 10 10" fill="#2D1238" opacity="0.5"/></svg></div><div style="background:#F7F0FA;border-radius:12px 12px 12px 0;padding:10px 14px;max-width:78%;font-size:14px;line-height:1.5;color:var(--dark);">Got it! I'll make sure to accommodate that. See you soon 😊</div></div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 1000);
+}
+
+// ── Checkout ──────────────────────────────────────────
+var promoApplied = false;
+
+function goToCheckout(name, culture, tier, date, hrs, rate) {
+  name = name || 'Adunola Mensah';
+  culture = culture || 'Yoruba · Nigerian tradition';
+  tier = tier || 'In-Home Visit';
+  date = date || 'Sat, Jun 14 · 10:00 AM';
+  hrs = hrs || 3;
+  rate = rate || 45;
+  var subtotal = rate * hrs;
+  var fee = Math.round(subtotal * 0.18 * 100) / 100;
+  var total = Math.round((subtotal + fee) * 100) / 100;
+  document.getElementById('checkout-name').textContent = name;
+  document.getElementById('checkout-culture').textContent = culture;
+  document.getElementById('checkout-tier').textContent = tier;
+  document.getElementById('checkout-date').textContent = date;
+  document.getElementById('checkout-duration').textContent = hrs + ' hour' + (hrs !== 1 ? 's' : '');
+  document.getElementById('checkout-rate-label').textContent = 'Hourly rate × ' + hrs + ' hrs';
+  document.getElementById('checkout-subtotal').textContent = '$' + subtotal.toFixed(2);
+  document.getElementById('checkout-fee').textContent = '$' + fee.toFixed(2);
+  document.getElementById('checkout-total').textContent = '$' + total.toFixed(2);
+  promoApplied = false;
+  document.getElementById('promo-msg').style.display = 'none';
+  document.getElementById('promo-line').style.display = 'none';
+  document.getElementById('promo-input').value = '';
+  showPage('checkout');
+}
+
+function applyPromo() {
+  var code = document.getElementById('promo-input').value.trim().toUpperCase();
+  if (promoApplied) return;
+  if (code === 'STAWP10' || code === 'WELCOME' || code === 'MOM10') {
+    promoApplied = true;
+    document.getElementById('promo-msg').style.display = 'block';
+    document.getElementById('promo-line').style.display = 'flex';
+    var total = parseFloat(document.getElementById('checkout-total').textContent.replace('$',''));
+    var discount = Math.round(total * 0.10 * 100) / 100;
+    document.getElementById('checkout-discount').textContent = '-$' + discount.toFixed(2);
+    document.getElementById('checkout-total').textContent = '$' + (total - discount).toFixed(2);
+  } else {
+    document.getElementById('promo-input').style.borderColor = '#E24B4A';
+    setTimeout(function(){ document.getElementById('promo-input').style.borderColor = ''; }, 1500);
+  }
+}
+
+function completeMockBooking() {
+  var name = document.getElementById('checkout-name').textContent.split(' ')[0];
+  document.getElementById('success-name').textContent = name;
+  var ref = 'SB-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + String(Math.floor(Math.random()*9000)+1000);
+  document.getElementById('success-ref').textContent = 'Booking ref: ' + ref;
+  var modal = document.getElementById('booking-success-modal');
+  modal.style.display = 'flex';
+}
+
+function closeBookingSuccess() {
+  document.getElementById('booking-success-modal').style.display = 'none';
+  showPage('home');
+}
+
+</script>
+
+  <!-- ══ CHECKOUT PAGE ══ -->
+  <div class="page hidden" id="page-checkout">
+    <div style="max-width:560px;margin:0 auto;padding:32px 20px 80px;">
+
+      <!-- Back -->
+      <button onclick="showPage('profile')" style="display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--rose);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:24px;padding:0;">
+        ← Back to profile
+      </button>
+
+      <h1 style="font-size:26px;font-weight:800;color:var(--dark);margin-bottom:24px;">Checkout</h1>
+
+      <!-- Mock payment notice (highlighted) -->
+      <div style="background:#EEE0F5;border:1.5px solid #C49DD4;border-radius:12px;padding:16px 18px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start;">
+        <span style="font-size:20px;flex-shrink:0;">🔒</span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#2D1238;margin-bottom:3px;">StawpBy V1 — Demo Checkout</div>
+          <div style="font-size:13px;color:#5C2D6E;line-height:1.6;">No card will be charged. This is a mock payment flow. Stripe will be connected when StawpBy goes live — your booking details are saved.</div>
+        </div>
+      </div>
+
+      <!-- Booking summary -->
+      <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
+        <div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px;">Booking summary</div>
+
+        <!-- Expert Mom row -->
+        <div style="display:flex;gap:14px;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px;">
+          <div style="width:52px;height:52px;border-radius:12px;background:linear-gradient(150deg,#5C2D6E,#2D1238);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">👩🏾</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark);" id="checkout-name">Adunola Mensah</div>
+            <div style="font-size:13px;color:var(--muted);" id="checkout-culture">Yoruba · Nigerian tradition</div>
+            <div style="display:flex;gap:4px;margin-top:4px;">
+              <span style="font-size:11px;background:#EEE0F5;color:#5C2D6E;padding:2px 8px;border-radius:20px;font-weight:600;" id="checkout-tier">In-Home Visit</span>
+            </div>
+          </div>
+          <div style="margin-left:auto;text-align:right;">
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">⭐ 4.9</div>
+            <div style="font-size:12px;color:var(--muted);">47 sessions</div>
+          </div>
+        </div>
+
+        <!-- Session details -->
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;">
+            <span style="color:var(--muted);">📅 Date & time</span>
+            <span style="font-weight:600;color:var(--dark);" id="checkout-date">Sat, Jun 14 · 10:00 AM</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;">
+            <span style="color:var(--muted);">⏱ Duration</span>
+            <span style="font-weight:600;color:var(--dark);" id="checkout-duration">3 hours</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;">
+            <span style="color:var(--muted);">📍 Location</span>
+            <span style="font-weight:600;color:var(--dark);">Your home</span>
+          </div>
+        </div>
+
+        <!-- Promo code -->
+        <div style="display:flex;gap:8px;margin-bottom:16px;">
+          <input type="text" placeholder="Promo code" id="promo-input"
+            style="flex:1;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;outline:none;font-family:inherit;"
+            onfocus="this.style.borderColor='#5C2D6E'" onblur="this.style.borderColor='var(--border)'"/>
+          <button onclick="applyPromo()" style="padding:11px 18px;background:var(--rose-l);color:var(--rose);border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;">Apply</button>
+        </div>
+        <div id="promo-msg" style="font-size:12px;color:#2D8A3E;margin:-10px 0 12px;display:none;">✓ Promo applied — 10% off!</div>
+
+        <!-- Price breakdown -->
+        <div style="border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;">
+            <span style="color:var(--muted);" id="checkout-rate-label">Hourly rate × 3 hrs</span>
+            <span id="checkout-subtotal">$135.00</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;">
+            <span style="color:var(--muted);">Platform fee (18%)</span>
+            <span id="checkout-fee">$24.30</span>
+          </div>
+          <div id="promo-line" style="display:none;justify-content:space-between;font-size:14px;">
+            <span style="color:#2D8A3E;">Promo discount (10%)</span>
+            <span style="color:#2D8A3E;" id="checkout-discount">-$13.50</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:800;color:var(--dark);padding-top:10px;border-top:1px solid var(--border);margin-top:4px;">
+            <span>Total</span>
+            <span id="checkout-total">$159.30</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment method placeholder -->
+      <div style="background:#FFFFFF;border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;">
+        <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px;">Payment method</div>
+        <div style="display:flex;gap:10px;margin-bottom:14px;">
+          <div style="flex:1;border:2px solid #5C2D6E;border-radius:10px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <span style="font-size:20px;">💳</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--dark);">Credit / Debit card</div>
+              <div style="font-size:11px;color:var(--muted);">Stripe — coming soon</div>
+            </div>
+            <div style="margin-left:auto;width:16px;height:16px;border-radius:50%;background:#5C2D6E;"></div>
+          </div>
+        </div>
+        <!-- Card fields (greyed out — mock) -->
+        <div style="opacity:0.45;pointer-events:none;display:flex;flex-direction:column;gap:10px;">
+          <input type="text" placeholder="Card number" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;"/>
+          <div style="display:flex;gap:10px;">
+            <input type="text" placeholder="MM / YY" style="flex:1;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;"/>
+            <input type="text" placeholder="CVC" style="flex:1;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;"/>
+          </div>
+          <input type="text" placeholder="Name on card" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;"/>
+        </div>
+        <div style="font-size:12px;color:#5C2D6E;background:#EEE0F5;border-radius:8px;padding:8px 12px;margin-top:12px;text-align:center;">
+          🔒 Stripe payment will be enabled at launch. Your booking is confirmed.
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button onclick="completeMockBooking()"
+        style="width:100%;padding:16px;background:linear-gradient(150deg,#5C2D6E,#2D1238);color:#fff;border:none;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:-0.3px;box-shadow:0 4px 20px rgba(200,92,142,0.35);">
+        Complete Booking →
+      </button>
+      <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6;">
+        By completing this booking you agree to StawpBy's <a href="#" style="color:var(--rose);">Terms of Service</a>. Cancellations must be made 24h in advance.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Booking success modal -->
+  <div id="booking-success-modal" style="display:none;position:fixed;inset:0;background:rgba(92,45,110,0.55);z-index:1000;align-items:center;justify-content:center;">
+    <div style="background:#FFFFFF;border-radius:24px;padding:36px 32px;max-width:400px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(45,27,105,0.3);">
+      <div style="font-size:64px;margin-bottom:12px;">🎉</div>
+      <h2 style="font-size:24px;font-weight:800;color:#2D1238;margin-bottom:8px;">Booking confirmed!</h2>
+      <p style="font-size:14px;color:#9A7AAA;line-height:1.7;margin-bottom:8px;">Your session with <strong id="success-name">Adunola</strong> is booked. You'll receive a confirmation email shortly.</p>
+      <div style="background:#EEE0F5;border-radius:10px;padding:12px 16px;margin:16px 0;font-size:13px;color:#5C2D6E;font-weight:600;" id="success-ref">
+        Booking ref: SB-20260603-0001
+      </div>
+      <div style="font-size:12px;color:#C49DD4;margin-bottom:20px;">Payment will be processed via Stripe when the platform launches.</div>
+      <button onclick="closeBookingSuccess()"
+        style="width:100%;padding:14px;background:#2D1238;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;">
+        Back to Home
+      </button>
+    </div>
+  </div>
+
+</body>
+</html>
