@@ -19,29 +19,31 @@ a{text-decoration:none;color:inherit}
 button{cursor:pointer;border:none;font-family:'Inter',sans-serif}
 img{max-width:100%}
 
-/* NAV */
+/* NAV — logo + hamburger only */
 #nav{position:sticky;top:0;z-index:100;background:rgba(45,18,56,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.1)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;height:62px;display:flex;align-items:center;gap:24px}
-.nav-logo{display:flex;flex-direction:column;align-items:center;cursor:pointer;margin-right:8px}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;flex-direction:column;align-items:center;cursor:pointer}
 .nav-logo-text{font-family:'Dancing Script',cursive;font-size:1.5rem;color:#6B30BF;line-height:1}
 .nav-logo svg.heart{width:18px;height:18px;margin-bottom:2px}
 .nav-logo svg.curve{width:70px;height:8px;margin-top:1px}
-.nav-links{display:none}
-.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto}
-.market-toggle{display:flex;background:rgba(255,255,255,.1);border-radius:20px;overflow:hidden}
-.market-btn{padding:4px 12px;font-size:.78rem;color:rgba(255,255,255,.7);background:none;border:none;cursor:pointer;transition:.2s}
-.market-btn.active{background:var(--brand);color:#fff}
-.signin-btn{padding:6px 16px;background:rgba(255,255,255,.15);color:#fff;border-radius:20px;font-size:.82rem;border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:.2s}
-.signin-btn:hover{background:rgba(255,255,255,.25)}
-.hamburger{display:block;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:4px 8px}
+.nav-right-area{display:flex;align-items:center;gap:12px}
+.nav-user-chip{display:flex;align-items:center;gap:8px;color:#fff;font-size:.82rem;font-weight:600;cursor:pointer}
+.nav-user-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,.4)}
+.hamburger{background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;padding:4px 8px;display:flex;align-items:center}
 
-/* MOBILE MENU */
-#mobile-menu{display:none;position:fixed;inset:0;z-index:200;background:var(--dark);flex-direction:column;padding:24px}
-#mobile-menu.open{display:flex}
-.mobile-menu-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
-.mobile-close{background:none;border:none;color:#fff;font-size:1.8rem;cursor:pointer}
-.mobile-links{display:flex;flex-direction:column;gap:4px}
-.mobile-links a{color:rgba(255,255,255,.85);font-size:1.1rem;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);display:block}
+/* SIDE MENU */
+.menu-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s}
+.menu-overlay.open{opacity:1;pointer-events:all}
+.side-menu{position:fixed;top:0;right:-320px;width:300px;height:100%;background:var(--dark);z-index:201;transition:right .25s;display:flex;flex-direction:column;overflow-y:auto}
+.side-menu.open{right:0}
+.side-menu-header{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.side-menu-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.5rem;cursor:pointer}
+.side-menu nav a,.side-menu nav button.smenu-btn{display:flex;align-items:center;gap:12px;padding:14px 20px;color:rgba(255,255,255,.85);font-size:.95rem;text-decoration:none;background:none;border:none;width:100%;text-align:left;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);font-family:'Inter',sans-serif;transition:.15s}
+.side-menu nav a:hover,.side-menu nav button.smenu-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.side-menu-footer{padding:20px;margin-top:auto}
+.smenu-cta{width:100%;background:var(--brand);color:#fff;border:none;padding:12px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-bottom:8px}
+.smenu-cta:hover{background:#5a26a0}
+.smenu-divider{height:1px;background:rgba(255,255,255,.1);margin:8px 20px}
 
 /* PAGES */
 .page{display:none}
@@ -73,19 +75,18 @@ img{max-width:100%}
 .ask-btn-sm{margin-left:auto;background:var(--rose);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer}
 
 /* QA CARD */
-.qa-card{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;display:flex;overflow:hidden;transition:.15s}
-.qa-card:hover{box-shadow:0 2px 12px rgba(92,45,110,.12);border-color:rgba(160,80,140,.3)}
-.vote-col{display:flex;flex-direction:column;align-items:center;padding:12px 8px;background:var(--gray);gap:4px;min-width:46px}
-.vote-btn{background:none;border:none;font-size:.95rem;cursor:pointer;color:var(--muted);transition:.2s;padding:2px}
+.qa-card{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:14px;display:flex;overflow:hidden;transition:.2s}
+.qa-card:hover{box-shadow:0 4px 16px rgba(92,45,110,.1)}
+.vote-col{display:flex;flex-direction:column;align-items:center;padding:14px 10px;background:var(--gray);gap:4px;min-width:52px}
+.vote-btn{background:none;border:none;font-size:1rem;cursor:pointer;color:var(--muted);transition:.2s;padding:2px}
 .vote-btn:hover{color:var(--rose)}
-.vote-count{font-size:.85rem;font-weight:700;color:var(--dark)}
-.qa-body{padding:12px 16px;flex:1;min-width:0}
-.topic-chip{display:inline-block;background:var(--rose-l);color:var(--rose);font-size:.7rem;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:7px}
-.qa-title{font-size:1.05rem;font-weight:700;color:var(--dark);line-height:1.45;margin-bottom:8px;cursor:pointer}
+.vote-count{font-size:.9rem;font-weight:700;color:var(--dark)}
+.qa-body{padding:14px 16px;flex:1;min-width:0}
+.topic-chip{display:inline-block;background:var(--rose-l);color:var(--rose);font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.qa-title{font-size:1rem;font-weight:600;color:var(--dark);line-height:1.4;margin-bottom:10px;cursor:pointer}
 .qa-title:hover{color:var(--rose)}
-.qa-img{display:none}
-.answer-preview{background:transparent;border-left:3px solid var(--border);padding:4px 10px;margin-bottom:8px;font-size:.82rem;line-height:1.45;color:var(--muted)}
-.answer-header{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.answer-preview{background:var(--gray);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:.83rem;line-height:1.5}
+.answer-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .answer-avatar{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#fff;flex-shrink:0}
 .top-badge{background:linear-gradient(90deg,#f59e0b,#f97316);color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:10px}
 .comment-list{margin-bottom:8px}
@@ -94,6 +95,19 @@ img{max-width:100%}
 .qa-footer{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .qa-foot-btn{background:none;border:none;font-size:.78rem;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:6px;transition:.2s}
 .qa-foot-btn:hover{background:var(--rose-l);color:var(--rose)}
+
+/* INLINE REPLY INPUT */
+.reply-section{display:none;border-top:1px solid var(--border);margin-top:8px;padding-top:10px}
+.reply-section.open{display:block}
+.reply-item{display:flex;gap:8px;margin-bottom:10px;font-size:.82rem}
+.reply-item .r-av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff;flex-shrink:0;margin-top:1px}
+.reply-item .r-body{}
+.reply-item .r-name{font-weight:600;font-size:.8rem}
+.reply-item .r-text{color:#444;line-height:1.45}
+.reply-input-row{display:flex;gap:8px;margin-top:6px}
+.reply-input-row input{flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-size:.83rem;font-family:'Inter',sans-serif;outline:none}
+.reply-input-row input:focus{border-color:var(--rose)}
+.reply-submit{background:var(--rose);color:#fff;border:none;padding:7px 14px;border-radius:7px;font-size:.82rem;font-weight:600;cursor:pointer}
 
 /* SIDEBAR */
 .sidebar-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
@@ -203,28 +217,18 @@ img{max-width:100%}
 .profile-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:.85rem;color:rgba(255,255,255,.8)}
 .profile-meta span{display:flex;align-items:center;gap:4px}
 .profile-body{max-width:1100px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:1fr 320px;gap:28px}
-.profile-main{}
-.profile-sidebar{}
-
-/* SAFETY PANELS */
 .safety-panel{border-radius:10px;padding:14px 16px;margin-bottom:12px;font-size:.85rem;line-height:1.5}
 .safety-panel.orange{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412}
 .safety-panel.green{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d}
 .safety-panel.red{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
 .safety-panel p{margin-bottom:6px}
 .report-btn{background:#ea580c;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:.78rem;cursor:pointer;margin-top:6px}
-
-/* SECTION CARD */
 .section-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px}
 .section-card h3{font-size:1rem;font-weight:700;margin-bottom:14px;color:var(--dark)}
-
-/* SERVICES GRID */
 .services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .service-item{background:var(--gray);border-radius:8px;padding:12px;font-size:.85rem}
 .service-name{font-weight:600;margin-bottom:2px}
 .service-price{color:var(--rose);font-size:.8rem}
-
-/* CALENDAR */
 .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .cal-day{text-align:center;padding:8px 4px;border-radius:8px;font-size:.78rem;cursor:pointer;transition:.2s;border:1px solid var(--border)}
 .cal-day.available{background:var(--rose-l);border-color:var(--rose);color:var(--rose);cursor:pointer}
@@ -232,8 +236,6 @@ img{max-width:100%}
 .cal-day.booked{background:#f1f5f9;color:#94a3b8;cursor:not-allowed}
 .cal-day-name{font-size:.7rem;color:var(--muted);margin-bottom:2px;font-weight:600}
 .cal-day-num{font-weight:600;font-size:.9rem}
-
-/* BOOKING BOX */
 .booking-box{background:#fff;border:2px solid var(--rose);border-radius:14px;padding:20px;position:sticky;top:80px}
 .booking-tabs{display:flex;background:var(--gray);border-radius:8px;margin-bottom:16px;overflow:hidden}
 .booking-tab{flex:1;padding:8px;text-align:center;font-size:.8rem;cursor:pointer;border:none;background:none;color:var(--muted);transition:.2s}
@@ -246,8 +248,6 @@ img{max-width:100%}
 .price-row.total{font-weight:700;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;font-size:.9rem}
 .fees-note{font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:10px}
 .book-btn{width:100%;background:var(--rose);color:#fff;border:none;padding:13px;border-radius:8px;font-weight:700;font-size:.95rem;cursor:pointer}
-
-/* HOW IT WORKS */
 .how-hero{background:linear-gradient(135deg,var(--dark),#3D1550);padding:48px 20px;text-align:center;color:#fff}
 .how-body{max-width:900px;margin:0 auto;padding:40px 20px}
 .tab-toggle{display:flex;background:var(--gray);border-radius:10px;max-width:320px;margin:0 auto 40px;overflow:hidden}
@@ -271,8 +271,6 @@ img{max-width:100%}
 .earnings-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
 .earnings-table tr:last-child td{border-bottom:none}
 .earnings-table tr:nth-child(even) td{background:var(--gray)}
-
-/* SIGNUP FORM */
 .signup-hero{background:linear-gradient(135deg,var(--dark),#3D1550);padding:40px 20px;text-align:center;color:#fff}
 .signup-body{max-width:700px;margin:0 auto;padding:40px 20px}
 .steps-indicator{display:flex;justify-content:center;gap:8px;margin-bottom:36px}
@@ -301,7 +299,7 @@ img{max-width:100%}
 .done-card h2{font-size:1.5rem;font-weight:700;margin-bottom:8px}
 .done-card p{color:var(--muted);margin-bottom:24px;line-height:1.6}
 
-/* MODALS */
+/* AUTH MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
 .modal{background:#fff;border-radius:16px;padding:28px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
@@ -311,6 +309,7 @@ img{max-width:100%}
 .modal-field label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:4px}
 .modal-field select,.modal-field textarea,.modal-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-family:'Inter',sans-serif}
 .modal-field textarea{resize:vertical;min-height:100px}
+.modal-field input:focus,.modal-field select:focus,.modal-field textarea:focus{outline:none;border-color:var(--rose)}
 .anon-toggle{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:.88rem}
 .anon-toggle input{accent-color:var(--rose)}
 .modal-submit{background:var(--rose);color:#fff;border:none;padding:12px 28px;border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;width:100%}
@@ -318,6 +317,43 @@ img{max-width:100%}
 .consent-item input{accent-color:var(--rose);margin-top:2px;flex-shrink:0}
 .booking-expert-info{display:flex;align-items:center;gap:12px;background:var(--gray);border-radius:10px;padding:12px;margin-bottom:16px}
 .booking-expert-info .mini-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:700;color:#fff;flex-shrink:0}
+.auth-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px}
+.auth-tab{flex:1;text-align:center;padding:10px;font-size:.9rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:.15s}
+.auth-tab.active{color:var(--rose);border-bottom-color:var(--rose)}
+.pass-wrap{position:relative}
+.pass-wrap input{padding-right:40px}
+.pass-eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:.9rem}
+.strength-bar{height:3px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden}
+.strength-fill{height:100%;border-radius:2px;width:0;transition:.3s}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.otp-row{display:flex;gap:8px;justify-content:center;margin:16px 0}
+.otp-row input{width:42px;height:50px;border:2px solid var(--border);border-radius:10px;font-size:1.3rem;font-weight:700;text-align:center;outline:none;font-family:'Inter',sans-serif}
+.otp-row input:focus{border-color:var(--rose)}
+.step-screen{text-align:center;padding:8px 0}
+.step-screen .big-icon{font-size:3rem;margin-bottom:12px}
+.step-screen h3{font-size:1.2rem;font-weight:700;margin-bottom:8px}
+.step-screen p{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.link-btn{background:none;border:none;color:var(--brand);font-size:.83rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.link-btn:hover{text-decoration:underline}
+.success-badge{display:inline-flex;align-items:center;gap:6px;background:#d1fae5;color:#065f46;border-radius:20px;padding:4px 14px;font-size:.82rem;font-weight:600;margin-bottom:12px}
+
+/* CHECKOUT */
+.checkout-body{max-width:760px;margin:40px auto;padding:0 20px 60px}
+.checkout-body h1{font-size:1.6rem;font-weight:700;margin-bottom:28px}
+.checkout-grid{display:grid;grid-template-columns:1fr 300px;gap:24px}
+
+/* REVIEWS */
+.review-card{background:var(--gray);border-radius:10px;padding:14px;margin-bottom:12px}
+.review-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.review-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0}
+.review-name{font-weight:600;font-size:.88rem}
+.review-date{font-size:.74rem;color:var(--muted)}
+.review-stars{color:#f59e0b;font-size:.85rem}
+.review-text{font-size:.83rem;color:#444;line-height:1.5}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#2D1238;color:#fff;padding:10px 22px;border-radius:8px;font-size:.88rem;z-index:500;transition:transform .3s;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
 
 /* FOOTER */
 footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
@@ -332,33 +368,6 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
 .footer-col a:hover{color:#fff}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:.78rem;color:rgba(255,255,255,.45)}
 
-/* REVIEWS */
-.review-card{background:var(--gray);border-radius:10px;padding:14px;margin-bottom:12px}
-.review-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.review-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0}
-.review-name{font-weight:600;font-size:.88rem}
-.review-date{font-size:.74rem;color:var(--muted)}
-.review-stars{color:#f59e0b;font-size:.85rem}
-.review-text{font-size:.83rem;color:#444;line-height:1.5}
-
-/* CHECKOUT */
-.checkout-body{max-width:760px;margin:40px auto;padding:0 20px 60px}
-.checkout-body h1{font-size:1.6rem;font-weight:700;margin-bottom:28px}
-.checkout-grid{display:grid;grid-template-columns:1fr 300px;gap:24px}
-
-/* AUTH */
-.auth-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px}
-.auth-tab{flex:1;padding:10px;text-align:center;border:none;background:none;cursor:pointer;font-size:.9rem;color:var(--muted);transition:.2s;border-bottom:3px solid transparent;margin-bottom:-2px;font-family:'Inter',sans-serif}
-.auth-tab.active{color:var(--rose);border-bottom-color:var(--rose);font-weight:600}
-.auth-panel{}
-.nav-user-pill{display:none;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;color:#fff;font-size:.82rem;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
-.nav-user-pill:hover{background:rgba(255,255,255,.25)}
-.auth-code-input{text-align:center;font-size:1.5rem;letter-spacing:.4em;font-weight:700;padding:12px!important}
-.myq-page-hero{background:linear-gradient(135deg,var(--dark),#3D1550);padding:40px 20px;text-align:center;color:#fff}
-.myq-page-hero h1{font-size:1.8rem;margin-bottom:12px}
-.auth-gate-msg{text-align:center;padding:48px 20px;color:var(--muted);font-size:.95rem}
-
-/* RESPONSIVE */
 @media(max-width:768px){
   .feed-layout{grid-template-columns:1fr}
   .sidebar-col{display:none}
@@ -367,13 +376,13 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   .expert-grid{grid-template-columns:1fr}
   .profile-body{grid-template-columns:1fr}
   .profile-hero-inner{flex-direction:column;align-items:center;text-align:center}
-  .profile-sidebar{order:-1}
   .booking-box{position:static}
   .footer-grid{grid-template-columns:1fr 1fr}
   .search-card{flex-direction:column}
   .form-grid{grid-template-columns:1fr}
   .hero-strip h1{font-size:1.6rem}
   .checkout-grid{grid-template-columns:1fr}
+  .form-row-2{grid-template-columns:1fr}
 }
 @media(max-width:480px){
   .hero-strip h1{font-size:1.35rem}
@@ -396,77 +405,70 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       <span class="nav-logo-text">StawpBy</span>
       <svg class="curve" viewBox="0 0 70 8" fill="none"><path d="M2 6 Q35 1 68 6" stroke="#6B30BF" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
     </div>
-    <div class="nav-right">
-      <div class="market-toggle">
-        <button class="market-btn active" id="btn-us" onclick="setMarket('US')">🇺🇸 US</button>
-        <button class="market-btn" id="btn-ca" onclick="setMarket('CA')">🇨🇦 CA</button>
-      </div>
-      <button class="nav-user-pill" id="nav-user-pill" onclick="toggleMobileMenu()">👤 <span id="nav-user-name"></span></button>
-      <button class="signin-btn" id="nav-signin-btn" onclick="openAuthModal('signin')">Sign In</button>
+    <div class="nav-right-area">
+      <div id="nav-user-area"></div>
+      <button class="hamburger" onclick="openSideMenu()" aria-label="Menu">☰</button>
     </div>
-    <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
-<div id="mobile-menu">
-  <div class="mobile-menu-header">
-    <div class="nav-logo" onclick="toggleMobileMenu();showPage('home')">
+<!-- SIDE MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeSideMenu()"></div>
+
+<!-- SIDE MENU -->
+<div class="side-menu" id="sideMenu">
+  <div class="side-menu-header">
+    <div class="nav-logo" style="cursor:default">
       <svg class="heart" viewBox="0 0 24 24" fill="#6B30BF"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
       <span class="nav-logo-text">StawpBy</span>
     </div>
-    <button class="mobile-close" onclick="toggleMobileMenu()">✕</button>
+    <button class="side-menu-close" onclick="closeSideMenu()">✕</button>
   </div>
-  <div class="mobile-links">
-    <a href="#" onclick="toggleMobileMenu();showPage('home');return false">Help Center</a>
-    <a href="#" onclick="toggleMobileMenu();showPage('community');return false">Community Q&amp;A</a>
-    <a href="#" onclick="toggleMobileMenu();showPage('connect');return false">Connect with a Mom</a>
-    <a href="#" onclick="toggleMobileMenu();showPage('connect');return false">Book an Expert Mom</a>
-    <a href="#" onclick="toggleMobileMenu();showPage('how');return false">How It Works</a>
-    <a href="#" onclick="toggleMobileMenu();showPage('signup');return false">Become an Expert Mom</a>
-    <a href="#" onclick="toggleMobileMenu();return false">About Us</a>
-    <a href="#" id="menu-myq-link" style="display:none" onclick="toggleMobileMenu();showPage('myquestions');return false">📋 My Questions</a>
-    <a href="#" id="menu-signin-link" onclick="toggleMobileMenu();openAuthModal('signin');return false">Sign In / Create Account</a>
-    <a href="#" id="menu-signout-link" style="display:none;color:#f87171" onclick="signOut();return false">Sign Out</a>
+  <nav>
+    <a href="#" onclick="closeSideMenu();showPage('home');return false">🏠 &nbsp;Help Center</a>
+    <a href="#" onclick="closeSideMenu();showPage('community');return false">💬 &nbsp;Community Q&amp;A</a>
+    <a href="#" onclick="closeSideMenu();showPage('connect');return false">🤝 &nbsp;Connect with a Mom</a>
+    <a href="#" onclick="closeSideMenu();showPage('connect');return false">📅 &nbsp;Book an Expert Mom</a>
+    <a href="#" onclick="closeSideMenu();showPage('how');return false">❓ &nbsp;How It Works</a>
+    <a href="#" onclick="closeSideMenu();showPage('signup');return false">⭐ &nbsp;Become an Expert Mom</a>
+    <div class="smenu-divider"></div>
+    <button class="smenu-btn" id="smenu-my-posts" onclick="closeSideMenu();requireAuth('profile')" style="display:none">📋 &nbsp;My Questions</button>
+    <button class="smenu-btn" id="smenu-signin" onclick="closeSideMenu();openModal('modal-auth')">🔑 &nbsp;Sign In / Log In</button>
+    <button class="smenu-btn" id="smenu-signout" onclick="closeSideMenu();signOut()" style="display:none">🚪 &nbsp;Sign Out</button>
+  </nav>
+  <div class="side-menu-footer">
+    <button class="smenu-cta" id="smenu-join-btn" onclick="closeSideMenu();openAuthTab('signup')">Create Account — It's Free</button>
   </div>
 </div>
 
+
 <!-- ===== PAGE: HOME ===== -->
 <div id="page-home" class="page active">
-
-  <!-- Hero -->
   <div class="hero-strip">
     <div class="hero-badge">🌎 Now in the US &amp; Canada</div>
-    <h1>Get answers from experienced moms<br><span>who've been through it</span></h1>
-    <p class="hero-sub">Real questions from new moms and dads — answered free by verified Expert Moms, anytime, post anonymously if you want.</p>
+    <h1>Get answers from <span>experienced moms</span></h1>
+    <p class="hero-sub">Real questions from new parents — answered by experienced moms in the community. Post anonymously if you want.</p>
     <div class="hero-btns">
-      <button class="btn-white" onclick="openAskModal()">+ Ask a Question</button>
+      <button class="btn-white" onclick="requireAuth('ask')">+ Ask a Question</button>
       <button class="btn-outline" onclick="showPage('community')">Browse all questions →</button>
-    </div>
-    <div class="trust-bar">
-      <span>✅ Background verified</span>
-      <span>💬 Free Q&amp;A</span>
-      <span>🔒 Post anonymously</span>
-      <span>📹 Book video calls</span>
     </div>
   </div>
 
-  <!-- Feed + Sidebar -->
   <div class="feed-layout">
     <div class="feed-col">
       <div class="sort-bar">
-        <button class="sort-btn active" onclick="setSortActive(this,'hot')">🔥 Hot</button>
-        <button class="sort-btn" onclick="setSortActive(this,'new')">🆕 New</button>
-        <button class="sort-btn" onclick="setSortActive(this,'top')">⭐ Top</button>
-        <button class="ask-btn-sm" onclick="openAskModal()">+ Ask</button>
+        <button class="sort-btn active" onclick="setQASort('hot',this)">🔥 Hot</button>
+        <button class="sort-btn" onclick="setQASort('new',this)">🆕 New</button>
+        <button class="sort-btn" onclick="setQASort('top',this)">⭐ Top</button>
+        <button class="ask-btn-sm" onclick="requireAuth('ask')">+ Ask</button>
       </div>
       <div id="qa-feed"></div>
     </div>
     <div class="sidebar-col">
       <div class="sidebar-card purple">
         <h3>Have a question?</h3>
-        <p>Get answers from verified Expert Moms — free, fast, and private.</p>
-        <button class="sidebar-ask-btn" onclick="openAskModal()">+ Ask a Question</button>
+        <p>Get answers from experienced moms — free, real, and private.</p>
+        <button class="sidebar-ask-btn" onclick="requireAuth('ask')">+ Ask a Question</button>
       </div>
       <div class="sidebar-card">
         <div class="stat-row"><span>Questions answered</span><span class="stat-val">2,400+</span></div>
@@ -475,21 +477,19 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
         <div class="stat-row"><span>Cost to ask</span><span class="stat-val">Free</span></div>
       </div>
       <div class="sidebar-card">
-        <h3 style="font-size:.95rem;font-weight:700;margin-bottom:8px;">Find an Expert Mom</h3>
-        <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">Book in-home or video support from a culturally matched Expert Mom.</p>
+        <h3 style="font-size:.95rem;font-weight:700;margin-bottom:8px">Find an Expert Mom</h3>
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">Book in-home or video support from a culturally matched Expert Mom.</p>
         <button class="sidebar-find-btn" onclick="showPage('connect')">Browse Expert Moms →</button>
       </div>
     </div>
   </div>
 
-  <!-- Connect Banner -->
   <div class="connect-banner">
     <h2>Need more than answers?</h2>
     <p>Book an Expert Mom for in-home postpartum care or a private video session — matched to your culture.</p>
     <button class="btn-brand" onclick="showPage('connect')">Connect with an Expert Mom</button>
   </div>
 
-  <!-- Testimonials -->
   <div class="testimonials">
     <div class="section-title">Real families. Real support.</div>
     <div class="section-sub">Postpartum care rooted in your culture</div>
@@ -497,43 +497,24 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       <div class="tcard">
         <div class="tcard-stars">★★★★★</div>
         <p class="tcard-text">"After delivery, I was craving my mother's pepper soup but she was still in Lagos. Chidinma came to my home and made it fresh. She also showed me how to bind my belly the Igbo way. I cried — the good kind."</p>
-        <div class="tcard-author">
-          <div class="tcard-avatar" style="background:#C87830">AN</div>
-          <div>
-            <div class="tcard-name">Adaeze N.</div>
-            <div class="tcard-loc">Houston, TX &nbsp;·&nbsp; Nigerian Igbo</div>
-          </div>
-        </div>
+        <div class="tcard-author"><div class="tcard-avatar" style="background:#C87830">AN</div><div><div class="tcard-name">Adaeze N.</div><div class="tcard-loc">Houston, TX &nbsp;·&nbsp; Nigerian Igbo</div></div></div>
       </div>
       <div class="tcard">
         <div class="tcard-stars">★★★★★</div>
         <p class="tcard-text">"Rosa understood cuarentena completely — she knew exactly what I could and couldn't eat, helped me with the herbal baths, and my mother-in-law actually approved. I didn't have to explain anything. It felt like family."</p>
-        <div class="tcard-author">
-          <div class="tcard-avatar" style="background:#E8A878">MG</div>
-          <div>
-            <div class="tcard-name">María G.</div>
-            <div class="tcard-loc">Houston, TX &nbsp;·&nbsp; Mexican</div>
-          </div>
-        </div>
+        <div class="tcard-author"><div class="tcard-avatar" style="background:#E8A878">MG</div><div><div class="tcard-name">María G.</div><div class="tcard-loc">Houston, TX &nbsp;·&nbsp; Mexican</div></div></div>
       </div>
       <div class="tcard">
         <div class="tcard-stars">★★★★★</div>
-        <p class="tcard-text">"Funmilayo did Yoruba belly binding for me at two weeks postpartum. She brought the right cloth and did it properly, not like the YouTube tutorials. My recovery has been so much faster. This service is a lifesaver."</p>
-        <div class="tcard-author">
-          <div class="tcard-avatar" style="background:#9898C8">TA</div>
-          <div>
-            <div class="tcard-name">Temi A.</div>
-            <div class="tcard-loc">New York, NY &nbsp;·&nbsp; Nigerian Yoruba</div>
-          </div>
-        </div>
+        <p class="tcard-text">"Funmilayo did Yoruba belly binding for me at two weeks postpartum. She brought the right cloth and did it properly, not like the YouTube tutorials. My recovery has been so much faster."</p>
+        <div class="tcard-author"><div class="tcard-avatar" style="background:#9898C8">TA</div><div><div class="tcard-name">Temi A.</div><div class="tcard-loc">New York, NY &nbsp;·&nbsp; Nigerian Yoruba</div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- Expert CTA -->
   <div class="expert-cta">
     <h2>Been through postpartum?<br>Share what you know.</h2>
-    <p>Turn your experience and cultural knowledge into income. Expert Moms on StawpBy earn $200–$330/day. 100% of service fees go directly to you — StawpBy earns only from an 18% platform fee.</p>
+    <p>Turn your experience and cultural knowledge into income. Expert Moms on StawpBy earn $200–$330/day. 100% of service fees go directly to you.</p>
     <div class="earn-pills">
       <div class="earn-pill">Earn <strong>$200–$330/day</strong></div>
       <div class="earn-pill"><strong>100%</strong> of service fees</div>
@@ -542,8 +523,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
     </div>
     <button class="btn-white" onclick="showPage('signup')">Become an Expert Mom</button>
   </div>
-
-</div><!-- /page-home -->
+</div>
 
 <!-- ===== PAGE: CONNECT ===== -->
 <div id="page-connect" class="page">
@@ -553,32 +533,12 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   </div>
   <div class="search-bar">
     <div class="search-card">
-      <div class="search-field">
-        <label>Location</label>
-        <input type="text" id="loc-input" placeholder="City or zip code"/>
+      <div class="search-field"><label>Location</label><input type="text" id="loc-input" placeholder="City or zip code"/></div>
+      <div class="search-field"><label>Cultural Background</label>
+        <select id="culture-select"><option value="">Any Culture</option><option>Nigerian Igbo</option><option>Nigerian Yoruba</option><option>Mexican</option><option>Chinese</option><option>Ghanaian</option><option>Indian</option><option>Filipino</option><option>Caribbean</option></select>
       </div>
-      <div class="search-field">
-        <label>Cultural Background</label>
-        <select id="culture-select">
-          <option value="">Any Culture</option>
-          <option>Nigerian Igbo</option>
-          <option>Nigerian Yoruba</option>
-          <option>Mexican</option>
-          <option>Chinese</option>
-          <option>Ghanaian</option>
-          <option>Indian</option>
-          <option>Filipino</option>
-          <option>Caribbean</option>
-        </select>
-      </div>
-      <div class="search-field">
-        <label>Support Type</label>
-        <select id="support-select">
-          <option value="">Any Type</option>
-          <option>In-Home</option>
-          <option>Virtual</option>
-          <option>Free Q&amp;A</option>
-        </select>
+      <div class="search-field"><label>Support Type</label>
+        <select id="support-select"><option value="">Any Type</option><option>In-Home</option><option>Virtual</option><option>Free Q&amp;A</option></select>
       </div>
       <button class="search-go" onclick="filterExperts()">Search</button>
     </div>
@@ -594,32 +554,20 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   </div>
   <div class="tier-section">
     <div class="tier-cards">
-      <div class="tier-card">
-        <div class="tier-icon">💬</div>
-        <div class="tier-label">Tier 1 — Free <span>Community Q&amp;A</span></div>
-        <div class="tier-desc">Ask any postpartum question and get answers from our community. Always free, post anonymously.</div>
-      </div>
-      <div class="tier-card">
-        <div class="tier-icon">📹</div>
-        <div class="tier-label">Tier 2 — Video Verified <span>$40–75/session</span></div>
-        <div class="tier-desc">Photo ID match + Checkr background check. Private video sessions with a verified Expert Mom.</div>
-      </div>
-      <div class="tier-card">
-        <div class="tier-icon">🛡️</div>
-        <div class="tier-label">Tier 3 — Home Certified <span>from $30/hr</span></div>
-        <div class="tier-desc">Full KYC, annual re-verification, visit tracking, and 911 emergency access. Safe in-home care.</div>
-      </div>
+      <div class="tier-card"><div class="tier-icon">💬</div><div class="tier-label">Tier 1 — Free <span>Community Q&amp;A</span></div><div class="tier-desc">Ask any postpartum question and get answers from our community. Always free, post anonymously.</div></div>
+      <div class="tier-card"><div class="tier-icon">📹</div><div class="tier-label">Tier 2 — Video Verified <span>$40–75/session</span></div><div class="tier-desc">Photo ID match + Checkr background check. Private video sessions with a verified Expert Mom.</div></div>
+      <div class="tier-card"><div class="tier-icon">🛡️</div><div class="tier-label">Tier 3 — Home Certified <span>from $30/hr</span></div><div class="tier-desc">Full KYC, annual re-verification, visit tracking, and 911 emergency access. Safe in-home care.</div></div>
     </div>
   </div>
   <div class="expert-grid" id="expert-grid"></div>
-</div><!-- /page-connect -->
+</div>
 
 <!-- ===== PAGE: COMMUNITY ===== -->
 <div id="page-community" class="page">
   <div class="community-hero">
     <h1>Community Q&amp;A</h1>
-    <p style="color:rgba(255,255,255,.75);margin-bottom:16px;">Join thousands of parents asking and answering real postpartum questions</p>
-    <button class="ask-big-btn" onclick="openAskModal()">+ Ask a Question</button>
+    <p style="color:rgba(255,255,255,.75);margin-bottom:16px">Join thousands of parents asking and answering real postpartum questions</p>
+    <button class="ask-big-btn" onclick="requireAuth('ask')">+ Ask a Question</button>
   </div>
   <div class="topic-filters" id="topic-filters">
     <div class="chip active" onclick="filterTopic(this,'all')">All Topics</div>
@@ -631,7 +579,17 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
     <div class="chip" onclick="filterTopic(this,'Nutrition')">Nutrition</div>
   </div>
   <div class="qa-full-list" id="qa-full-list"></div>
-</div><!-- /page-community -->
+</div>
+
+<!-- ===== PAGE: MY QUESTIONS ===== -->
+<div id="page-myquestions" class="page">
+  <div class="community-hero">
+    <h1>My Questions</h1>
+    <p style="color:rgba(255,255,255,.75);margin-bottom:16px">Questions you've posted and their answers</p>
+    <button class="ask-big-btn" onclick="requireAuth('ask')">+ Ask a Question</button>
+  </div>
+  <div class="qa-full-list" id="qa-my-list"></div>
+</div>
 
 <!-- ===== PAGE: PROFILE ===== -->
 <div id="page-profile" class="page">
@@ -656,49 +614,14 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   </div>
   <div class="profile-body">
     <div class="profile-main">
-      <!-- Safety -->
-      <div class="safety-panel orange">
-        <p>📸 <strong>Photo ID match required for in-home visits.</strong> Before your Expert Mom enters your home, verify her face matches her StawpBy ID photo.</p>
-        <button class="report-btn" onclick="alert('Thank you. Our safety team will follow up within 2 hours.')">⚠️ Report Photo Mismatch</button>
-      </div>
-      <div class="safety-panel green">
-        <p>📍 <strong>Visit tracking is active for all in-home bookings.</strong> Your visit is logged in real time. A trusted contact can be notified.</p>
-      </div>
-      <div class="safety-panel red">
-        <p>🆘 <strong>Emergency:</strong> Call 911 immediately. &nbsp;|&nbsp; StawpBy support: <strong>1-800-STAWPBY</strong></p>
-      </div>
-
-      <!-- About -->
-      <div class="section-card">
-        <h3>About Me</h3>
-        <p id="profile-about" style="font-size:.88rem;color:#444;line-height:1.7">I'm a certified postpartum doula with 5 years of experience supporting new families in the Igbo tradition. I specialize in belly binding, pepper soup preparation, newborn bathing, and emotional support during the vulnerable first weeks. I grew up watching my aunties support new mothers in Enugu State and I bring that warmth and knowledge to families here in Houston.</p>
-      </div>
-
-      <!-- Video intro -->
-      <div class="section-card">
-        <h3>Video Introduction</h3>
-        <div style="background:var(--gray);border-radius:10px;height:180px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;cursor:pointer;border:2px dashed var(--border)" onclick="openChatModal()">
-          ▶️ &nbsp; Watch Chidinma's Introduction (2:14)
-        </div>
-      </div>
-
-      <!-- Services -->
-      <div class="section-card">
-        <h3>Services Offered</h3>
-        <div class="services-grid" id="profile-services"></div>
-      </div>
-
-      <!-- Availability -->
-      <div class="section-card">
-        <h3>Availability — Next 7 Days</h3>
-        <div class="calendar-grid" id="profile-calendar"></div>
-      </div>
-
-      <!-- Reviews -->
-      <div class="section-card">
-        <h3>Reviews</h3>
-        <div id="profile-reviews"></div>
-      </div>
+      <div class="safety-panel orange"><p>📸 <strong>Photo ID match required for in-home visits.</strong> Before your Expert Mom enters your home, verify her face matches her StawpBy ID photo.</p><button class="report-btn" onclick="alert('Thank you. Our safety team will follow up within 2 hours.')">⚠️ Report Photo Mismatch</button></div>
+      <div class="safety-panel green"><p>📍 <strong>Visit tracking is active for all in-home bookings.</strong> Your visit is logged in real time. A trusted contact can be notified.</p></div>
+      <div class="safety-panel red"><p>🆘 <strong>Emergency:</strong> Call 911 immediately. &nbsp;|&nbsp; StawpBy support: <strong>1-800-STAWPBY</strong></p></div>
+      <div class="section-card"><h3>About Me</h3><p id="profile-about" style="font-size:.88rem;color:#444;line-height:1.7">I'm a certified postpartum doula with 5 years of experience supporting new families in the Igbo tradition. I specialize in belly binding, pepper soup preparation, newborn bathing, and emotional support during the vulnerable first weeks.</p></div>
+      <div class="section-card"><h3>Video Introduction</h3><div style="background:var(--gray);border-radius:10px;height:180px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;cursor:pointer;border:2px dashed var(--border)" onclick="openChatModal()">▶️ &nbsp; Watch Introduction (2:14)</div></div>
+      <div class="section-card"><h3>Services Offered</h3><div class="services-grid" id="profile-services"></div></div>
+      <div class="section-card"><h3>Availability — Next 7 Days</h3><div class="calendar-grid" id="profile-calendar"></div></div>
+      <div class="section-card"><h3>Reviews</h3><div id="profile-reviews"></div></div>
     </div>
     <div class="profile-sidebar">
       <div class="booking-box">
@@ -708,19 +631,8 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
           <button class="booking-tab" onclick="setBookingTab(this,'daily')">Daily</button>
           <button class="booking-tab" onclick="setBookingTab(this,'monthly')">Monthly</button>
         </div>
-        <div class="booking-field">
-          <label>Date</label>
-          <input type="date" id="booking-date"/>
-        </div>
-        <div class="booking-field">
-          <label>Duration</label>
-          <select id="booking-duration" onchange="calcPrice()">
-            <option value="1">1 hour</option>
-            <option value="2">2 hours</option>
-            <option value="3">3 hours</option>
-            <option value="4">4 hours</option>
-          </select>
-        </div>
+        <div class="booking-field"><label>Date</label><input type="date" id="booking-date"/></div>
+        <div class="booking-field"><label>Duration</label><select id="booking-duration" onchange="calcPrice()"><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option></select></div>
         <div class="price-summary" id="price-summary">
           <div class="price-row"><span>Service fee</span><span id="price-service">$55.00</span></div>
           <div class="price-row"><span>Platform fee (18%)</span><span id="price-platform">$9.90</span></div>
@@ -731,134 +643,43 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       </div>
     </div>
   </div>
-</div><!-- /page-profile -->
+</div>
 
 <!-- ===== PAGE: HOW IT WORKS ===== -->
 <div id="page-how" class="page">
-  <div class="how-hero">
-    <h1>How StawpBy Works</h1>
-    <p style="color:rgba(255,255,255,.75);margin-top:8px;font-size:.95rem">Safe, verified, culturally matched postpartum care</p>
-  </div>
+  <div class="how-hero"><h1>How StawpBy Works</h1><p style="color:rgba(255,255,255,.75);margin-top:8px;font-size:.95rem">Safe, verified, culturally matched postpartum care</p></div>
   <div class="how-body">
     <div class="tab-toggle">
       <button class="tab-btn active" onclick="setHowTab(this,'families')">👶 For Families</button>
       <button class="tab-btn" onclick="setHowTab(this,'experts')">💛 For Expert Moms</button>
     </div>
-
-    <!-- FAMILIES TAB -->
     <div class="tab-content active" id="how-families">
       <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-text">
-            <h4>Ask a Question (Free)</h4>
-            <p>Post your postpartum question to our community. Get answers within 2 hours from verified Expert Moms. Post anonymously if you prefer.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-text">
-            <h4>Book a Session</h4>
-            <p>Browse culturally matched Expert Moms. Choose Tier 2 for a video call ($40–75) or Tier 3 for in-home care (from $30/hr). Secure payment via Stripe.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-text">
-            <h4>Receive Care, Rate &amp; Share</h4>
-            <p>Get culturally rooted postpartum support. After your session, rate your Expert Mom and help other families find great care.</p>
-          </div>
-        </div>
+        <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Ask a Question (Free)</h4><p>Post your postpartum question to our community. Get answers from experienced moms. Post anonymously if you prefer.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Book a Session</h4><p>Browse culturally matched Expert Moms. Choose Tier 2 for a video call ($40–75) or Tier 3 for in-home care (from $30/hr).</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Receive Care, Rate &amp; Share</h4><p>Get culturally rooted postpartum support. Rate your Expert Mom and help other families find great care.</p></div></div>
       </div>
     </div>
-
-    <!-- EXPERTS TAB -->
     <div class="tab-content" id="how-experts">
-
       <div class="tier-cards">
-        <div class="tier-card">
-          <div class="tier-icon">💬</div>
-          <div class="tier-label">Tier 1 — Free</div>
-          <div class="tier-desc">Name + email only. Instant access to Community Q&amp;A. No video or in-home visits.</div>
-        </div>
-        <div class="tier-card">
-          <div class="tier-icon">📹</div>
-          <div class="tier-label">Tier 2 — Video Verified</div>
-          <div class="tier-desc">Photo ID match + Checkr background check. Unlocks video call bookings at $40–$75/session.</div>
-        </div>
-        <div class="tier-card">
-          <div class="tier-icon">🛡️</div>
-          <div class="tier-label">Tier 3 — Home Certified</div>
-          <div class="tier-desc">Third-party ID verification ($2–3/check, covered by StawpBy) + annual re-verification. Unlocks in-home visits.</div>
-        </div>
+        <div class="tier-card"><div class="tier-icon">💬</div><div class="tier-label">Tier 1 — Free</div><div class="tier-desc">Name + email only. Instant access to Community Q&amp;A. No video or in-home visits.</div></div>
+        <div class="tier-card"><div class="tier-icon">📹</div><div class="tier-label">Tier 2 — Video Verified</div><div class="tier-desc">Photo ID match + Checkr background check. Unlocks video call bookings at $40–$75/session.</div></div>
+        <div class="tier-card"><div class="tier-icon">🛡️</div><div class="tier-label">Tier 3 — Home Certified</div><div class="tier-desc">Third-party ID verification + annual re-verification. Unlocks in-home visits.</div></div>
       </div>
-
       <div class="verify-box">
         <h3>Verification Details by Tier</h3>
-        <div class="verify-tier">
-          <div class="verify-tier-label">Tier 1 — Instant Access (Free Q&amp;A)</div>
-          <ul>
-            <li>Name + email verification only</li>
-            <li>Instant access to Community Q&amp;A</li>
-            <li>No video or in-home visits</li>
-          </ul>
-        </div>
-        <div class="verify-tier">
-          <div class="verify-tier-label">Tier 2 — Video Verified</div>
-          <ul>
-            <li>Photo selfie match against government ID</li>
-            <li>Checkr background check (7-year criminal history)</li>
-            <li>Private video sessions unlocked</li>
-            <li>AI quality monitoring — consistently poor advice leads to automatic downgrade</li>
-          </ul>
-        </div>
-        <div class="verify-tier">
-          <div class="verify-tier-label">Tier 3 — Home Certified</div>
-          <ul>
-            <li>Third-party ID verification ($2–3/check, covered by StawpBy)</li>
-            <li>Annual re-verification required</li>
-            <li>Real-time visit tracking active for all in-home sessions</li>
-            <li>One-tap 911 emergency access via app</li>
-            <li>Photo ID match required at door before entry</li>
-          </ul>
-        </div>
+        <div class="verify-tier"><div class="verify-tier-label">Tier 1 — Instant Access (Free Q&amp;A)</div><ul><li>Name + email verification only</li><li>Instant access to Community Q&amp;A</li><li>No video or in-home visits</li></ul></div>
+        <div class="verify-tier"><div class="verify-tier-label">Tier 2 — Video Verified</div><ul><li>Photo selfie match against government ID</li><li>Checkr background check (7-year criminal history)</li><li>Private video sessions unlocked</li><li>AI quality monitoring — poor advice leads to automatic downgrade</li></ul></div>
+        <div class="verify-tier"><div class="verify-tier-label">Tier 3 — Home Certified</div><ul><li>Third-party ID verification (covered by StawpBy)</li><li>Annual re-verification required</li><li>Real-time visit tracking active for all in-home sessions</li><li>One-tap 911 emergency access via app</li></ul></div>
       </div>
-
       <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-text">
-            <h4>Create Your Profile</h4>
-            <p>Sign up free. Add your name, bio, cultural background, and the services you offer. Instant Tier 1 access to answer Q&amp;A.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-text">
-            <h4>Get Verified</h4>
-            <p>Complete Tier 2 (photo ID + Checkr background check) to unlock video sessions. Complete Tier 3 to offer in-home visits.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-text">
-            <h4>Set Your Rate</h4>
-            <p>You decide your hourly and video session price. Families see your rate upfront. No bidding, no race to the bottom.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-text">
-            <h4>Answer, Show Up &amp; Earn</h4>
-            <p>Answer free Q&A to build your reputation, then earn from bookings. 100% of service fees go to you — StawpBy takes an 18% platform fee on top.</p>
-          </div>
-        </div>
+        <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Create Your Profile</h4><p>Sign up free. Add your name, bio, cultural background, and the services you offer.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Get Verified</h4><p>Complete Tier 2 (photo ID + Checkr) to unlock video sessions. Complete Tier 3 for in-home visits.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Set Your Rate</h4><p>You decide your hourly and video session price. Families see your rate upfront.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text"><h4>Answer, Show Up &amp; Earn</h4><p>Answer free Q&A to build your reputation, then earn from bookings. 100% of service fees go to you.</p></div></div>
       </div>
-
       <table class="earnings-table">
-        <thead>
-          <tr><th>Service</th><th>Example Rate</th><th>You Earn</th><th>StawpBy Fee (18%)</th></tr>
-        </thead>
+        <thead><tr><th>Service</th><th>Example Rate</th><th>You Earn</th><th>StawpBy Fee (18%)</th></tr></thead>
         <tbody>
           <tr><td>Video call (1 hr)</td><td>$55</td><td>$55.00</td><td>$9.90 (on top)</td></tr>
           <tr><td>In-home (4 hrs)</td><td>$140</td><td>$140.00</td><td>$25.20 (on top)</td></tr>
@@ -866,30 +687,19 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
           <tr><td>Weekly package</td><td>$800</td><td>$800.00</td><td>$144.00 (on top)</td></tr>
         </tbody>
       </table>
-      <p style="font-size:.78rem;color:var(--muted);margin-top:12px;">* StawpBy's 18% platform fee is charged to the family on top of your service rate. You always receive 100% of what you quote.</p>
-
-      <div style="text-align:center;margin-top:32px">
-        <button class="btn-brand" onclick="showPage('signup')">Become an Expert Mom</button>
-      </div>
+      <div style="text-align:center;margin-top:32px"><button class="btn-brand" onclick="showPage('signup')">Become an Expert Mom</button></div>
     </div>
   </div>
-</div><!-- /page-how -->
+</div>
 
 <!-- ===== PAGE: SIGNUP ===== -->
 <div id="page-signup" class="page">
-  <div class="signup-hero">
-    <h1>Become an Expert Mom</h1>
-    <p style="color:rgba(255,255,255,.75);margin-top:8px">Share your postpartum wisdom and earn $200–$330/day</p>
-  </div>
+  <div class="signup-hero"><h1>Become an Expert Mom</h1><p style="color:rgba(255,255,255,.75);margin-top:8px">Share your postpartum wisdom and earn $200–$330/day</p></div>
   <div class="signup-body">
     <div class="steps-indicator">
-      <div class="step-dot active" id="sdot-1">1</div>
-      <div class="step-dot" id="sdot-2">2</div>
-      <div class="step-dot" id="sdot-3">3</div>
-      <div class="step-dot" id="sdot-4">4</div>
+      <div class="step-dot active" id="sdot-1">1</div><div class="step-dot" id="sdot-2">2</div>
+      <div class="step-dot" id="sdot-3">3</div><div class="step-dot" id="sdot-4">4</div>
     </div>
-
-    <!-- Step 1 -->
     <div id="signup-step-1" class="form-card">
       <h2>Step 1: Basic Information</h2>
       <div class="form-grid">
@@ -897,22 +707,14 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
         <div class="form-field"><label>Last Name</label><input type="text" placeholder="e.g. Okonkwo"/></div>
         <div class="form-field"><label>Email</label><input type="email" placeholder="you@email.com"/></div>
         <div class="form-field"><label>Phone</label><input type="tel" placeholder="+1 (555) 000-0000"/></div>
-        <div class="form-field"><label>Nationality / Heritage</label>
-          <select><option>Nigerian Igbo</option><option>Nigerian Yoruba</option><option>Mexican</option><option>Chinese</option><option>Ghanaian</option><option>Indian</option><option>Filipino</option><option>Caribbean</option><option>Other</option></select>
-        </div>
+        <div class="form-field"><label>Nationality / Heritage</label><select><option>Nigerian Igbo</option><option>Nigerian Yoruba</option><option>Mexican</option><option>Chinese</option><option>Ghanaian</option><option>Indian</option><option>Filipino</option><option>Caribbean</option><option>Other</option></select></div>
         <div class="form-field"><label>City</label><input type="text" placeholder="Houston, TX"/></div>
         <div class="form-field"><label>Languages Spoken</label><input type="text" placeholder="e.g. English, Igbo, Yoruba"/></div>
-        <div class="form-field"><label>Years of Experience</label>
-          <select><option>1–2 years</option><option>3–5 years</option><option>5–10 years</option><option>10+ years</option></select>
-        </div>
-        <div class="form-field full"><label>Bio (Tell families about yourself)</label>
-          <textarea placeholder="Describe your postpartum experience and the cultural care you offer..."></textarea>
-        </div>
+        <div class="form-field"><label>Years of Experience</label><select><option>1–2 years</option><option>3–5 years</option><option>5–10 years</option><option>10+ years</option></select></div>
+        <div class="form-field full"><label>Bio (Tell families about yourself)</label><textarea placeholder="Describe your postpartum experience and the cultural care you offer..."></textarea></div>
       </div>
       <button class="form-next" onclick="signupNext(2)">Continue to Services →</button>
     </div>
-
-    <!-- Step 2 -->
     <div id="signup-step-2" class="form-card" style="display:none">
       <h2>Step 2: Services You Offer</h2>
       <div class="services-check-grid">
@@ -931,38 +733,18 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
         <button class="form-next" onclick="signupNext(3)">Continue to Verification →</button>
       </div>
     </div>
-
-    <!-- Step 3 -->
     <div id="signup-step-3" class="form-card" style="display:none">
       <h2>Step 3: Choose Your Verification Level</h2>
-      <div class="verify-option" onclick="selectVerifyTier(1)">
-        <h4>💬 Tier 1 — Email Only (Instant)</h4>
-        <p>Verify your email and start answering Community Q&A questions immediately. Free. No in-home or video sessions.</p>
-      </div>
-      <div class="verify-option" onclick="selectVerifyTier(2)">
-        <h4>📹 Tier 2 — Video Verified</h4>
-        <p>Upload a selfie + government ID. Complete a Checkr background check. Unlock private video sessions at your chosen rate.</p>
-      </div>
-      <div class="verify-option" onclick="selectVerifyTier(3)">
-        <h4>🛡️ Tier 3 — Home Certified</h4>
-        <p>Full KYC identity verification (covered by StawpBy). Annual re-verification. Offer in-home visits with visit tracking and 911 access.</p>
-      </div>
-      <div style="margin-top:20px;display:flex;gap:12px">
-        <button class="form-next" style="background:var(--muted)" onclick="signupNext(2)">← Back</button>
-      </div>
+      <div class="verify-option" onclick="selectVerifyTier(1)"><h4>💬 Tier 1 — Email Only (Instant)</h4><p>Verify your email and start answering Community Q&A immediately. Free.</p></div>
+      <div class="verify-option" onclick="selectVerifyTier(2)"><h4>📹 Tier 2 — Video Verified</h4><p>Upload a selfie + government ID. Complete a Checkr background check. Unlock video sessions.</p></div>
+      <div class="verify-option" onclick="selectVerifyTier(3)"><h4>🛡️ Tier 3 — Home Certified</h4><p>Full KYC identity verification (covered by StawpBy). Offer in-home visits with visit tracking.</p></div>
+      <div style="margin-top:20px"><button class="form-next" style="background:var(--muted)" onclick="signupNext(2)">← Back</button></div>
     </div>
-
-    <!-- Step 4 -->
     <div id="signup-step-4" class="form-card" style="display:none">
-      <div class="done-card">
-        <div class="done-icon">🎉</div>
-        <h2>Welcome to StawpBy!</h2>
-        <p>Your application has been received. You'll receive a confirmation email within 24 hours with next steps for your verification level. In the meantime, you can already start answering Community Q&A questions.</p>
-        <button class="btn-brand" onclick="showPage('home')">Go to Help Center</button>
-      </div>
+      <div class="done-card"><div class="done-icon">🎉</div><h2>Welcome to StawpBy!</h2><p>Your application has been received. You'll receive a confirmation email within 24 hours with next steps for your verification level.</p><button class="btn-brand" onclick="showPage('home')">Go to Help Center</button></div>
     </div>
   </div>
-</div><!-- /page-signup -->
+</div>
 
 <!-- ===== PAGE: CHECKOUT ===== -->
 <div id="page-checkout" class="page">
@@ -994,833 +776,824 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       </div>
     </div>
   </div>
-</div><!-- /page-checkout -->
+</div>
 
-<!-- ===== PAGE: MY QUESTIONS ===== -->
-<div id="page-myquestions" class="page">
-  <div class="myq-page-hero">
-    <h1>My Questions</h1>
-    <p style="color:rgba(255,255,255,.75);margin-bottom:16px">Questions you've posted to the community</p>
-    <button class="ask-big-btn" onclick="openAskModal()">+ Ask a Question</button>
-  </div>
-  <div class="qa-full-list" id="my-questions-list"></div>
-</div><!-- /page-myquestions -->
 
-<!-- FOOTER -->
+<!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand-logo" onclick="showPage('home')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#6B30BF" style="margin-bottom:2px"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          <span class="logo-text">StawpBy</span>
-        </div>
-        <p class="footer-tagline">Postpartum support for new parents — moms, dads, and partners. Culturally matched, safely verified.</p>
-        <div class="footer-fee-note">💚 100% of service fees go directly to Expert Moms. StawpBy earns only from an 18% platform fee.</div>
-      </div>
-      <div class="footer-col">
-        <h4>For Parents</h4>
-        <a href="#" onclick="showPage('home');return false">Help Center Q&A</a>
-        <a href="#" onclick="showPage('connect');return false">Connect with a Mom</a>
-        <a href="#" onclick="showPage('community');return false">Community Q&A</a>
-        <a href="#" onclick="showPage('how');return false">How It Works</a>
-        <a href="#">Safety &amp; Trust</a>
-      </div>
-      <div class="footer-col">
-        <h4>For Expert Moms</h4>
-        <a href="#" onclick="showPage('signup');return false">Become an Expert Mom</a>
-        <a href="#">Earnings Calculator</a>
-        <a href="#" onclick="showPage('how');return false">Verification (T1/T2/T3)</a>
-        <a href="#">AI Monitoring Info</a>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <a href="#">About Us</a>
-        <a href="#">Our Mission</a>
-        <a href="mailto:ads@stawpby.com">📢 Advertise with Us</a>
-        <a href="#">Baby Brand Partnerships</a>
-        <a href="#">Press</a>
-        <a href="#">Contact</a>
-      </div>
+    <div class="footer-brand">
+      <div class="footer-logo">StawpBy</div>
+      <p>A community where parents and caregivers get answers from experienced moms. Real people, real answers.</p>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 StawpBy Inc. · US &amp; Canada</span>
-      <span>Advertising: <a href="mailto:ads@stawpby.com" style="color:rgba(255,255,255,.6)">ads@stawpby.com</a></span>
+    <div class="footer-col">
+      <h4>Community</h4>
+      <a href="#" onclick="showPage('community');return false">Community Q&amp;A</a>
+      <a href="#" onclick="showPage('connect');return false">Connect with a Mom</a>
+      <a href="#" onclick="openModal('auth-modal');return false">Ask a Question</a>
     </div>
+    <div class="footer-col">
+      <h4>Expert Moms</h4>
+      <a href="#" onclick="showPage('become-expert');return false">Become an Expert Mom</a>
+      <a href="#" onclick="showPage('how');return false">How It Works</a>
+      <a href="#" onclick="showPage('connect');return false">Browse Experts</a>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <a href="#" onclick="openModal('auth-modal');return false">Sign In</a>
+      <a href="#" onclick="openModal('auth-modal');return false">Create Account</a>
+      <a href="#" onclick="showPage('myquestions');return false">My Questions</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 StawpBy. All rights reserved.</span>
+    <span style="color:var(--muted)">Built with ❤️ for parents everywhere</span>
   </div>
 </footer>
 
 <!-- ===== MODALS ===== -->
 
-<!-- Ask a Question -->
-<div class="modal-overlay" id="modal-ask">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-ask')">✕</button>
-    <h2>Ask a Question</h2>
-    <div class="modal-field">
-      <label>Topic</label>
-      <select id="ask-topic-select">
-        <option>Newborn Care</option><option>Lactation Support</option><option>Mental Health</option>
-        <option>Nutrition</option><option>Recovery</option><option>Cultural Practices</option>
-        <option>Baby Sleep</option><option>Other</option>
-      </select>
+<!-- Auth Modal (Sign In / Sign Up) -->
+<div id="auth-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('auth-modal')">
+  <div class="modal-box" style="max-width:440px">
+    <button class="modal-close" onclick="closeModal('auth-modal')">✕</button>
+    <div class="auth-tabs">
+      <button id="tab-signin" class="auth-tab active" onclick="switchAuthTab('signin')">Sign In</button>
+      <button id="tab-signup" class="auth-tab" onclick="switchAuthTab('signup')">Create Account</button>
     </div>
-    <div class="modal-field">
-      <label>Your Question</label>
-      <textarea id="ask-question-text" placeholder="What would you like to know? Be as specific as you like..."></textarea>
+
+    <!-- Sign In Form -->
+    <div id="signin-form">
+      <h2 style="margin-bottom:20px">Welcome back</h2>
+      <div class="form-field" style="margin-bottom:14px">
+        <label>Email</label>
+        <input type="email" id="si-email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-field" style="margin-bottom:20px">
+        <label>Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="si-pass" placeholder="Your password"/>
+          <span class="pass-eye" onclick="togglePass('si-pass',this)">👁</span>
+        </div>
+      </div>
+      <div id="signin-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
+      <button class="btn-brand" style="width:100%" onclick="doLogin()">Sign In</button>
+      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">
+        No account? <a href="#" onclick="switchAuthTab('signup');return false" style="color:var(--rose)">Create one free →</a>
+      </p>
     </div>
-    <div class="anon-toggle">
-      <input type="checkbox" id="anon-check"/>
-      <label for="anon-check">Post anonymously (your name won't appear)</label>
+
+    <!-- Sign Up Form -->
+    <div id="signup-form" style="display:none">
+      <h2 style="margin-bottom:8px">Join StawpBy</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Ask questions, share experiences, help each other.</p>
+      <div class="form-row-2">
+        <div class="form-field">
+          <label>First Name</label>
+          <input type="text" id="su-fname" placeholder="Ana"/>
+        </div>
+        <div class="form-field">
+          <label>Last Name</label>
+          <input type="text" id="su-lname" placeholder="Okafor"/>
+        </div>
+      </div>
+      <div class="form-field" style="margin-bottom:14px">
+        <label>Username</label>
+        <input type="text" id="su-username" placeholder="@anamom" oninput="checkUsername(this)"/>
+        <span id="username-hint" style="font-size:12px;color:var(--muted)">Used publicly. Can differ from your real name.</span>
+      </div>
+      <div class="form-field" style="margin-bottom:14px">
+        <label>Email</label>
+        <input type="email" id="su-email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-field" style="margin-bottom:14px">
+        <label>Phone Number (for 2FA)</label>
+        <input type="tel" id="su-phone" placeholder="+1 234 567 8900"/>
+      </div>
+      <div class="form-field" style="margin-bottom:20px">
+        <label>Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="su-pass" placeholder="Min 8 characters" oninput="checkStrength(this)"/>
+          <span class="pass-eye" onclick="togglePass('su-pass',this)">👁</span>
+        </div>
+        <div class="strength-bar"><div id="strength-fill" style="height:100%;border-radius:4px;width:0%;transition:width .3s,background .3s"></div></div>
+        <span id="strength-label" style="font-size:12px;color:var(--muted)"></span>
+      </div>
+      <div id="signup-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
+      <button class="btn-brand" style="width:100%" onclick="doSignup()">Create Account →</button>
     </div>
-    <button class="modal-submit" onclick="submitQuestion()">Post Question</button>
   </div>
 </div>
 
-<!-- Q&A Answer Modal -->
-<div class="modal-overlay" id="modal-qa">
-  <div class="modal" style="max-width:620px">
-    <button class="modal-close" onclick="closeModal('modal-qa')">✕</button>
-    <h2 id="modal-qa-title">Question Title</h2>
-    <div id="modal-qa-body" style="font-size:.88rem;color:var(--muted);margin-bottom:16px;line-height:1.5"></div>
-    <div style="background:var(--gray);border-radius:10px;padding:14px;margin-bottom:16px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <span class="top-badge">Top Answer</span>
-        <span style="font-size:.82rem;font-weight:600" id="modal-qa-answerer"></span>
-      </div>
-      <p id="modal-qa-answer" style="font-size:.85rem;line-height:1.6;color:#444"></p>
+<!-- Email OTP Confirmation Modal -->
+<div id="otp-email-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('otp-email-modal')">
+  <div class="modal-box" style="max-width:400px;text-align:center">
+    <div style="font-size:48px;margin-bottom:12px">📧</div>
+    <h2>Check your email</h2>
+    <p style="color:var(--muted);margin:10px 0 24px">We sent a 6-digit code to <strong id="otp-email-display"></strong>. Enter it below to confirm your account.</p>
+    <div class="otp-row">
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,0)"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,1)"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,2)"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,3)"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,4)"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,5)"/>
     </div>
-    <div class="modal-field">
-      <label>Add Your Answer</label>
-      <textarea placeholder="Share what worked for you..."></textarea>
+    <div id="otp-email-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
+    <button class="btn-brand" style="width:100%;margin-top:8px" onclick="confirmEmailOTP()">Confirm Email →</button>
+    <p style="font-size:13px;color:var(--muted);margin-top:16px">Didn't get it? <a href="#" onclick="resendOTP();return false" style="color:var(--rose)">Resend code</a></p>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px">(Demo: any 6 digits work)</p>
+  </div>
+</div>
+
+<!-- Phone 2FA Modal -->
+<div id="otp-phone-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('otp-phone-modal')">
+  <div class="modal-box" style="max-width:400px;text-align:center">
+    <div style="font-size:48px;margin-bottom:12px">📱</div>
+    <h2>Two-Factor Verification</h2>
+    <p style="color:var(--muted);margin:10px 0 24px">We sent a 6-digit code to <strong id="otp-phone-display"></strong>. Enter it to secure your account.</p>
+    <div class="otp-row" id="phone-otp-boxes">
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,0,'phone')"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,1,'phone')"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,2,'phone')"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,3,'phone')"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,4,'phone')"/>
+      <input class="otp-box" type="text" maxlength="1" oninput="otpNext(this,5,'phone')"/>
     </div>
-    <button class="modal-submit" onclick="requireAuth(()=>{ closeModal('modal-qa'); setTimeout(()=>alert('Your answer has been posted!'),200); })">Post Answer</button>
+    <div id="otp-phone-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
+    <button class="btn-brand" style="width:100%;margin-top:8px" onclick="verify2FA()">Verify & Continue →</button>
+    <p style="font-size:12px;color:var(--muted);margin-top:16px">(Demo: any 6 digits work)</p>
+  </div>
+</div>
+
+<!-- Welcome Modal (post-signup) -->
+<div id="welcome-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('welcome-modal')">
+  <div class="modal-box" style="max-width:420px;text-align:center">
+    <div style="font-size:56px;margin-bottom:12px">🎉</div>
+    <h2>You're in!</h2>
+    <p id="welcome-name" style="font-size:18px;color:var(--rose);font-weight:600;margin:8px 0"></p>
+    <p style="color:var(--muted);margin:10px 0 28px">Welcome to the StawpBy community. You can now ask questions, reply to others, and connect with experienced moms.</p>
+    <button class="btn-brand" style="width:100%" onclick="closeModal('welcome-modal');showPage('community')">Browse Questions →</button>
+    <button style="width:100%;margin-top:10px;padding:12px;border:1px solid var(--border);background:none;border-radius:8px;cursor:pointer;color:var(--dark)" onclick="closeModal('welcome-modal');openAskModal()">Ask Your First Question</button>
+  </div>
+</div>
+
+<!-- Ask Question Modal -->
+<div id="ask-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('ask-modal')">
+  <div class="modal-box" style="max-width:520px">
+    <button class="modal-close" onclick="closeModal('ask-modal')">✕</button>
+    <h2 style="margin-bottom:6px">Ask the Community</h2>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Real answers from experienced moms. No AI responses.</p>
+    <div class="form-field" style="margin-bottom:14px">
+      <label>Topic</label>
+      <select id="ask-topic" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:#fff">
+        <option value="General">General</option>
+        <option value="Newborn">Newborn (0-3 months)</option>
+        <option value="Feeding">Feeding &amp; Nutrition</option>
+        <option value="Sleep">Sleep</option>
+        <option value="Health">Health &amp; Wellness</option>
+        <option value="Development">Development</option>
+        <option value="Postpartum">Postpartum</option>
+      </select>
+    </div>
+    <div class="form-field" style="margin-bottom:14px">
+      <label>Your Question</label>
+      <textarea id="ask-question" rows="4" placeholder="e.g. My 2-week-old has tiny red bumps on her face. Is this baby acne? What helped your baby?" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:14px;resize:vertical;font-family:inherit"></textarea>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <input type="checkbox" id="ask-anon" style="width:16px;height:16px"/>
+      <label for="ask-anon" style="font-size:14px;color:var(--muted);cursor:pointer">Post anonymously (your name won't be shown)</label>
+    </div>
+    <div id="ask-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
+    <button class="btn-brand" style="width:100%" onclick="submitQuestion()">Post Question</button>
+  </div>
+</div>
+
+<!-- Reply / Answer Modal (full post view) -->
+<div id="qa-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('qa-modal')">
+  <div class="modal-box" style="max-width:600px;max-height:80vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('qa-modal')">✕</button>
+    <div id="qa-modal-body"></div>
   </div>
 </div>
 
 <!-- Booking Confirm Modal -->
-<div class="modal-overlay" id="modal-booking">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-booking')">✕</button>
-    <h2>Confirm Your Booking</h2>
-    <div class="booking-expert-info">
-      <div class="mini-avatar" id="booking-mini-avatar" style="background:#E8C870">CO</div>
-      <div>
-        <div id="booking-expert-name" style="font-weight:700;font-size:.95rem">Chidinma O.</div>
-        <div id="booking-service-desc" style="font-size:.82rem;color:var(--muted)">Virtual Session · 1 hour</div>
-      </div>
-    </div>
-    <div class="price-summary">
-      <div class="price-row"><span>Service fee</span><span id="bm-service">$55.00</span></div>
-      <div class="price-row"><span>Platform fee (18%)</span><span id="bm-platform">$9.90</span></div>
-      <div class="price-row total"><span>Total</span><span id="bm-total">$64.90</span></div>
-    </div>
-    <div style="font-size:.75rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px;color:#15803d;margin-bottom:14px">
-      💚 100% of your service fee goes directly to your Expert Mom. StawpBy charges an 18% platform fee on top.
-    </div>
-    <div style="margin-bottom:14px">
-      <div class="consent-item"><input type="checkbox" id="c1"/><label for="c1">I will verify the Expert Mom's photo ID matches her StawpBy profile before allowing entry to my home.</label></div>
-      <div class="consent-item"><input type="checkbox" id="c2"/><label for="c2">I understand visit tracking is active and a trusted contact may be notified.</label></div>
-      <div class="consent-item"><input type="checkbox" id="c3"/><label for="c3">I understand that in case of emergency I should call 911 immediately.</label></div>
-    </div>
-    <button class="modal-submit" onclick="openSuccessModal()">Pay &amp; Confirm 🔒</button>
+<div id="booking-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('booking-modal')">
+  <div class="modal-box" style="max-width:460px">
+    <button class="modal-close" onclick="closeModal('booking-modal')">✕</button>
+    <h2 style="margin-bottom:6px">Confirm Booking</h2>
+    <div id="booking-modal-body" style="margin:16px 0"></div>
+    <button class="btn-brand" style="width:100%" onclick="closeModal('booking-modal');openSuccessModal()">Confirm &amp; Pay 🔒</button>
   </div>
 </div>
 
 <!-- Success Modal -->
-<div class="modal-overlay" id="modal-success">
-  <div class="modal" style="text-align:center">
-    <button class="modal-close" onclick="closeModal('modal-success')">✕</button>
-    <div style="font-size:3rem;margin-bottom:12px">🎉</div>
+<div id="success-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('success-modal')">
+  <div class="modal-box" style="max-width:420px;text-align:center">
+    <div style="font-size:56px;margin-bottom:12px">✅</div>
     <h2>Booking Confirmed!</h2>
-    <p style="color:var(--muted);font-size:.88rem;margin-bottom:12px;line-height:1.5">Your session has been confirmed. You'll receive an email confirmation shortly.</p>
-    <div style="background:var(--gray);border-radius:8px;padding:12px;margin-bottom:16px;font-size:.85rem">
-      <strong>Reference:</strong> SB-<span id="booking-ref"></span>
-    </div>
-    <button class="modal-submit" onclick="closeModal('modal-success');showPage('home')">Back to Home</button>
+    <p style="color:var(--muted);margin:12px 0 24px">Your session has been booked. You'll receive a confirmation email with the call link shortly.</p>
+    <button class="btn-brand" style="width:100%" onclick="closeModal('success-modal')">Done</button>
   </div>
 </div>
 
 <!-- Chat Modal -->
-<div class="modal-overlay" id="modal-chat">
-  <div class="modal" style="max-width:480px">
-    <button class="modal-close" onclick="closeModal('modal-chat')">✕</button>
-    <h2 id="chat-title">Chat with Chidinma O.</h2>
-    <div style="height:220px;background:var(--gray);border-radius:10px;padding:14px;margin-bottom:14px;overflow-y:auto;font-size:.85rem;display:flex;flex-direction:column;gap:10px" id="chat-messages">
-      <div style="align-self:flex-start;background:#fff;border-radius:10px;padding:8px 12px;max-width:80%;border:1px solid var(--border)">
-        Hi! I'm Chidinma. I'd love to support you during your postpartum journey. What questions do you have?
+<div id="chat-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('chat-modal')">
+  <div class="modal-box" style="max-width:480px;padding:0">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <strong id="chat-expert-name">Chat</strong>
+        <div style="font-size:12px;color:var(--muted)">Expert Mom</div>
       </div>
+      <button class="modal-close" style="position:static" onclick="closeModal('chat-modal')">✕</button>
     </div>
-    <div style="display:flex;gap:8px">
-      <input type="text" id="chat-input" placeholder="Type a message..." style="flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.88rem;font-family:inherit"/>
-      <button onclick="sendChat()" style="background:var(--rose);color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:.9rem">Send</button>
+    <div id="chat-messages" style="height:320px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px"></div>
+    <div style="padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px">
+      <input type="text" id="chat-input" placeholder="Type a message..." style="flex:1;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:14px" onkeydown="if(event.key==='Enter')sendChat()"/>
+      <button class="btn-brand" style="padding:10px 16px" onclick="sendChat()">Send</button>
     </div>
   </div>
 </div>
 
-<!-- ===== AUTH MODAL ===== -->
-<div class="modal-overlay" id="modal-auth">
-  <div class="modal" style="max-width:460px">
-    <button class="modal-close" onclick="closeModal('modal-auth')">✕</button>
+<!-- Toast -->
+<div id="toast" class="toast"></div>
 
-    <!-- Tabs -->
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="auth-tab-signin" onclick="switchAuthTab('signin')">Sign In</button>
-      <button class="auth-tab" id="auth-tab-signup" onclick="switchAuthTab('signup')">Create Account</button>
-    </div>
 
-    <!-- SIGN IN -->
-    <div id="auth-signin-panel" class="auth-panel">
-      <div class="modal-field"><label>Email</label><input type="email" id="si-email" placeholder="you@email.com"/></div>
-      <div class="modal-field"><label>Password</label><input type="password" id="si-password" placeholder="••••••••"/></div>
-      <div id="si-error" style="color:#dc2626;font-size:.82rem;margin-bottom:10px;display:none"></div>
-      <button class="modal-submit" onclick="doSignIn()">Sign In →</button>
-      <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:14px">
-        No account? <a href="#" onclick="switchAuthTab('signup');return false" style="color:var(--rose);font-weight:600">Create one free →</a>
-      </p>
-    </div>
 
-    <!-- SIGN UP Step 1: Basic info -->
-    <div id="auth-signup-1" class="auth-panel" style="display:none">
-      <p style="font-size:.78rem;color:var(--muted);margin-bottom:16px;font-weight:600;text-transform:uppercase;letter-spacing:.4px">Step 1 of 3 — Your info</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="modal-field" style="margin:0 0 14px"><label>First Name</label><input type="text" id="su-fname" placeholder="Ana"/></div>
-        <div class="modal-field" style="margin:0 0 14px"><label>Last Name</label><input type="text" id="su-lname" placeholder="Smith"/></div>
-      </div>
-      <div class="modal-field">
-        <label>Username</label>
-        <input type="text" id="su-username" placeholder="e.g. new_mom_ana"/>
-        <span style="font-size:.72rem;color:var(--muted)">How you'll appear on posts (can be changed later)</span>
-      </div>
-      <div class="modal-field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com"/></div>
-      <div class="modal-field"><label>Phone — for 2FA</label><input type="tel" id="su-phone" placeholder="+1 (555) 000-0000"/></div>
-      <div class="modal-field"><label>Password</label><input type="password" id="su-password" placeholder="Min 6 characters"/></div>
-      <div id="su1-error" style="color:#dc2626;font-size:.82rem;margin-bottom:10px;display:none"></div>
-      <button class="modal-submit" onclick="signupStep1()">Continue — Verify Email →</button>
-    </div>
-
-    <!-- SIGN UP Step 2: Email confirmation -->
-    <div id="auth-signup-2" class="auth-panel" style="display:none;text-align:center">
-      <div style="font-size:2.8rem;margin-bottom:12px">📧</div>
-      <h3 style="font-size:1rem;font-weight:700;margin-bottom:8px">Check your inbox</h3>
-      <p style="font-size:.85rem;color:var(--muted);margin-bottom:20px;line-height:1.5">We sent a 6-digit code to<br><strong id="su-email-display" style="color:var(--dark)"></strong></p>
-      <div class="modal-field" style="text-align:left">
-        <label>Enter code</label>
-        <input type="text" id="su-email-code" class="auth-code-input" placeholder="· · · · · ·" maxlength="6"/>
-      </div>
-      <div id="su2-error" style="color:#dc2626;font-size:.82rem;margin-bottom:10px;display:none"></div>
-      <button class="modal-submit" onclick="verifyEmailCode()">Verify Email →</button>
-      <p style="font-size:.75rem;color:var(--muted);margin-top:12px">
-        <a href="#" onclick="alert('New code sent!');return false" style="color:var(--rose)">Resend code</a>
-        &nbsp;·&nbsp; Demo: enter <strong>123456</strong>
-      </p>
-    </div>
-
-    <!-- SIGN UP Step 3: Phone 2FA -->
-    <div id="auth-signup-3" class="auth-panel" style="display:none;text-align:center">
-      <div style="font-size:2.8rem;margin-bottom:12px">📱</div>
-      <h3 style="font-size:1rem;font-weight:700;margin-bottom:8px">Verify your phone</h3>
-      <p style="font-size:.85rem;color:var(--muted);margin-bottom:20px;line-height:1.5">We texted a code to<br><strong id="su-phone-display" style="color:var(--dark)"></strong></p>
-      <div class="modal-field" style="text-align:left">
-        <label>Enter SMS code</label>
-        <input type="text" id="su-phone-code" class="auth-code-input" placeholder="· · · · · ·" maxlength="6"/>
-      </div>
-      <div id="su3-error" style="color:#dc2626;font-size:.82rem;margin-bottom:10px;display:none"></div>
-      <button class="modal-submit" onclick="verifyPhoneCode()">Complete Sign Up ✓</button>
-      <p style="font-size:.75rem;color:var(--muted);margin-top:12px">
-        <a href="#" onclick="alert('New SMS sent!');return false" style="color:var(--rose)">Resend SMS</a>
-        &nbsp;·&nbsp; Demo: enter <strong>654321</strong>
-      </p>
-    </div>
-
-  </div>
-</div>
+<!-- Firebase SDK (CDN) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
-// ===== DATA =====
-const expertMoms = [
-  {id:1,name:"Chidinma O.",initials:"CO",culture:"Nigerian (Igbo)",flag:"🇳🇬",rating:4.9,reviews:47,priceHr:35,priceVirtual:55,tier:3,available:true,nextSlot:"Today 3 pm",bgColor:"#E8C870",tags:["Belly binding","Pepper soup","Night care","Baby bathing"],city:"Houston, TX",exp:5,creds:"Certified Postpartum Doula"},
-  {id:2,name:"Rosa H.",initials:"RH",culture:"Mexican",flag:"🇲🇽",rating:4.8,reviews:31,priceHr:32,priceVirtual:45,tier:3,available:false,nextSlot:"Tomorrow 9 am",bgColor:"#E8A878",tags:["Cuarentena meals","Herbal baths","Lactation Support","Newborn care"],city:"Houston, TX",exp:4,creds:null},
-  {id:3,name:"Li W.",initials:"LW",culture:"Chinese",flag:"🇨🇳",rating:5.0,reviews:22,priceHr:38,priceVirtual:60,tier:2,available:true,nextSlot:"Today 5 pm",bgColor:"#D8C870",tags:["Chinese healing soup","Ginger therapy","Baby massage","Night care"],city:"Los Angeles, CA",exp:6,creds:"Traditional Chinese Medicine background"},
-  {id:4,name:"Funmilayo A.",initials:"FA",culture:"Nigerian (Yoruba)",flag:"🇳🇬",rating:4.7,reviews:58,priceHr:30,priceVirtual:45,tier:3,available:false,nextSlot:"Thu Jun 12",bgColor:"#9898C8",tags:["Yoruba ogi","Hot water baths","Emotional support","Baby bathing"],city:"Atlanta, GA",exp:7,creds:null},
-  {id:5,name:"Priya S.",initials:"PS",culture:"Indian",flag:"🇮🇳",rating:4.9,reviews:19,priceHr:33,priceVirtual:50,tier:2,available:true,nextSlot:"Today 2 pm",bgColor:"#C8B860",tags:["Ayurvedic meals","Oil massage","Lactation Support","Newborn care"],city:"Dallas, TX",exp:3,creds:"Ayurvedic nutrition cert."},
-  {id:6,name:"Abena M.",initials:"AM",culture:"Ghanaian",flag:"🇬🇭",rating:4.8,reviews:26,priceHr:31,priceVirtual:48,tier:2,available:false,nextSlot:"Tomorrow 11 am",bgColor:"#C8B040",tags:["Ghanaian soups","Herbal baths","Baby care","Night care"],city:"New York, NY",exp:4,creds:null}
+// ============================================================
+// FIREBASE INIT
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyCFBifK-1Bupwr0Y7em5P0YWPZ0aeLvhGM",
+  authDomain: "stawpby.firebaseapp.com",
+  projectId: "stawpby",
+  storageBucket: "stawpby.firebasestorage.app",
+  messagingSenderId: "148427723746",
+  appId: "1:148427723746:web:f909d7570d60e51f959fbb"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ============================================================
+// SEED DATA (written to Firestore once)
+// ============================================================
+const SEED_POSTS = [
+  { id:'post_001', author:'Ana Okafor', username:'@anaomom', anonymous:false, topic:'Newborn', question:'My 2-week-old has tiny red bumps all over her cheeks. Is this normal baby acne? What helped your newborn?', timestamp: Date.now()-1000*60*60*3, votes:14, replies:[{author:'Miri Adeyemi',username:'@miriadeyemi',text:"Totally normal! Hormonal from birth. Keep skin clean with warm water — clears up by 6-8 weeks. Don't use any creams.",timestamp:Date.now()-1000*60*60*2},{author:'Funke Balogun',username:'@funkebalogun',text:"Same thing happened to my son! Left it alone and it was gone in a month. Resist the urge to scrub it.",timestamp:Date.now()-1000*60*50}] },
+  { id:'post_002', author:'Anonymous', username:null, anonymous:true, topic:'Feeding', question:'My 3-week-old refuses to latch after a bottle was introduced. Has anyone dealt with nipple confusion? Any tips?', timestamp:Date.now()-1000*60*60*8, votes:22, replies:[{author:'Miri Adeyemi',username:'@miriadeyemi',text:"Yes! Try paced bottle feeding with the slowest flow nipple. It helped us a lot within a week.",timestamp:Date.now()-1000*60*60*7}] },
+  { id:'post_003', author:'Funke Balogun', username:'@funkebalogun', anonymous:false, topic:'Sleep', question:'What actually worked for getting your newborn to sleep longer stretches at night? I am running on 2-hour chunks.', timestamp:Date.now()-1000*60*60*24, votes:31, replies:[{author:'Ana Okafor',username:'@anaomom',text:"Swaddling changed everything for us. Also a white noise machine. Baby slept 4 hours straight the first night!",timestamp:Date.now()-1000*60*60*23},{author:'Rosa H.',username:'@rosah',text:"Dreamfeed at 10-11pm before YOU go to sleep. Extends the longest stretch to align with yours. Game changer.",timestamp:Date.now()-1000*60*60*22}] },
+  { id:'post_004', author:'Miri Adeyemi', username:'@miriadeyemi', anonymous:false, topic:'Postpartum', question:"How long did it take for your C-section scar to stop hurting? I'm 3 weeks postpartum and still can't stand fully upright.", timestamp:Date.now()-1000*60*60*36, votes:18, replies:[{author:'Funke Balogun',username:'@funkebalogun',text:"Mine took about 6 weeks. Be patient — the internal stitches take longer than the outside. Wear a soft binder.",timestamp:Date.now()-1000*60*60*34}] },
+  { id:'post_005', author:'Anonymous', username:null, anonymous:true, topic:'Health', question:'My 6-week-old has been crying for 3+ hours every evening. Pediatrician says colic. What helped you survive those weeks?', timestamp:Date.now()-1000*60*60*48, votes:45, replies:[{author:'Ana Okafor',username:'@anaomom',text:"The 5 S's by Harvey Karp — Swaddle, Side/Stomach hold, Shush, Swing, Suck. Gripe water helped too.",timestamp:Date.now()-1000*60*60*47},{author:'Miri Adeyemi',username:'@miriadeyemi',text:"If breastfeeding, try cutting out dairy for 2 weeks. My colicky baby was COMPLETELY different after that.",timestamp:Date.now()-1000*60*60*46},{author:'Funke Balogun',username:'@funkebalogun',text:"You will survive it. Peaks at 6 weeks, ends by 3-4 months. Take shifts with your partner, tag in and tag out.",timestamp:Date.now()-1000*60*60*45}] }
 ];
 
-const qaQuestions = [
-  {id:1,topic:"Newborn Care",title:"My baby has small white and red bumps all over her cheeks — is this baby acne? She's 3 weeks old.",upvotes:47,userVote:0,hasImage:false,
-   answer:{text:"Yes, almost certainly baby acne (neonatal acne)! About 20% of newborns get it — caused by maternal hormones still in your baby's system. It appears around 2–4 weeks and clears up on its own. Just clean with plain warm water, no creams, no squeezing. If bumps spread or look crusty, check with your pediatrician.",
-    author:"Ana M.",rating:"⭐4.9",bgColor:"#C870A8"},
-   comments:[{author:"Sarah M.",text:"My daughter had this too at 3 weeks. Gone by 6 weeks completely!"},
-             {author:"Mary K.",text:"Same! The doctor said don't use any lotions. Just water."}]},
-  {id:2,topic:"Lactation Support",title:"My baby is 12 days old and not latching well — what finally worked for you?",upvotes:31,userVote:0,hasImage:false,
-   answer:{text:"Latching issues at 12 days are so common — you are not alone! The football hold was a game-changer for me: baby's body tucked under your arm, you have full control of the head. Also try laid-back nursing (recline at 45°, baby lies on your chest). Aim the nipple toward the upper lip so they open wide. One session with a lactation consultant can fix things in minutes.",
-    author:"Mary K.",rating:"⭐4.8",bgColor:"#70A8C8"},
-   comments:[{author:"Ana M.",text:"Football hold saved us!! Absolute game changer."},
-             {author:"Rosa H.",text:"The laid-back position worked so well for us in the first weeks."}]},
-  {id:3,topic:"Mental Health",title:"Is it normal to feel really sad and overwhelmed in the first week even if everything went okay?",upvotes:58,userVote:0,hasImage:false,
-   answer:{text:"Yes — completely normal, and I want you to know that. What you're describing sounds like the baby blues, which affect up to 80% of new mothers regardless of how the birth went. It's caused by a massive hormonal drop after delivery. Baby blues typically peak around day 3–5 and resolve within 2 weeks. If feelings are still very strong after 2 weeks, please reach out to your doctor — it could be postpartum depression, which is very treatable.",
-    author:"Ana M.",rating:"⭐4.9",bgColor:"#C870A8"},
-   comments:[{author:"Mary K.",text:"I felt this deeply. The baby blues hit me on day 4. You are not alone."},
-             {author:"Anonymous",text:"I thought something was wrong with me. Knowing it was normal helped so much."}]},
-  {id:4,topic:"Nutrition",title:"What foods helped your postpartum recovery the most? Looking for West African recipes.",upvotes:42,userVote:0,hasImage:false,
-   answer:{text:"Pepper soup is THE postpartum food for good reason — warming, boosts milk supply, and the spices have anti-inflammatory properties. Also: palm fruit soup is incredibly nutritious, ogbono with lots of fish, and the broth from any soup is gold. For drinks, zobo (hibiscus) and warm pap every morning. Avoid cold drinks for the first 40 days.",
-    author:"Mary K.",rating:"⭐4.8",bgColor:"#70A8C8"},
-   comments:[{author:"Ana M.",text:"Pepper soup every day for 6 weeks. I genuinely felt healed 😂"},
-             {author:"Rosa H.",text:"We do something similar — warm broths and no cold food. Works so well."}]},
-  {id:5,topic:"Recovery",title:"How do I safely do belly binding at home? 2 weeks postpartum.",upvotes:28,userVote:0,hasImage:false,
-   answer:{text:"At 2 weeks you can start belly binding. Key rules: never bind so tight that you can't take a deep breath. Always wrap from the hips upward (bottom to top). Use a long breathable cotton cloth. Wear 8–12 hours during the day, remove at night. C-section moms: wait until your incision is fully closed — usually 6 weeks. Warm your belly with a cloth before binding to help muscles relax.",
-    author:"Ana M.",rating:"⭐4.9",bgColor:"#C870A8"},
-   comments:[{author:"Mary K.",text:"This is exactly right — start low and work your way up. So important."}]},
-  {id:6,topic:"Newborn Care",title:"How often should I bathe my newborn? I've heard conflicting advice.",upvotes:19,userVote:0,hasImage:false,
-   answer:{text:"2–3 times a week is plenty for a newborn — daily baths can dry out their skin. Sponge baths only until the umbilical cord stump falls off (usually 1–3 weeks). After that, a shallow warm bath is fine. Clean the face, neck folds, diaper area, and hands daily with a warm cloth. The cord stump: keep it dry, let it fall off on its own.",
-    author:"Mary K.",rating:"⭐4.8",bgColor:"#70A8C8"},
-   comments:[{author:"Ana M.",text:"This! My nurse told me the same — less is more with baths."}]}
+const EXPERT_MOMS = [
+  { id:'e1', name:'Chidinma O.', title:'Newborn Care Specialist', years:8, bio:'NICU nurse turned newborn care consultant. Helped 200+ families through the first 90 days.', tags:['Newborn','Sleep','Feeding'], price:55, rating:4.9, reviews:47, flag:'🇳🇬' },
+  { id:'e2', name:'Rosa H.', title:'Postpartum Doula', years:6, bio:'Bilingual doula (English/Spanish). Specializes in C-section recovery and postpartum mental health.', tags:['Postpartum','Mental Health','Recovery'], price:65, rating:5.0, reviews:38, flag:'🇲🇽' },
+  { id:'e3', name:'Li W.', title:'Lactation Consultant', years:10, bio:'IBCLC-certified. Helped over 500 moms with latch issues, low supply, and weaning transitions.', tags:['Breastfeeding','Feeding','Nutrition'], price:75, rating:4.8, reviews:62, flag:'🇨🇳' },
+  { id:'e4', name:'Funmilayo A.', title:'Child Development Expert', years:7, bio:'Developmental pediatrics background. Guides parents through milestones, developmental delays, and play therapy.', tags:['Development','Milestones','Toddler'], price:60, rating:4.9, reviews:41, flag:'🇳🇬' },
+  { id:'e5', name:'Priya S.', title:'Sleep Consultant', years:5, bio:'Certified sleep consultant. Gentle methods only — no cry-it-out unless parents choose. 90% success rate.', tags:['Sleep','Newborn','Toddler'], price:70, rating:4.9, reviews:55, flag:'🇮🇳' },
+  { id:'e6', name:'Abena M.', title:'Holistic Baby Wellness', years:9, bio:'Integrative approach to baby wellness. Traditional African child-rearing wisdom meets modern pediatric practice.', tags:['Holistic','Newborn','Wellness'], price:55, rating:5.0, reviews:29, flag:'🇬🇭' }
 ];
 
-// ===== SVG IMAGES =====
-function getBabyAcneSVG(){
-  return `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:140px;border-radius:8px">
-    <rect width="280" height="140" fill="#F5D5B8"/>
-    <ellipse cx="140" cy="75" rx="90" ry="55" fill="#F0C8A0"/>
-    <circle cx="105" cy="68" r="4" fill="#D94040" opacity=".8"/>
-    <circle cx="118" cy="55" r="3" fill="#E55555" opacity=".7"/>
-    <circle cx="95" cy="80" r="3.5" fill="#D04040" opacity=".85"/>
-    <circle cx="112" cy="82" r="2.5" fill="#CC3333" opacity=".75"/>
-    <circle cx="100" cy="58" r="2" fill="#E06060" opacity=".6"/>
-    <circle cx="125" cy="72" r="3" fill="#FFFFFF" opacity=".6"/>
-    <circle cx="108" cy="70" r="2" fill="#FFFFFF" opacity=".5"/>
-    <circle cx="170" cy="65" r="4" fill="#D94040" opacity=".8"/>
-    <circle cx="182" cy="78" r="3.5" fill="#E55555" opacity=".7"/>
-    <circle cx="160" cy="75" r="3" fill="#CC3333" opacity=".75"/>
-    <circle cx="175" cy="85" r="2" fill="#D04040" opacity=".65"/>
-    <text x="140" y="128" text-anchor="middle" font-size="10" fill="#9A7AAA" font-family="Inter,sans-serif">Baby acne — common at 2–4 weeks</text>
-  </svg>`;
-}
-function getBellyBindingSVG(){
-  return `<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:140px;border-radius:8px">
-    <rect width="280" height="140" fill="#EEE0F5"/>
-    <rect x="60" y="30" width="160" height="80" rx="30" fill="#C8A0DC" opacity=".4"/>
-    <rect x="55" y="48" width="170" height="14" rx="7" fill="#8A4FA0" opacity=".7"/>
-    <rect x="58" y="66" width="164" height="12" rx="6" fill="#6B30BF" opacity=".6"/>
-    <rect x="60" y="82" width="160" height="12" rx="6" fill="#8A4FA0" opacity=".55"/>
-    <line x1="60" y1="54" x2="55" y2="54" stroke="#5C2D6E" stroke-width="2"/>
-    <line x1="220" y1="54" x2="225" y2="54" stroke="#5C2D6E" stroke-width="2"/>
-    <text x="140" y="128" text-anchor="middle" font-size="10" fill="#5C2D6E" font-family="Inter,sans-serif">Yoruba belly binding — wrap hip to waist</text>
-  </svg>`;
+// ============================================================
+// SESSION (localStorage — just tracks who's logged in locally)
+// ============================================================
+function getSession() { return JSON.parse(localStorage.getItem('sb_session')||'null'); }
+function saveSession(s) { localStorage.setItem('sb_session', JSON.stringify(s)); }
+function clearSession() { localStorage.removeItem('sb_session'); }
+function getVoted() { return JSON.parse(localStorage.getItem('sb_voted')||'[]'); }
+function saveVoted(v) { localStorage.setItem('sb_voted', JSON.stringify(v)); }
+
+// ============================================================
+// FIRESTORE HELPERS
+// ============================================================
+async function seedIfEmpty() {
+  const snap = await db.collection('posts').limit(1).get();
+  if (!snap.empty) return;
+  const batch = db.batch();
+  SEED_POSTS.forEach(p => {
+    const ref = db.collection('posts').doc(p.id);
+    batch.set(ref, p);
+  });
+  await batch.commit();
 }
 
-// ===== RENDER FUNCTIONS =====
-function renderLandingQA(){
-  const feed = document.getElementById('qa-feed');
-  if(!feed) return;
-  feed.innerHTML = qaQuestions.map(q => renderQACard(q, false)).join('');
+async function getUser(email) {
+  const snap = await db.collection('users').where('email','==',email).limit(1).get();
+  if (snap.empty) return null;
+  return { id: snap.docs[0].id, ...snap.docs[0].data() };
 }
 
-function renderQACard(q, full){
-  const img = q.hasImage ? `<div class="qa-img">${q.imageType==='acne'?getBabyAcneSVG():getBellyBindingSVG()}</div>` : '';
-  const comments = q.comments.map(c=>`<div class="comment"><strong>${c.author}:</strong> ${c.text}</div>`).join('');
-  const answerLen = full ? q.answer.text.length : 160;
-  const answerText = q.answer.text.length > answerLen ? q.answer.text.slice(0,answerLen)+'…' : q.answer.text;
-  return `<div class="qa-card" id="qacard-${q.id}">
-    <div class="vote-col">
-      <button class="vote-btn" onclick="vote(${q.id},1)" title="Upvote">▲</button>
-      <span class="vote-count" id="votes-${q.id}">${q.upvotes}</span>
-      <button class="vote-btn" onclick="vote(${q.id},-1)" title="Downvote">▼</button>
-    </div>
-    <div class="qa-body">
-      <span class="topic-chip">${q.topic}</span>
-      <div class="qa-title" onclick="openQAModal(${q.id})">${q.title}</div>
-      ${img}
-      <div class="answer-preview">
-        <div class="answer-header">
-          <div class="answer-avatar" style="background:${q.answer.bgColor}">${q.answer.author.split(' ').map(w=>w[0]).join('')}</div>
-          <strong style="font-size:.82rem">${q.answer.author}</strong>
-          <span style="font-size:.75rem;color:var(--muted)">${q.answer.rating}</span>
-          <span class="top-badge">Top answer</span>
-        </div>
-        <p style="color:#444;font-size:.83rem;line-height:1.55">${answerText}</p>
-      </div>
-      <div class="comment-list">${comments}</div>
-      <div class="qa-footer">
-        <button class="qa-foot-btn" onclick="openQAModal(${q.id})">💬 ${q.comments.length+1} answers</button>
-        <button class="qa-foot-btn">🔗 Share</button>
-        <button class="qa-foot-btn" onclick="openQAModal(${q.id})">➕ Add answer</button>
-      </div>
-    </div>
-  </div>`;
+async function getUserByUsername(username) {
+  const snap = await db.collection('users').where('username','==',username.toLowerCase()).limit(1).get();
+  return snap.empty ? null : { id: snap.docs[0].id, ...snap.docs[0].data() };
 }
 
-function renderExpertMoms(moms){
-  const grid = document.getElementById('expert-grid');
-  if(!grid) return;
-  grid.innerHTML = moms.map(m => {
-    const tierBadge = m.tier===3 ? '<span class="tier-badge">🛡️ T3</span>' : '<span class="tier-badge t2">📹 T2</span>';
-    const availClass = m.available ? 'green' : 'orange';
-    const availText = m.available ? 'Available now' : `Next: ${m.nextSlot}`;
-    const tags = m.tags.slice(0,3).map(t=>`<span class="expert-tag">${t}</span>`).join('');
-    const creds = m.creds ? `<div class="expert-creds">${m.creds}</div>` : '';
-    return `<div class="expert-card" onclick="openProfile(${m.id})">
-      <div class="expert-card-top">
-        ${tierBadge}
-        <div class="avail-dot ${availClass}">${availText}</div>
-        <div class="expert-avatar" style="background:${m.bgColor}">${m.initials}</div>
-        <div class="expert-name">${m.name}</div>
-        <div class="expert-culture">${m.flag} ${m.culture}</div>
-        <div class="expert-loc">📍 ${m.city} · ${m.exp} yrs</div>
-      </div>
-      <div class="expert-card-body">
-        <div class="expert-tags">${tags}</div>
-        ${creds}
-        <div class="expert-prices">
-          <span>In-home: <strong>$${m.priceHr}/hr</strong></span>
-          <span>Virtual: <strong>$${m.priceVirtual}</strong></span>
-        </div>
-        <div class="expert-rating">
-          <span class="stars">${'★'.repeat(Math.floor(m.rating))}</span>
-          <span style="font-weight:600">${m.rating}</span>
-          <span class="review-count">(${m.reviews} reviews)</span>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+async function createUser(data) {
+  const ref = db.collection('users').doc();
+  await ref.set({ ...data, id: ref.id });
+  return ref.id;
 }
 
-function renderQAFull(filter){
-  const list = document.getElementById('qa-full-list');
-  if(!list) return;
-  const filtered = filter && filter!=='all' ? qaQuestions.filter(q=>q.topic===filter||q.topic.toLowerCase().includes(filter.toLowerCase())) : qaQuestions;
-  list.innerHTML = filtered.map(q=>renderQACard(q,true)).join('');
+
+// ============================================================
+// AUTH SYSTEM
+// ============================================================
+let _pendingUser = null;
+
+function switchAuthTab(tab) {
+  document.getElementById('signin-form').style.display = tab==='signin' ? '' : 'none';
+  document.getElementById('signup-form').style.display = tab==='signup' ? '' : 'none';
+  document.getElementById('tab-signin').classList.toggle('active', tab==='signin');
+  document.getElementById('tab-signup').classList.toggle('active', tab==='signup');
+  document.getElementById('signin-err').style.display='none';
+  document.getElementById('signup-err').style.display='none';
 }
 
-// ===== NAVIGATION =====
-function showPage(name){
+async function doLogin() {
+  const email = document.getElementById('si-email').value.trim().toLowerCase();
+  const pass = document.getElementById('si-pass').value;
+  const errEl = document.getElementById('signin-err');
+  errEl.style.display='none';
+  if (!email||!pass) { errEl.textContent='Please enter email and password.'; errEl.style.display=''; return; }
+  const btn = document.querySelector('#signin-form .btn-brand');
+  btn.textContent='Checking...'; btn.disabled=true;
+  try {
+    const user = await getUser(email);
+    if (!user || user.password !== pass) { errEl.textContent='Incorrect email or password.'; errEl.style.display=''; btn.textContent='Sign In'; btn.disabled=false; return; }
+    _pendingUser = { ...user, flow:'login' };
+    document.getElementById('otp-phone-display').textContent = maskPhone(user.phone);
+    closeModal('auth-modal');
+    openModal('otp-phone-modal');
+    clearOtpBoxes('phone');
+  } catch(e) { errEl.textContent='Connection error. Please try again.'; errEl.style.display=''; }
+  btn.textContent='Sign In'; btn.disabled=false;
+}
+
+async function doSignup() {
+  const fname = document.getElementById('su-fname').value.trim();
+  const lname = document.getElementById('su-lname').value.trim();
+  const username = document.getElementById('su-username').value.trim().replace(/^@/,'').toLowerCase();
+  const email = document.getElementById('su-email').value.trim().toLowerCase();
+  const phone = document.getElementById('su-phone').value.trim();
+  const pass = document.getElementById('su-pass').value;
+  const errEl = document.getElementById('signup-err');
+  errEl.style.display='none';
+  if (!fname||!lname) { errEl.textContent='Please enter your full name.'; errEl.style.display=''; return; }
+  if (!username) { errEl.textContent='Please choose a username.'; errEl.style.display=''; return; }
+  if (!email||!email.includes('@')) { errEl.textContent='Please enter a valid email.'; errEl.style.display=''; return; }
+  if (!phone) { errEl.textContent='Phone number required for 2FA.'; errEl.style.display=''; return; }
+  if (pass.length<8) { errEl.textContent='Password must be at least 8 characters.'; errEl.style.display=''; return; }
+  const btn = document.querySelector('#signup-form .btn-brand');
+  btn.textContent='Checking...'; btn.disabled=true;
+  try {
+    const existing = await getUser(email);
+    if (existing) { errEl.textContent='An account with this email already exists.'; errEl.style.display=''; btn.textContent='Create Account →'; btn.disabled=false; return; }
+    const takenUser = await getUserByUsername(username);
+    if (takenUser) { errEl.textContent='Username already taken.'; errEl.style.display=''; btn.textContent='Create Account →'; btn.disabled=false; return; }
+    _pendingUser = { fname, lname, username, email, phone, password:pass, flow:'signup', joined:Date.now() };
+    document.getElementById('otp-email-display').textContent = email;
+    closeModal('auth-modal');
+    openModal('otp-email-modal');
+    clearOtpBoxes('email');
+  } catch(e) { errEl.textContent='Connection error. Please try again.'; errEl.style.display=''; }
+  btn.textContent='Create Account →'; btn.disabled=false;
+}
+
+function confirmEmailOTP() {
+  const boxes = document.querySelectorAll('#otp-email-modal .otp-box');
+  const code = Array.from(boxes).map(b=>b.value).join('');
+  const errEl = document.getElementById('otp-email-err');
+  errEl.style.display='none';
+  if (code.length<6) { errEl.textContent='Please enter all 6 digits.'; errEl.style.display=''; return; }
+  closeModal('otp-email-modal');
+  document.getElementById('otp-phone-display').textContent = maskPhone(_pendingUser.phone);
+  openModal('otp-phone-modal');
+  clearOtpBoxes('phone');
+}
+
+async function verify2FA() {
+  const boxes = document.querySelectorAll('#otp-phone-modal .otp-box');
+  const code = Array.from(boxes).map(b=>b.value).join('');
+  const errEl = document.getElementById('otp-phone-err');
+  errEl.style.display='none';
+  if (code.length<6) { errEl.textContent='Please enter all 6 digits.'; errEl.style.display=''; return; }
+  const btn = document.querySelector('#otp-phone-modal .btn-brand');
+  btn.textContent='Verifying...'; btn.disabled=true;
+  try {
+    if (_pendingUser.flow==='signup') {
+      const userId = await createUser({ fname:_pendingUser.fname, lname:_pendingUser.lname, username:_pendingUser.username, email:_pendingUser.email, phone:_pendingUser.phone, password:_pendingUser.password, joined:_pendingUser.joined });
+      saveSession({ userId, username:_pendingUser.username, fname:_pendingUser.fname, lname:_pendingUser.lname, email:_pendingUser.email });
+      closeModal('otp-phone-modal');
+      _pendingUser=null;
+      renderHeaderUser(); updateSideMenuAuth();
+      document.getElementById('welcome-name').textContent='Hi '+getSession().fname+' 👋';
+      openModal('welcome-modal');
+    } else {
+      saveSession({ userId:_pendingUser.id, username:_pendingUser.username, fname:_pendingUser.fname, lname:_pendingUser.lname, email:_pendingUser.email });
+      closeModal('otp-phone-modal');
+      _pendingUser=null;
+      renderHeaderUser(); updateSideMenuAuth();
+      showToast('Welcome back, '+getSession().fname+'! 👋');
+    }
+  } catch(e) { errEl.textContent='Error. Please try again.'; errEl.style.display=''; }
+  btn.textContent='Verify & Continue →'; btn.disabled=false;
+}
+
+function signOut() { clearSession(); renderHeaderUser(); updateSideMenuAuth(); closeSideMenu(); showToast('Signed out.'); showPage('home'); }
+function requireAuth(cb) { if (getSession()) { cb(); return; } openModal('auth-modal'); switchAuthTab('signin'); showToast('Sign in to continue.'); }
+function resendOTP() { showToast('New code sent! (Demo: any 6 digits work)'); }
+function maskPhone(p) { if (!p) return '***'; return p.replace(/(\d{3})\d+(\d{2})/, '$1 *** **$2'); }
+
+async function checkUsername(input) {
+  const val = input.value.replace(/^@/,'').trim().toLowerCase();
+  const hint = document.getElementById('username-hint');
+  if (!val) { hint.textContent='Used publicly. Can differ from your real name.'; hint.style.color='var(--muted)'; return; }
+  const taken = await getUserByUsername(val);
+  if (taken) { hint.textContent='✗ Username taken'; hint.style.color='#e05a7a'; }
+  else { hint.textContent='✓ @'+val+' is available'; hint.style.color='#3aaa6d'; }
+}
+
+function checkStrength(input) {
+  const val=input.value; const fill=document.getElementById('strength-fill'); const label=document.getElementById('strength-label');
+  let s=0; if(val.length>=8)s++; if(/[A-Z]/.test(val))s++; if(/[0-9]/.test(val))s++; if(/[^A-Za-z0-9]/.test(val))s++;
+  const c=['#e05a7a','#e05a7a','#f0a500','#3aaa6d','#3aaa6d']; const l=['','Weak','Fair','Good','Strong'];
+  fill.style.width=(s*25)+'%'; fill.style.background=c[s]; label.textContent=l[s];
+}
+
+function togglePass(id,eye) { const i=document.getElementById(id); i.type=i.type==='password'?'text':'password'; eye.textContent=i.type==='password'?'👁':'🙈'; }
+
+
+// ============================================================
+// OTP HELPERS
+// ============================================================
+function otpNext(input,idx,type) {
+  if (input.value&&idx<5) {
+    const sel=type==='phone'?'#otp-phone-modal .otp-box':'#otp-email-modal .otp-box';
+    document.querySelectorAll(sel)[idx+1].focus();
+  }
+}
+function clearOtpBoxes(type) {
+  const sel=type==='phone'?'#otp-phone-modal .otp-box':'#otp-email-modal .otp-box';
+  document.querySelectorAll(sel).forEach(b=>b.value='');
+  document.getElementById(type==='phone'?'otp-phone-err':'otp-email-err').style.display='none';
+}
+
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
+function showPage(id) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const page = document.getElementById('page-'+name);
-  if(page){
-    page.classList.add('active');
-    window.scrollTo(0,0);
-  }
-  // Update nav active state
-  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  const navMap={home:'nav-home',connect:'nav-connect',community:'nav-community',how:'nav-how',signup:'nav-signup'};
-  if(navMap[name]){const el=document.getElementById(navMap[name]);if(el)el.classList.add('active');}
-  // Lazy render
-  if(name==='home') renderLandingQA();
-  if(name==='connect') renderExpertMoms(expertMoms);
-  if(name==='community') renderQAFull('all');
-  if(name==='profile') renderProfilePage(currentProfileId||1);
-  if(name==='myquestions') renderMyQuestions();
+  const t=document.getElementById('page-'+id);
+  if (t) { t.classList.add('active'); window.scrollTo(0,0); }
+  closeSideMenu();
+  if (id==='home') loadLandingQA();
+  if (id==='community') loadQAFull();
+  if (id==='myquestions') loadMyQuestions();
+  if (id==='connect') renderExpertMoms();
 }
 
-// ===== VOTING =====
-function vote(id, dir){
-  const q = qaQuestions.find(x=>x.id===id);
-  if(!q) return;
-  if(q.userVote===dir){ q.upvotes-=dir; q.userVote=0; }
-  else { q.upvotes+=(dir - q.userVote); q.userVote=dir; }
-  const el=document.getElementById('votes-'+id);
-  if(el) el.textContent=q.upvotes;
+// ============================================================
+// SIDE MENU
+// ============================================================
+function openSideMenu() { document.getElementById('side-menu').classList.add('open'); document.getElementById('menu-overlay').style.display='block'; document.body.style.overflow='hidden'; }
+function closeSideMenu() { document.getElementById('side-menu').classList.remove('open'); document.getElementById('menu-overlay').style.display='none'; document.body.style.overflow=''; }
+function updateSideMenuAuth() {
+  const s=getSession();
+  const si=document.getElementById('smenu-signin'); const so=document.getElementById('smenu-signout'); const mp=document.getElementById('smenu-my-posts');
+  if (s) { if(si)si.style.display='none'; if(so)so.style.display=''; if(mp)mp.style.display=''; const cta=document.querySelector('.smenu-cta'); if(cta)cta.style.display='none'; }
+  else { if(si)si.style.display=''; if(so)so.style.display='none'; if(mp)mp.style.display='none'; const cta=document.querySelector('.smenu-cta'); if(cta)cta.style.display=''; }
+}
+function renderHeaderUser() {
+  const s=getSession(); const a=document.getElementById('nav-user-area'); if (!a) return;
+  if (s) { a.innerHTML='<div class="nav-user-chip" onclick="showPage(\'myquestions\')"><div class="nav-user-avatar">'+s.fname.charAt(0).toUpperCase()+'</div><span>'+s.fname+'</span></div>'; }
+  else { a.innerHTML='<button class="btn-brand" style="padding:8px 18px;font-size:13px" onclick="openModal(\'auth-modal\')">Sign In</button>'; }
 }
 
-// ===== SORT BAR =====
-function setSortActive(btn, mode){
-  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  if(mode==='top'){ qaQuestions.sort((a,b)=>b.upvotes-a.upvotes); }
-  else if(mode==='new'){ qaQuestions.sort((a,b)=>b.id-a.id); }
-  else { qaQuestions.sort((a,b)=>b.upvotes-a.upvotes); }
-  renderLandingQA();
+// ============================================================
+// MODAL SYSTEM
+// ============================================================
+function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3200); }
+
+// ============================================================
+// HELPERS
+// ============================================================
+function timeAgo(ts) {
+  const d=Date.now()-ts;
+  if(d<60000) return 'just now';
+  if(d<3600000) return Math.floor(d/60000)+'m ago';
+  if(d<86400000) return Math.floor(d/3600000)+'h ago';
+  return Math.floor(d/86400000)+'d ago';
+}
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ============================================================
+// Q&A RENDERING (Firestore)
+// ============================================================
+function renderQACard(post) {
+  const voted=getVoted().includes(post.id);
+  const rc=(post.replies||[]).length;
+  return '<div class="qa-card" id="card-'+post.id+'">' +
+    '<div class="qa-card-meta"><span class="qa-badge '+post.topic.toLowerCase().replace(/ /g,'-')+'">'+post.topic+'</span><span style="color:var(--muted);font-size:13px">· '+timeAgo(post.timestamp)+'</span></div>' +
+    '<div class="qa-card-question" onclick="openQAPost(\''+post.id+'\')" style="cursor:pointer">'+escHtml(post.question)+'</div>' +
+    '<div class="qa-card-footer">' +
+      '<span class="qa-author">'+(post.anonymous?'👤 Anonymous':'👩 '+post.author)+'</span>' +
+      '<div style="display:flex;align-items:center;gap:14px">' +
+        '<button class="vote-btn'+(voted?' voted':'')+'" onclick="vote(\''+post.id+'\')">▲ <span id="votes-'+post.id+'">'+post.votes+'</span></button>' +
+        '<button class="reply-btn" onclick="openQAPost(\''+post.id+'\')">💬 '+rc+(rc===1?' reply':' replies')+'</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
 }
 
-// ===== FILTER =====
-function filterByChip(el, culture){
-  document.querySelectorAll('#culture-chips .chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  const filtered = culture ? expertMoms.filter(m=>m.culture.toLowerCase().includes(culture.toLowerCase())) : expertMoms;
-  renderExpertMoms(filtered);
-}
-function filterExperts(){
-  const cult = document.getElementById('culture-select').value;
-  const filtered = cult ? expertMoms.filter(m=>m.culture.toLowerCase().includes(cult.toLowerCase())) : expertMoms;
-  renderExpertMoms(filtered);
-}
-function filterTopic(el, topic){
-  document.querySelectorAll('#topic-filters .chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  renderQAFull(topic==='all'?null:topic);
+function setFeedLoading(containerId, msg) {
+  const el=document.getElementById(containerId);
+  if(el) el.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">'+msg+'</div>';
 }
 
-// ===== PROFILE =====
-let currentProfileId = 1;
-function openProfile(id){
-  currentProfileId = id;
-  renderProfilePage(id);
-  showPage('profile');
+async function loadLandingQA() {
+  setFeedLoading('landing-qa-feed','Loading questions...');
+  try {
+    const snap = await db.collection('posts').orderBy('timestamp','desc').limit(4).get();
+    const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const el=document.getElementById('landing-qa-feed');
+    if(el) el.innerHTML = posts.length ? posts.map(renderQACard).join('') : '<p style="text-align:center;color:var(--muted);padding:40px">No questions yet. Be the first to ask!</p>';
+  } catch(e) { setFeedLoading('landing-qa-feed','Could not load questions.'); }
 }
-function renderProfilePage(id){
-  const m = expertMoms.find(x=>x.id===id);
-  if(!m) return;
-  const avEl=document.getElementById('profile-avatar-lg');
-  if(avEl){avEl.textContent=m.initials;avEl.style.background=m.bgColor;}
-  setText('profile-name', m.name);
-  setText('profile-culture', m.flag+' '+m.culture);
-  setText('profile-loc', '📍 '+m.city);
-  setText('profile-exp', m.exp+' yrs experience');
-  setText('profile-rating', '⭐ '+m.rating+' · '+m.reviews+' reviews');
-  // Tier badge
-  const tb=document.getElementById('profile-tier-badge');
-  if(tb) tb.textContent = m.tier===3?'🛡️ Tier 3 — Home Certified':'📹 Tier 2 — Video Verified';
-  // Avail badge
-  const ab=document.getElementById('profile-avail-badge');
-  if(ab){
-    if(m.available){ab.textContent='● Available Now';ab.style.background='#16a34a';}
-    else{ab.textContent='Next: '+m.nextSlot;ab.style.background='#ea580c';}
-  }
-  // Services
-  const sg=document.getElementById('profile-services');
-  if(sg){
-    sg.innerHTML=m.tags.map((t,i)=>`<div class="service-item"><div class="service-name">${t}</div><div class="service-price">${i===0?'$'+(m.priceHr)+'/hr':'Included'}</div></div>`).join('');
-  }
-  // Calendar
-  const cg=document.getElementById('profile-calendar');
-  if(cg){
-    const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    const today=new Date();
-    cg.innerHTML='';
-    for(let i=0;i<7;i++){
-      const d=new Date(today);d.setDate(today.getDate()+i);
-      const avail=Math.random()>0.4;
-      cg.innerHTML+=`<div class="cal-day ${avail?'available':'booked'}"><div class="cal-day-name">${days[d.getDay()]}</div><div class="cal-day-num">${d.getDate()}</div></div>`;
+
+let _activeTopic = null;
+async function loadQAFull(topic) {
+  _activeTopic = topic||null;
+  setFeedLoading('community-feed','Loading questions...');
+  try {
+    let q = db.collection('posts').orderBy('timestamp','desc');
+    if (topic && topic!=='All') q = db.collection('posts').where('topic','==',topic).orderBy('timestamp','desc');
+    const snap = await q.get();
+    const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const el=document.getElementById('community-feed');
+    if(el) el.innerHTML = posts.length ? posts.map(renderQACard).join('') :
+      '<div style="text-align:center;padding:60px 20px;color:var(--muted)"><div style="font-size:48px;margin-bottom:12px">🔍</div><p>No questions yet in this topic.</p><button class="btn-brand" style="margin-top:16px" onclick="openAskModal()">Ask a Question</button></div>';
+  } catch(e) { setFeedLoading('community-feed','Could not load questions.'); }
+}
+
+async function loadMyQuestions() {
+  const s=getSession();
+  const el=document.getElementById('myq-feed'); if(!el) return;
+  if (!s) { el.innerHTML='<div style="text-align:center;padding:60px;color:var(--muted)"><p>Sign in to see your questions.</p><button class="btn-brand" style="margin-top:16px" onclick="openModal(\'auth-modal\')">Sign In</button></div>'; return; }
+  setFeedLoading('myq-feed','Loading your questions...');
+  try {
+    const snap = await db.collection('posts').where('userId','==',s.userId).orderBy('timestamp','desc').get();
+    const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
+    el.innerHTML = posts.length ? posts.map(renderQACard).join('') :
+      '<div style="text-align:center;padding:60px;color:var(--muted)"><div style="font-size:48px;margin-bottom:12px">📝</div><p>You haven\'t asked anything yet.</p><button class="btn-brand" style="margin-top:16px" onclick="openAskModal()">Ask Your First Question</button></div>';
+  } catch(e) { setFeedLoading('myq-feed','Could not load your questions.'); }
+}
+
+
+// ============================================================
+// Q&A POST MODAL
+// ============================================================
+async function openQAPost(postId) {
+  openModal('qa-modal');
+  document.getElementById('qa-modal-body').innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">Loading...</div>';
+  try {
+    const doc = await db.collection('posts').doc(postId).get();
+    if (!doc.exists) { document.getElementById('qa-modal-body').innerHTML='<p>Post not found.</p>'; return; }
+    const post = {id:doc.id,...doc.data()};
+    const s=getSession(); const voted=getVoted().includes(postId);
+    const repliesHtml=(post.replies||[]).map(r=>
+      '<div class="reply-item"><div style="font-weight:600;font-size:14px">👩 '+escHtml(r.author)+' <span style="font-weight:400;color:var(--muted);font-size:12px">'+timeAgo(r.timestamp)+'</span></div>' +
+      '<div style="margin-top:6px;font-size:14px;color:#3a2048">'+escHtml(r.text)+'</div></div>'
+    ).join('');
+    const replyHtml = s
+      ? '<div class="reply-input-row">' +
+          '<textarea id="reply-text-'+postId+'" rows="3" placeholder="Write your reply..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:14px;resize:vertical;font-family:inherit"></textarea>' +
+          '<div style="margin-top:8px;display:flex;gap:10px;align-items:center">' +
+            '<input type="checkbox" id="reply-anon-'+postId+'"/> <label for="reply-anon-'+postId+'" style="font-size:13px;color:var(--muted)">Reply anonymously</label>' +
+            '<button class="btn-brand" style="margin-left:auto" onclick="submitReply(\''+postId+'\')">Post Reply</button>' +
+          '</div></div>'
+      : '<div style="text-align:center;padding:20px;background:var(--gray);border-radius:8px;margin-top:16px"><p style="color:var(--muted);margin-bottom:12px">Sign in to reply</p><button class="btn-brand" onclick="closeModal(\'qa-modal\');openModal(\'auth-modal\')">Sign In to Reply</button></div>';
+    document.getElementById('qa-modal-body').innerHTML =
+      '<div class="qa-badge '+post.topic.toLowerCase().replace(/ /g,'-')+'" style="margin-bottom:12px">'+post.topic+'</div>' +
+      '<h2 style="font-size:18px;margin-bottom:8px">'+escHtml(post.question)+'</h2>' +
+      '<div style="color:var(--muted);font-size:13px;margin-bottom:20px">'+(post.anonymous?'👤 Anonymous':'👩 '+post.author)+' · '+timeAgo(post.timestamp)+
+        ' · <button class="vote-btn'+(voted?' voted':'')+'" onclick="vote(\''+postId+'\',true)" style="display:inline-flex">▲ <span id="modal-votes-'+postId+'">'+post.votes+'</span></button></div>' +
+      '<div class="reply-section"><h3 style="font-size:15px;margin-bottom:14px">'+(post.replies||[]).length+' '+((post.replies||[]).length===1?'Reply':'Replies')+'</h3>' +
+      (repliesHtml||'<p style="color:var(--muted);font-size:14px">No replies yet. Be the first!</p>') + '</div>' + replyHtml;
+  } catch(e) { document.getElementById('qa-modal-body').innerHTML='<p style="color:#e05a7a">Error loading post.</p>'; }
+}
+
+async function submitReply(postId) {
+  const s=getSession(); if(!s) { requireAuth(()=>{}); return; }
+  const textEl=document.getElementById('reply-text-'+postId);
+  const anonEl=document.getElementById('reply-anon-'+postId);
+  const text=textEl?textEl.value.trim():'';
+  if(!text) { showToast('Please write something before posting.'); return; }
+  const anon=anonEl?anonEl.checked:false;
+  const reply = { author:anon?'Anonymous':s.fname+' '+s.lname.charAt(0)+'.', username:anon?null:'@'+s.username, text, timestamp:Date.now() };
+  const btn=document.querySelector('#qa-modal-body .btn-brand'); if(btn){btn.textContent='Posting...';btn.disabled=true;}
+  try {
+    const ref=db.collection('posts').doc(postId);
+    await ref.update({ replies: firebase.firestore.FieldValue.arrayUnion(reply) });
+    showToast('Reply posted!');
+    closeModal('qa-modal');
+    openQAPost(postId);
+    loadLandingQA(); loadQAFull(_activeTopic);
+  } catch(e) { showToast('Error posting reply. Please try again.'); if(btn){btn.textContent='Post Reply';btn.disabled=false;} }
+}
+
+// ============================================================
+// ASK QUESTION
+// ============================================================
+function openAskModal() { requireAuth(()=>openModal('ask-modal')); }
+
+async function submitQuestion() {
+  const s=getSession(); if(!s) { openModal('auth-modal'); return; }
+  const question=document.getElementById('ask-question').value.trim();
+  const topic=document.getElementById('ask-topic').value;
+  const anon=document.getElementById('ask-anon').checked;
+  const errEl=document.getElementById('ask-err'); errEl.style.display='none';
+  if(!question||question.length<10) { errEl.textContent='Please write at least a 10-character question.'; errEl.style.display=''; return; }
+  const btn=document.querySelector('#ask-modal .btn-brand'); btn.textContent='Posting...'; btn.disabled=true;
+  try {
+    await db.collection('posts').add({
+      userId:s.userId,
+      author:anon?'Anonymous':s.fname+' '+s.lname.charAt(0)+'.',
+      username:anon?null:'@'+s.username,
+      anonymous:anon, topic, question, timestamp:Date.now(), votes:0, replies:[]
+    });
+    document.getElementById('ask-question').value='';
+    document.getElementById('ask-anon').checked=false;
+    closeModal('ask-modal');
+    showToast('Question posted! 🎉');
+    showPage('community');
+  } catch(e) { errEl.textContent='Error posting. Please try again.'; errEl.style.display=''; }
+  btn.textContent='Post Question'; btn.disabled=false;
+}
+
+// ============================================================
+// VOTING
+// ============================================================
+async function vote(postId, inModal) {
+  const s=getSession(); if(!s) { requireAuth(()=>{}); return; }
+  const voted=getVoted();
+  if(voted.includes(postId)) { showToast('You already voted on this one.'); return; }
+  try {
+    await db.collection('posts').doc(postId).update({ votes: firebase.firestore.FieldValue.increment(1) });
+    voted.push(postId); saveVoted(voted);
+    const doc=await db.collection('posts').doc(postId).get();
+    const v=doc.data().votes;
+    const vEl=document.getElementById('votes-'+postId); if(vEl){vEl.textContent=v;vEl.closest('.vote-btn').classList.add('voted');}
+    const mvEl=document.getElementById('modal-votes-'+postId); if(mvEl){mvEl.textContent=v;mvEl.closest('.vote-btn').classList.add('voted');}
+    showToast('Vote counted! ▲');
+  } catch(e) { showToast('Error voting. Please try again.'); }
+}
+
+
+// ============================================================
+// EXPERT MOMS
+// ============================================================
+let activeSort='top', activeChip='All', searchQuery='';
+
+function renderExpertMoms() {
+  const c=document.getElementById('expert-grid'); if(!c) return;
+  let moms=[...EXPERT_MOMS];
+  if(searchQuery){const q=searchQuery.toLowerCase();moms=moms.filter(m=>m.name.toLowerCase().includes(q)||m.tags.some(t=>t.toLowerCase().includes(q))||m.title.toLowerCase().includes(q));}
+  if(activeChip!=='All') moms=moms.filter(m=>m.tags.includes(activeChip));
+  if(activeSort==='top') moms.sort((a,b)=>b.rating-a.rating);
+  else if(activeSort==='price-lo') moms.sort((a,b)=>a.price-b.price);
+  else if(activeSort==='price-hi') moms.sort((a,b)=>b.price-a.price);
+  c.innerHTML=moms.length?moms.map(m=>
+    '<div class="expert-card" onclick="openProfile(\''+m.id+'\')">' +
+      '<div class="expert-avatar">'+m.flag+'</div>' +
+      '<div class="expert-name">'+m.name+'</div>' +
+      '<div class="expert-title">'+m.title+'</div>' +
+      '<div class="expert-rating">⭐ '+m.rating+' <span style="color:var(--muted)">('+m.reviews+' reviews)</span></div>' +
+      '<div class="expert-tags">'+m.tags.map(t=>'<span class="expert-tag">'+t+'</span>').join('')+'</div>' +
+      '<div class="expert-price">From $'+m.price+'/hr</div>' +
+    '</div>'
+  ).join(''):'<div style="text-align:center;padding:60px;color:var(--muted);grid-column:1/-1"><p>No experts match your search.</p></div>';
+}
+
+function filterExperts(q){searchQuery=q||'';renderExpertMoms();}
+function filterByChip(chip,el){activeChip=chip;document.querySelectorAll('.culture-chip').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');renderExpertMoms();}
+function setSortActive(sort,el){activeSort=sort;document.querySelectorAll('#page-connect .sort-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');renderExpertMoms();}
+
+let _qaSort = 'hot';
+async function setQASort(sort, el) {
+  _qaSort = sort;
+  document.querySelectorAll('#page-home .sort-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  setFeedLoading('landing-qa-feed','Loading questions...');
+  try {
+    let q;
+    if (sort === 'new') {
+      q = db.collection('posts').orderBy('timestamp','desc').limit(10);
+    } else {
+      // hot and top both sort by votes desc
+      q = db.collection('posts').orderBy('votes','desc').limit(10);
     }
-  }
-  // Reviews
-  const rv=document.getElementById('profile-reviews');
-  if(rv){
-    const reviewData=[
-      {name:"Adaeze N.",bg:"#C87830",stars:5,date:"May 2026",text:"Chidinma was absolutely wonderful. She made pepper soup and helped me with belly binding. I felt so supported."},
-      {name:"Jennifer W.",bg:"#70A870",stars:5,date:"Apr 2026",text:"So professional and warm. She knew exactly what to do and was gentle with my newborn."},
-      {name:"Kemi B.",bg:"#A870A8",stars:4,date:"Mar 2026",text:"Great service. Very knowledgeable about Igbo postpartum traditions. Would definitely book again."}
-    ];
-    rv.innerHTML=reviewData.map(r=>`<div class="review-card"><div class="review-header"><div class="review-avatar" style="background:${r.bg}">${r.name.split(' ').map(w=>w[0]).join('')}</div><div><div class="review-name">${r.name}</div><div class="review-date">${r.date}</div></div><div class="review-stars">${'★'.repeat(r.stars)}</div></div><p class="review-text">${r.text}</p></div>`).join('');
-  }
-  // Booking box
-  const bd=document.getElementById('booking-date');
-  if(bd){const t=new Date();t.setDate(t.getDate()+1);bd.value=t.toISOString().split('T')[0];}
-  calcPrice();
+    const snap = await q.get();
+    const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const el2 = document.getElementById('landing-qa-feed');
+    if(el2) el2.innerHTML = posts.length ? posts.map(renderQACard).join('') : '<p style="text-align:center;color:var(--muted);padding:40px">No questions yet.</p>';
+  } catch(e) { setFeedLoading('landing-qa-feed','Could not load questions.'); }
 }
-function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+function setMarket(market,el){document.querySelectorAll('.market-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');}
+function filterTopic(topic,el){document.querySelectorAll('.topic-chip').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');loadQAFull(topic==='All'?null:topic);}
 
-// ===== BOOKING =====
-let currentBookingTab='virtual';
-function setBookingTab(btn, type){
-  document.querySelectorAll('.booking-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  currentBookingTab=type;
-  calcPrice();
-}
-function calcPrice(){
-  const m=expertMoms.find(x=>x.id===(currentProfileId||1));
-  if(!m) return;
-  const dur=parseInt((document.getElementById('booking-duration')||{value:'1'}).value)||1;
-  let service=0;
-  if(currentBookingTab==='virtual') service=m.priceVirtual;
-  else if(currentBookingTab==='daily') service=m.priceHr*8;
-  else if(currentBookingTab==='monthly') service=m.priceHr*8*20;
-  else service=m.priceHr*dur;
-  const platform=+(service*0.18).toFixed(2);
-  const total=service+platform;
-  setVal('price-service','$'+service.toFixed(2));
-  setVal('price-platform','$'+platform.toFixed(2));
-  setVal('price-total','$'+total.toFixed(2));
-}
-function setVal(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
-
-// ===== MARKET TOGGLE =====
-function setMarket(m){
-  document.getElementById('btn-us').classList.toggle('active',m==='US');
-  document.getElementById('btn-ca').classList.toggle('active',m==='CA');
+// ============================================================
+// PROFILE PAGE
+// ============================================================
+function openProfile(expertId) {
+  const mom=EXPERT_MOMS.find(m=>m.id===expertId); if(!mom) return;
+  const page=document.getElementById('page-profile');
+  page.querySelector('.profile-name').textContent=mom.name;
+  page.querySelector('.profile-title').textContent=mom.title;
+  page.querySelector('.profile-bio').textContent=mom.bio;
+  page.querySelector('.profile-years').textContent=mom.years+' years experience';
+  page.querySelector('.profile-rating').textContent='⭐ '+mom.rating+' ('+mom.reviews+' reviews)';
+  const tagsEl=page.querySelector('.profile-tags'); if(tagsEl) tagsEl.innerHTML=mom.tags.map(t=>'<span class="expert-tag">'+t+'</span>').join('');
+  const avatarEl=page.querySelector('.profile-avatar'); if(avatarEl) avatarEl.textContent=mom.flag;
+  const priceEl=page.querySelector('.profile-base-price'); if(priceEl) priceEl.textContent='$'+mom.price;
+  window._profileMom=mom;
+  showPage('profile'); setBookingTab('text');
 }
 
-// ===== MOBILE MENU =====
-function toggleMobileMenu(){
-  const menu=document.getElementById('mobile-menu');
-  menu.classList.toggle('open');
+function calcPrice() {
+  const mom=window._profileMom; if(!mom) return;
+  const type=document.getElementById('session-type')?document.getElementById('session-type').value:'text';
+  const dur=parseInt(document.getElementById('session-dur')?document.getElementById('session-dur').value:'30');
+  const mult=type==='text'?0.5:type==='audio'?0.75:1;
+  const price=Math.round(mom.price*mult*(dur/60));
+  const el=document.getElementById('booking-price'); if(el) el.textContent='$'+price;
 }
 
-// ===== MODALS =====
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function openAskModal(){
-  if(!currentUser){ openAuthModal('signin', ()=>openModal('modal-ask')); return; }
-  openModal('modal-ask');
-}
-function openBookingModal(){
-  const m=expertMoms.find(x=>x.id===(currentProfileId||1));
-  if(m){
-    setMiniAvatar(m);
-    setText('booking-expert-name',m.name);
-    setText('booking-service-desc',currentBookingTab.charAt(0).toUpperCase()+currentBookingTab.slice(1)+' Session');
-    // Sync prices
-    const s=document.getElementById('price-service');
-    const p=document.getElementById('price-platform');
-    const t=document.getElementById('price-total');
-    if(s&&p&&t){setVal('bm-service',s.textContent);setVal('bm-platform',p.textContent);setVal('bm-total',t.textContent);}
-  }
-  openModal('modal-booking');
-}
-function setMiniAvatar(m){
-  const el=document.getElementById('booking-mini-avatar');
-  if(el){el.textContent=m.initials;el.style.background=m.bgColor;}
-}
-function openSuccessModal(){
-  closeModal('modal-booking');
-  document.getElementById('booking-ref').textContent=Math.random().toString(36).slice(2,8).toUpperCase();
-  openModal('modal-success');
-}
-function openQAModal(id){
-  const q=qaQuestions.find(x=>x.id===id);
-  if(!q) return;
-  setText('modal-qa-title',q.title);
-  const body=document.getElementById('modal-qa-body');
-  if(body) body.textContent='';
-  setText('modal-qa-answerer',q.answer.author+' '+q.answer.rating);
-  setText('modal-qa-answer',q.answer.text);
-  openModal('modal-qa');
-}
-function openChatModal(){
-  const m=expertMoms.find(x=>x.id===(currentProfileId||1));
-  if(m) setText('chat-title','Chat with '+m.name);
-  openModal('modal-chat');
-}
-function sendChat(){
-  const input=document.getElementById('chat-input');
-  const messages=document.getElementById('chat-messages');
-  if(!input||!messages||!input.value.trim()) return;
-  const msg=document.createElement('div');
-  msg.style.cssText='align-self:flex-end;background:var(--rose);color:#fff;border-radius:10px;padding:8px 12px;max-width:80%;font-size:.85rem';
-  msg.textContent=input.value;
-  messages.appendChild(msg);
-  input.value='';
-  messages.scrollTop=messages.scrollHeight;
-  setTimeout(()=>{
-    const reply=document.createElement('div');
-    reply.style.cssText='align-self:flex-start;background:#fff;border-radius:10px;padding:8px 12px;max-width:80%;border:1px solid var(--border);font-size:.85rem';
-    reply.textContent="Thank you for reaching out! I'll get back to you shortly.";
-    messages.appendChild(reply);
-    messages.scrollTop=messages.scrollHeight;
-  },1000);
-}
-function submitQuestion(){
-  const topic = (document.getElementById('ask-topic-select')||{}).value || 'General';
-  const questionText = ((document.getElementById('ask-question-text')||{}).value||'').trim();
-  const isAnon = document.getElementById('anon-check')?.checked || false;
-  if(!questionText){ alert('Please enter your question.'); return; }
-  const displayName = isAnon ? 'Anonymous'
-    : (currentUser
-        ? (currentUser.displayPref==='username' ? '@'+currentUser.username : currentUser.firstName+' '+currentUser.lastName.charAt(0)+'.')
-        : 'Anonymous');
-  const newQ = {
-    id: Date.now(),
-    topic,
-    title: questionText,
-    upvotes: 1,
-    userVote: 1,
-    hasImage: false,
-    authorId: currentUser ? currentUser.id : null,
-    isAnon,
-    postedBy: displayName,
-    answer: { text:'Be the first to answer this question!', author:'Community', rating:'', bgColor:'#9A7AAA' },
-    comments: []
-  };
-  qaQuestions.unshift(newQ);
-  closeModal('modal-ask');
-  if(document.getElementById('ask-question-text')) document.getElementById('ask-question-text').value='';
-  renderLandingQA();
-  setTimeout(()=>alert('Your question has been posted! You\'ll receive answers within 2 hours.'),200);
+function setBookingTab(type) {
+  document.querySelectorAll('.booking-tab').forEach(t=>t.classList.toggle('active',t.dataset.type===type));
+  const s=document.getElementById('session-type'); if(s) s.value=type; calcPrice();
 }
 
-// ===== HOW TABS =====
-function setHowTab(btn, tab){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('how-'+tab).classList.add('active');
-}
-
-// ===== SIGNUP STEPS =====
-let signupVerifyTier=1;
-function signupNext(step){
-  for(let i=1;i<=4;i++){
-    const s=document.getElementById('signup-step-'+i);
-    if(s) s.style.display=(i===step)?'block':'none';
-    const dot=document.getElementById('sdot-'+i);
-    if(dot){
-      dot.classList.remove('active','done');
-      if(i===step) dot.classList.add('active');
-      else if(i<step) dot.classList.add('done');
-    }
-  }
-}
-function selectVerifyTier(tier){
-  signupVerifyTier=tier;
-  signupNext(4);
-}
-
-// ===== AUTH =====
-let currentUser = null;
-let authCallback = null;
-let tempSignup = {};
-
-function openAuthModal(tab, callback){
-  authCallback = callback || null;
-  switchAuthTab(tab || 'signin');
-  openModal('modal-auth');
-}
-
-function switchAuthTab(tab){
-  ['auth-signin-panel','auth-signup-1','auth-signup-2','auth-signup-3'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.style.display='none';
-  });
-  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
-  if(tab==='signin'){
-    document.getElementById('auth-tab-signin').classList.add('active');
-    document.getElementById('auth-signin-panel').style.display='block';
-  } else {
-    document.getElementById('auth-tab-signup').classList.add('active');
-    document.getElementById('auth-signup-1').style.display='block';
-  }
-}
-
-function _authErr(id,msg){ const e=document.getElementById(id); if(e){e.textContent=msg;e.style.display='block';} }
-function _authClear(id){ const e=document.getElementById(id); if(e) e.style.display='none'; }
-
-function doSignIn(){
-  _authClear('si-error');
-  const email=(document.getElementById('si-email').value||'').trim();
-  const pass=(document.getElementById('si-password').value||'');
-  if(!email||!pass){ _authErr('si-error','Please enter your email and password.'); return; }
-  // Demo: accept any credentials
-  const base=email.split('@')[0].replace(/[^a-zA-Z0-9]/g,'_');
-  completeAuth({
-    id:'u_'+Date.now(),
-    firstName: base.charAt(0).toUpperCase()+base.slice(1,12),
-    lastName:'',
-    username: base.toLowerCase().slice(0,20),
-    email, phone:'', displayPref:'username'
+function openBookingModal() {
+  const mom=window._profileMom; if(!mom) return;
+  requireAuth(()=>{
+    document.getElementById('booking-modal-body').innerHTML=
+      '<div style="display:flex;gap:16px;align-items:center;margin-bottom:20px"><div style="font-size:36px">'+mom.flag+'</div><div><strong>'+mom.name+'</strong><br><span style="color:var(--muted);font-size:14px">'+mom.title+'</span></div></div>' +
+      '<div class="price-summary"><div class="price-row"><span>Session fee</span><span>$'+mom.price+'/hr</span></div><div class="price-row"><span>Platform fee (18%)</span><span>$'+Math.round(mom.price*0.18)+'</span></div><div class="price-row total"><span>Total</span><span>$'+Math.round(mom.price*1.18)+'</span></div></div>';
+    openModal('booking-modal');
   });
 }
 
-function signupStep1(){
-  _authClear('su1-error');
-  const fname=(document.getElementById('su-fname').value||'').trim();
-  const lname=(document.getElementById('su-lname').value||'').trim();
-  const username=(document.getElementById('su-username').value||'').trim().replace(/\s+/g,'_');
-  const email=(document.getElementById('su-email').value||'').trim();
-  const phone=(document.getElementById('su-phone').value||'').trim();
-  const pass=(document.getElementById('su-password').value||'');
-  if(!fname||!email||!phone||!pass){ _authErr('su1-error','Please fill in all required fields.'); return; }
-  if(!username){ _authErr('su1-error','Please choose a username.'); return; }
-  if(pass.length<6){ _authErr('su1-error','Password must be at least 6 characters.'); return; }
-  tempSignup={fname,lname,username,email,phone};
-  document.getElementById('auth-signup-1').style.display='none';
-  document.getElementById('auth-signup-2').style.display='block';
-  document.getElementById('su-email-display').textContent=email;
-}
+function openSuccessModal(){closeModal('booking-modal');openModal('success-modal');}
+function setHowTab(tab){document.querySelectorAll('.how-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.getElementById('how-families').style.display=tab==='families'?'':'none';document.getElementById('how-experts').style.display=tab==='experts'?'':'none';}
+function signupNext(step){document.querySelectorAll('[id^="signup-step-"]').forEach(s=>s.style.display='none');const t=document.getElementById('signup-step-'+step);if(t)t.style.display='';window.scrollTo(0,0);}
+function selectVerifyTier(tier){document.querySelectorAll('.verify-option').forEach(v=>v.classList.remove('selected'));const o=document.querySelectorAll('.verify-option');if(o[tier-1])o[tier-1].classList.add('selected');signupNext(4);}
 
-function verifyEmailCode(){
-  _authClear('su2-error');
-  const code=(document.getElementById('su-email-code').value||'').trim();
-  if(code!=='123456'){ _authErr('su2-error','Incorrect code — demo code is 123456'); return; }
-  document.getElementById('auth-signup-2').style.display='none';
-  document.getElementById('auth-signup-3').style.display='block';
-  document.getElementById('su-phone-display').textContent=tempSignup.phone;
-}
-
-function verifyPhoneCode(){
-  _authClear('su3-error');
-  const code=(document.getElementById('su-phone-code').value||'').trim();
-  if(code!=='654321'){ _authErr('su3-error','Incorrect code — demo SMS code is 654321'); return; }
-  completeAuth({
-    id:'u_'+Date.now(),
-    firstName:tempSignup.fname,
-    lastName:tempSignup.lname,
-    username:tempSignup.username,
-    email:tempSignup.email,
-    phone:tempSignup.phone,
-    displayPref:'username'
+function openChatModal(expertId) {
+  const mom=EXPERT_MOMS.find(m=>m.id===expertId)||window._profileMom; if(!mom) return;
+  requireAuth(()=>{
+    document.getElementById('chat-expert-name').textContent=mom.name;
+    document.getElementById('chat-messages').innerHTML='<div style="background:var(--gray);padding:10px 14px;border-radius:8px;font-size:14px;color:var(--muted);text-align:center">Start your conversation with '+mom.name+'</div>';
+    openModal('chat-modal');
   });
 }
 
-function completeAuth(user){
-  currentUser=user;
-  _updateAuthUI();
-  closeModal('modal-auth');
-  if(authCallback){ const cb=authCallback; authCallback=null; cb(); }
+function sendChat() {
+  const input=document.getElementById('chat-input'); const text=input.value.trim(); if(!text) return;
+  const msgs=document.getElementById('chat-messages');
+  msgs.innerHTML+='<div style="background:var(--rose);color:#fff;padding:10px 14px;border-radius:12px 12px 4px 12px;font-size:14px;align-self:flex-end;max-width:80%;margin-left:auto">'+escHtml(text)+'</div>';
+  input.value=''; msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{msgs.innerHTML+='<div style="background:var(--gray);padding:10px 14px;border-radius:12px 12px 12px 4px;font-size:14px;max-width:80%">Thanks for your message! I\'ll get back to you shortly. 😊</div>';msgs.scrollTop=msgs.scrollHeight;},800);
 }
 
-function signOut(){
-  currentUser=null;
-  _updateAuthUI();
-  const menu=document.getElementById('mobile-menu');
-  if(menu) menu.classList.remove('open');
-  showPage('home');
-}
+function openQAModal(){openAskModal();}
 
-function requireAuth(callback){
-  if(currentUser) callback();
-  else openAuthModal('signin', callback);
-}
-
-function _updateAuthUI(){
-  const signinBtn=document.getElementById('nav-signin-btn');
-  const userPill=document.getElementById('nav-user-pill');
-  const nameSpan=document.getElementById('nav-user-name');
-  const menuSignin=document.getElementById('menu-signin-link');
-  const menuMyQ=document.getElementById('menu-myq-link');
-  const menuSignout=document.getElementById('menu-signout-link');
-  if(currentUser){
-    const display=currentUser.displayPref==='username'?'@'+currentUser.username:currentUser.firstName;
-    if(signinBtn) signinBtn.style.display='none';
-    if(userPill) userPill.style.display='flex';
-    if(nameSpan) nameSpan.textContent=display;
-    if(menuSignin) menuSignin.style.display='none';
-    if(menuMyQ) menuMyQ.style.display='block';
-    if(menuSignout) menuSignout.style.display='block';
-  } else {
-    if(signinBtn) signinBtn.style.display='';
-    if(userPill) userPill.style.display='none';
-    if(menuSignin) menuSignin.style.display='block';
-    if(menuMyQ) menuMyQ.style.display='none';
-    if(menuSignout) menuSignout.style.display='none';
-  }
-}
-
-// ===== MY QUESTIONS =====
-function renderMyQuestions(){
-  const list=document.getElementById('my-questions-list');
-  if(!list) return;
-  if(!currentUser){
-    list.innerHTML='<div class="auth-gate-msg">Please <a href="#" onclick="openAuthModal(\'signin\');return false" style="color:var(--rose);font-weight:600">sign in</a> to see your questions.</div>';
-    return;
-  }
-  const myQs=qaQuestions.filter(q=>q.authorId===currentUser.id);
-  if(!myQs.length){
-    list.innerHTML='<div class="auth-gate-msg">You haven\'t posted any questions yet.<br><br><button class="btn-brand" onclick="openAskModal()">+ Ask your first question</button></div>';
-    return;
-  }
-  list.innerHTML=myQs.map(q=>renderQACard(q,true)).join('');
-}
-
-// ===== CLOSE MODAL ON OVERLAY CLICK =====
-document.querySelectorAll('.modal-overlay').forEach(o=>{
-  o.addEventListener('click',function(e){if(e.target===this) this.classList.remove('open');});
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape'){const o=document.querySelector('.modal-overlay.open');if(o)closeModal(o.id);closeSideMenu();}
 });
 
-// ===== INIT =====
-renderLandingQA();
-// Set initial active nav highlight
-document.getElementById('nav-home').classList.add('active');
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', async ()=>{
+  renderHeaderUser();
+  updateSideMenuAuth();
+  await seedIfEmpty();
+  showPage('home');
+  const si=document.querySelector('#page-connect input[type="text"]');
+  if(si) si.addEventListener('input',(e)=>filterExperts(e.target.value));
+});
+
 </script>
 </body>
 </html>
