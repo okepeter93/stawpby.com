@@ -312,7 +312,23 @@ img{max-width:100%}
 .modal-overlay.open{display:flex}
 .modal{background:#fff;border-radius:16px;padding:28px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
 .modal h2{font-size:1.2rem;font-weight:700;margin-bottom:16px;color:var(--dark)}
-.modal-close{position:absolute;top:16px;right:16px;background:var(--gray);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:1rem;color:var(--muted)}
+.modal-box{background:#fff;border-radius:16px;padding:32px;width:100%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal-close{position:absolute;top:14px;right:14px;background:var(--gray);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1rem;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--border);color:var(--dark)}
+.post-view-header{padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.post-view-question{font-size:18px;font-weight:700;color:var(--dark);line-height:1.45;margin:10px 0}
+.post-view-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.replies-list{display:flex;flex-direction:column;gap:0}
+.reply-card{padding:14px 0;border-bottom:1px solid var(--border)}
+.reply-card:last-child{border-bottom:none}
+.reply-author-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.reply-avatar{width:30px;height:30px;border-radius:50%;background:var(--rose-l);color:var(--rose);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.reply-author-name{font-weight:600;font-size:13px;color:var(--dark)}
+.reply-username{font-size:12px;color:var(--muted)}
+.reply-text{font-size:14px;color:#3a2048;line-height:1.55;padding-left:38px}
+.reply-compose{margin-top:20px;padding-top:16px;border-top:2px solid var(--border)}
+.reply-compose textarea{width:100%;padding:12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;resize:vertical;font-family:inherit;min-height:80px;transition:.2s}
+.reply-compose textarea:focus{outline:none;border-color:var(--rose)}
 .modal-field{margin-bottom:14px}
 .modal-field label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:4px}
 .modal-field select,.modal-field textarea,.modal-field input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-family:'Inter',sans-serif}
@@ -971,9 +987,13 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       <label>Your Question</label>
       <textarea id="ask-question" rows="4" placeholder="e.g. My 2-week-old has tiny red bumps on her face. Is this baby acne? What helped your baby?" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:14px;resize:vertical;font-family:inherit"></textarea>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
-      <input type="checkbox" id="ask-anon" style="width:16px;height:16px"/>
-      <label for="ask-anon" style="font-size:14px;color:var(--muted);cursor:pointer">Post anonymously (your name won't be shown)</label>
+    <div class="form-field" style="margin-bottom:20px">
+      <label>Add a photo <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+      <input type="file" id="ask-image" accept="image/*" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px;font-size:14px;cursor:pointer" onchange="previewAskImage(this)"/>
+      <div id="ask-image-preview" style="display:none;margin-top:8px;position:relative">
+        <img id="ask-img-thumb" style="max-width:100%;max-height:160px;border-radius:8px;object-fit:cover;border:1px solid var(--border)"/>
+        <button onclick="clearAskImage()" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:14px">✕</button>
+      </div>
     </div>
     <div id="ask-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
     <button class="btn-brand" style="width:100%" onclick="submitQuestion()">Post Question</button>
@@ -1068,6 +1088,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
 <!-- Firebase SDK (CDN) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 
 <script>
 // ============================================================
@@ -1083,6 +1104,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 // ============================================================
 // SEED DATA (written to Firestore once)
@@ -1350,7 +1372,7 @@ function renderQACard(post) {
   const rc=(post.replies||[]).length;
   return '<div class="qa-card" id="card-'+post.id+'">' +
     '<div class="qa-card-meta"><span class="qa-badge '+post.topic.toLowerCase().replace(/ /g,'-')+'">'+post.topic+'</span><span style="color:var(--muted);font-size:13px">· '+timeAgo(post.timestamp)+'</span></div>' +
-    '<div class="qa-card-question" onclick="openQAPost(\''+post.id+'\')" style="cursor:pointer">'+escHtml(post.question)+'</div>' +
+    '<div class="qa-card-question" onclick="openQAPost(\''+post.id+'\')" style="cursor:pointer">'+escHtml(post.question)+(post.imageUrl?' 📷':'')+'</div>' +
     '<div class="qa-card-footer">' +
       '<span class="qa-author">'+(post.anonymous?'👤 Anonymous':'👩 '+post.author)+'</span>' +
       '<div style="display:flex;align-items:center;gap:14px">' +
@@ -1416,36 +1438,55 @@ async function openQAPost(postId) {
     if (!doc.exists) { document.getElementById('qa-modal-body').innerHTML='<p>Post not found.</p>'; return; }
     const post = {id:doc.id,...doc.data()};
     const s=getSession(); const voted=getVoted().includes(postId);
-    const repliesHtml=(post.replies||[]).map(r=>
-      '<div class="reply-item"><div style="font-weight:600;font-size:14px">👩 '+escHtml(r.author)+' <span style="font-weight:400;color:var(--muted);font-size:12px">'+timeAgo(r.timestamp)+'</span></div>' +
-      '<div style="margin-top:6px;font-size:14px;color:#3a2048">'+escHtml(r.text)+'</div></div>'
-    ).join('');
+    const repliesHtml=(post.replies||[]).map(r=>{
+      const initials = r.author ? r.author.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) : '?';
+      return '<div class="reply-card">' +
+        '<div class="reply-author-row">' +
+          '<div class="reply-avatar">'+initials+'</div>' +
+          '<div><div class="reply-author-name">'+escHtml(r.author)+'</div>' +
+          '<div class="reply-username">'+(r.username||'')+'  · '+timeAgo(r.timestamp)+'</div></div>' +
+        '</div>' +
+        '<div class="reply-text">'+escHtml(r.text)+'</div>' +
+      '</div>';
+    }).join('');
     const replyHtml = s
-      ? '<div class="reply-input-row">' +
-          '<textarea id="reply-text-'+postId+'" rows="3" placeholder="Write your reply..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:14px;resize:vertical;font-family:inherit"></textarea>' +
-          '<div style="margin-top:8px;display:flex;gap:10px;align-items:center">' +
-            '<input type="checkbox" id="reply-anon-'+postId+'"/> <label for="reply-anon-'+postId+'" style="font-size:13px;color:var(--muted)">Reply anonymously</label>' +
-            '<button class="btn-brand" style="margin-left:auto" onclick="submitReply(\''+postId+'\')">Post Reply</button>' +
+      ? '<div class="reply-compose">' +
+          '<div style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px">Reply as <span style="color:var(--rose)">@'+s.username+'</span></div>' +
+          '<textarea id="reply-text-'+postId+'" placeholder="Share what helped you, or ask a follow-up..." ></textarea>' +
+          '<div style="display:flex;justify-content:flex-end;margin-top:10px">' +
+            '<button class="btn-brand" onclick="submitReply(\''+postId+'\')">Post Reply</button>' +
           '</div></div>'
-      : '<div style="text-align:center;padding:20px;background:var(--gray);border-radius:8px;margin-top:16px"><p style="color:var(--muted);margin-bottom:12px">Sign in to reply</p><button class="btn-brand" onclick="closeModal(\'qa-modal\');openModal(\'auth-modal\')">Sign In to Reply</button></div>';
+      : '<div style="text-align:center;padding:20px;background:var(--gray);border-radius:10px;margin-top:20px">' +
+          '<p style="color:var(--muted);margin-bottom:12px;font-size:14px">Sign in to reply to this question</p>' +
+          '<button class="btn-brand" onclick="closeModal(\'qa-modal\');openModal(\'auth-modal\')">Sign In to Reply</button>' +
+        '</div>';
+    const imgHtml = post.imageUrl ? '<img src="'+post.imageUrl+'" style="width:100%;max-height:280px;object-fit:cover;border-radius:10px;margin:12px 0"/>' : '';
+    const rc = (post.replies||[]).length;
     document.getElementById('qa-modal-body').innerHTML =
-      '<div class="qa-badge '+post.topic.toLowerCase().replace(/ /g,'-')+'" style="margin-bottom:12px">'+post.topic+'</div>' +
-      '<h2 style="font-size:18px;margin-bottom:8px">'+escHtml(post.question)+'</h2>' +
-      '<div style="color:var(--muted);font-size:13px;margin-bottom:20px">'+(post.anonymous?'👤 Anonymous':'👩 '+post.author)+' · '+timeAgo(post.timestamp)+
-        ' · <button class="vote-btn'+(voted?' voted':'')+'" onclick="vote(\''+postId+'\',true)" style="display:inline-flex">▲ <span id="modal-votes-'+postId+'">'+post.votes+'</span></button></div>' +
-      '<div class="reply-section"><h3 style="font-size:15px;margin-bottom:14px">'+(post.replies||[]).length+' '+((post.replies||[]).length===1?'Reply':'Replies')+'</h3>' +
-      (repliesHtml||'<p style="color:var(--muted);font-size:14px">No replies yet. Be the first!</p>') + '</div>' + replyHtml;
+      '<div class="post-view-header">' +
+        '<span class="qa-badge '+post.topic.toLowerCase().replace(/ /g,'-')+'">'+post.topic+'</span>' +
+        '<div class="post-view-question">'+escHtml(post.question)+'</div>' +
+        imgHtml +
+        '<div class="post-view-meta">' +
+          '<span>'+(post.anonymous?'👤 Anonymous':'👤 '+post.author)+'</span>' +
+          '<span>'+timeAgo(post.timestamp)+'</span>' +
+          '<button class="vote-btn'+(voted?' voted':'')+'" onclick="vote(\''+postId+'\',true)" style="display:inline-flex;gap:4px;align-items:center">▲ <span id="modal-votes-'+postId+'">'+post.votes+'</span> upvotes</button>' +
+        '</div>' +
+      '</div>' +
+      '<div style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:12px">'+rc+' '+(rc===1?'Reply':'Replies')+'</div>' +
+      '<div class="replies-list">' +
+        (repliesHtml || '<div style="text-align:center;padding:24px;color:var(--muted);font-size:14px">No replies yet — be the first to help! 👇</div>') +
+      '</div>' +
+      replyHtml;
   } catch(e) { document.getElementById('qa-modal-body').innerHTML='<p style="color:#e05a7a">Error loading post.</p>'; }
 }
 
 async function submitReply(postId) {
   const s=getSession(); if(!s) { requireAuth(()=>{}); return; }
   const textEl=document.getElementById('reply-text-'+postId);
-  const anonEl=document.getElementById('reply-anon-'+postId);
   const text=textEl?textEl.value.trim():'';
   if(!text) { showToast('Please write something before posting.'); return; }
-  const anon=anonEl?anonEl.checked:false;
-  const reply = { author:anon?'Anonymous':s.fname+' '+s.lname.charAt(0)+'.', username:anon?null:'@'+s.username, text, timestamp:Date.now() };
+  const reply = { author:s.fname+' '+s.lname.charAt(0)+'.', username:'@'+s.username, text, timestamp:Date.now() };
   const btn=document.querySelector('#qa-modal-body .btn-brand'); if(btn){btn.textContent='Posting...';btn.disabled=true;}
   try {
     const ref=db.collection('posts').doc(postId);
@@ -1466,24 +1507,50 @@ async function submitQuestion() {
   const s=getSession(); if(!s) { openModal('auth-modal'); return; }
   const question=document.getElementById('ask-question').value.trim();
   const topic=document.getElementById('ask-topic').value;
-  const anon=document.getElementById('ask-anon').checked;
   const errEl=document.getElementById('ask-err'); errEl.style.display='none';
   if(!question||question.length<10) { errEl.textContent='Please write at least a 10-character question.'; errEl.style.display=''; return; }
   const btn=document.querySelector('#ask-modal .btn-brand'); btn.textContent='Posting...'; btn.disabled=true;
   try {
+    // Upload image if selected
+    let imageUrl = null;
+    const imgFile = document.getElementById('ask-image').files[0];
+    if (imgFile) {
+      btn.textContent='Uploading image...';
+      const ref = storage.ref('question-images/' + Date.now() + '_' + imgFile.name);
+      await ref.put(imgFile);
+      imageUrl = await ref.getDownloadURL();
+    }
     await db.collection('posts').add({
       userId:s.userId,
-      author:anon?'Anonymous':s.fname+' '+s.lname.charAt(0)+'.',
-      username:anon?null:'@'+s.username,
-      anonymous:anon, topic, question, timestamp:Date.now(), votes:0, replies:[]
+      author:s.fname+' '+s.lname.charAt(0)+'.',
+      username:'@'+s.username,
+      anonymous:false, topic, question,
+      imageUrl: imageUrl || null,
+      timestamp:Date.now(), votes:0, replies:[]
     });
     document.getElementById('ask-question').value='';
-    document.getElementById('ask-anon').checked=false;
+    clearAskImage();
     closeModal('ask-modal');
     showToast('Question posted! 🎉');
     showPage('community');
-  } catch(e) { errEl.textContent='Error posting. Please try again.'; errEl.style.display=''; }
+  } catch(e) { errEl.textContent='Error posting. Please try again.'; errEl.style.display=''; console.error(e); }
   btn.textContent='Post Question'; btn.disabled=false;
+}
+
+function previewAskImage(input) {
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('ask-img-thumb').src = e.target.result;
+    document.getElementById('ask-image-preview').style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearAskImage() {
+  document.getElementById('ask-image').value='';
+  document.getElementById('ask-image-preview').style.display='none';
+  document.getElementById('ask-img-thumb').src='';
 }
 
 // ============================================================
