@@ -449,7 +449,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
     <h1>Get answers from <span>experienced moms</span></h1>
     <p class="hero-sub">Real questions from new parents — answered by experienced moms in the community. Post anonymously if you want.</p>
     <div class="hero-btns">
-      <button class="btn-white" onclick="requireAuth('ask')">+ Ask a Question</button>
+      <button class="btn-white" onclick="openAskModal()">+ Ask a Question</button>
       <button class="btn-outline" onclick="showPage('community')">Browse all questions →</button>
     </div>
   </div>
@@ -460,7 +460,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
         <button class="sort-btn active" onclick="setQASort('hot',this)">🔥 Hot</button>
         <button class="sort-btn" onclick="setQASort('new',this)">🆕 New</button>
         <button class="sort-btn" onclick="setQASort('top',this)">⭐ Top</button>
-        <button class="ask-btn-sm" onclick="requireAuth('ask')">+ Ask</button>
+        <button class="ask-btn-sm" onclick="openAskModal()">+ Ask</button>
       </div>
       <div id="qa-feed"></div>
     </div>
@@ -468,7 +468,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       <div class="sidebar-card purple">
         <h3>Have a question?</h3>
         <p>Get answers from experienced moms — free, real, and private.</p>
-        <button class="sidebar-ask-btn" onclick="requireAuth('ask')">+ Ask a Question</button>
+        <button class="sidebar-ask-btn" onclick="openAskModal()">+ Ask a Question</button>
       </div>
       <div class="sidebar-card">
         <div class="stat-row"><span>Questions answered</span><span class="stat-val">2,400+</span></div>
@@ -567,7 +567,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   <div class="community-hero">
     <h1>Community Q&amp;A</h1>
     <p style="color:rgba(255,255,255,.75);margin-bottom:16px">Join thousands of parents asking and answering real postpartum questions</p>
-    <button class="ask-big-btn" onclick="requireAuth('ask')">+ Ask a Question</button>
+    <button class="ask-big-btn" onclick="openAskModal()">+ Ask a Question</button>
   </div>
   <div class="topic-filters" id="topic-filters">
     <div class="chip active" onclick="filterTopic(this,'all')">All Topics</div>
@@ -586,7 +586,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   <div class="community-hero">
     <h1>My Questions</h1>
     <p style="color:rgba(255,255,255,.75);margin-bottom:16px">Questions you've posted and their answers</p>
-    <button class="ask-big-btn" onclick="requireAuth('ask')">+ Ask a Question</button>
+    <button class="ask-big-btn" onclick="openAskModal()">+ Ask a Question</button>
   </div>
   <div class="qa-full-list" id="qa-my-list"></div>
 </div>
@@ -838,7 +838,10 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       </div>
       <div id="signin-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
       <button class="btn-brand" style="width:100%" onclick="doLogin()">Sign In</button>
-      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted)">
+      <p style="text-align:center;margin-top:12px;font-size:13px">
+        <a href="#" onclick="openResetModal();return false" style="color:var(--muted)">Forgot password?</a>
+      </p>
+      <p style="text-align:center;margin-top:8px;font-size:13px;color:var(--muted)">
         No account? <a href="#" onclick="switchAuthTab('signup');return false" style="color:var(--rose)">Create one free →</a>
       </p>
     </div>
@@ -1015,6 +1018,40 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   </div>
 </div>
 
+<!-- Reset Password Modal -->
+<div id="reset-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('reset-modal')">
+  <div class="modal-box" style="max-width:420px">
+    <button class="modal-close" onclick="closeModal('reset-modal')">✕</button>
+    <div id="reset-step-1">
+      <h2 style="margin-bottom:8px">Reset Password</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Enter your email and we'll verify your identity.</p>
+      <div class="form-field" style="margin-bottom:20px">
+        <label>Email address</label>
+        <input type="email" id="reset-email" placeholder="you@example.com"/>
+      </div>
+      <div id="reset-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
+      <button class="btn-brand" style="width:100%" onclick="startReset()">Continue →</button>
+    </div>
+    <div id="reset-step-2" style="display:none">
+      <h2 style="margin-bottom:8px">Set New Password</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Account found. Choose a new password.</p>
+      <div class="form-field" style="margin-bottom:14px">
+        <label>New Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="reset-newpass" placeholder="Min 8 characters"/>
+          <span class="pass-eye" onclick="togglePass('reset-newpass',this)">👁</span>
+        </div>
+      </div>
+      <div class="form-field" style="margin-bottom:20px">
+        <label>Confirm Password</label>
+        <input type="password" id="reset-confirm" placeholder="Repeat password"/>
+      </div>
+      <div id="reset-err2" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
+      <button class="btn-brand" style="width:100%" onclick="doReset()">Save New Password</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div id="toast" class="toast"></div>
 
@@ -1124,7 +1161,7 @@ async function doLogin() {
   btn.textContent='Checking...'; btn.disabled=true;
   try {
     const user = await getUser(email);
-    if (!user || user.password !== pass) { errEl.textContent='Incorrect email or password.'; errEl.style.display=''; btn.textContent='Sign In'; btn.disabled=false; return; }
+    if (!user || user.password !== pass.trim()) { errEl.textContent='Incorrect email or password.'; errEl.style.display=''; btn.textContent='Sign In'; btn.disabled=false; return; }
     _pendingUser = { ...user, flow:'login' };
     document.getElementById('otp-phone-display').textContent = maskPhone(user.phone);
     closeModal('auth-modal');
@@ -1322,41 +1359,41 @@ function setFeedLoading(containerId, msg) {
 }
 
 async function loadLandingQA() {
-  setFeedLoading('landing-qa-feed','Loading questions...');
+  setFeedLoading('qa-feed','Loading questions...');
   try {
     const snap = await db.collection('posts').orderBy('timestamp','desc').limit(4).get();
     const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
-    const el=document.getElementById('landing-qa-feed');
+    const el=document.getElementById('qa-feed');
     if(el) el.innerHTML = posts.length ? posts.map(renderQACard).join('') : '<p style="text-align:center;color:var(--muted);padding:40px">No questions yet. Be the first to ask!</p>';
-  } catch(e) { setFeedLoading('landing-qa-feed','Could not load questions.'); }
+  } catch(e) { setFeedLoading('qa-feed','Could not load questions.'); }
 }
 
 let _activeTopic = null;
 async function loadQAFull(topic) {
   _activeTopic = topic||null;
-  setFeedLoading('community-feed','Loading questions...');
+  setFeedLoading('qa-full-list','Loading questions...');
   try {
     let q = db.collection('posts').orderBy('timestamp','desc');
     if (topic && topic!=='All') q = db.collection('posts').where('topic','==',topic).orderBy('timestamp','desc');
     const snap = await q.get();
     const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
-    const el=document.getElementById('community-feed');
+    const el=document.getElementById('qa-full-list');
     if(el) el.innerHTML = posts.length ? posts.map(renderQACard).join('') :
       '<div style="text-align:center;padding:60px 20px;color:var(--muted)"><div style="font-size:48px;margin-bottom:12px">🔍</div><p>No questions yet in this topic.</p><button class="btn-brand" style="margin-top:16px" onclick="openAskModal()">Ask a Question</button></div>';
-  } catch(e) { setFeedLoading('community-feed','Could not load questions.'); }
+  } catch(e) { setFeedLoading('qa-full-list','Could not load questions.'); }
 }
 
 async function loadMyQuestions() {
   const s=getSession();
-  const el=document.getElementById('myq-feed'); if(!el) return;
+  const el=document.getElementById('qa-my-list'); if(!el) return;
   if (!s) { el.innerHTML='<div style="text-align:center;padding:60px;color:var(--muted)"><p>Sign in to see your questions.</p><button class="btn-brand" style="margin-top:16px" onclick="openModal(\'auth-modal\')">Sign In</button></div>'; return; }
-  setFeedLoading('myq-feed','Loading your questions...');
+  setFeedLoading('qa-my-list','Loading your questions...');
   try {
     const snap = await db.collection('posts').where('userId','==',s.userId).orderBy('timestamp','desc').get();
     const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
     el.innerHTML = posts.length ? posts.map(renderQACard).join('') :
       '<div style="text-align:center;padding:60px;color:var(--muted)"><div style="font-size:48px;margin-bottom:12px">📝</div><p>You haven\'t asked anything yet.</p><button class="btn-brand" style="margin-top:16px" onclick="openAskModal()">Ask Your First Question</button></div>';
-  } catch(e) { setFeedLoading('myq-feed','Could not load your questions.'); }
+  } catch(e) { setFeedLoading('qa-my-list','Could not load your questions.'); }
 }
 
 
@@ -1494,7 +1531,7 @@ async function setQASort(sort, el) {
   _qaSort = sort;
   document.querySelectorAll('#page-home .sort-btn').forEach(b=>b.classList.remove('active'));
   if(el) el.classList.add('active');
-  setFeedLoading('landing-qa-feed','Loading questions...');
+  setFeedLoading('qa-feed','Loading questions...');
   try {
     let q;
     if (sort === 'new') {
@@ -1505,12 +1542,12 @@ async function setQASort(sort, el) {
     }
     const snap = await q.get();
     const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
-    const el2 = document.getElementById('landing-qa-feed');
+    const el2 = document.getElementById('qa-feed');
     if(el2) el2.innerHTML = posts.length ? posts.map(renderQACard).join('') : '<p style="text-align:center;color:var(--muted);padding:40px">No questions yet.</p>';
-  } catch(e) { setFeedLoading('landing-qa-feed','Could not load questions.'); }
+  } catch(e) { setFeedLoading('qa-feed','Could not load questions.'); }
 }
 function setMarket(market,el){document.querySelectorAll('.market-btn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');}
-function filterTopic(topic,el){document.querySelectorAll('.topic-chip').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');loadQAFull(topic==='All'?null:topic);}
+function filterTopic(el,topic){document.querySelectorAll('#topic-filters .chip').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');loadQAFull(topic==='all'?null:topic);}
 
 // ============================================================
 // PROFILE PAGE
@@ -1577,6 +1614,56 @@ function sendChat() {
 }
 
 function openQAModal(){openAskModal();}
+
+// ============================================================
+// PASSWORD RESET
+// ============================================================
+let _resetUserId = null;
+function openResetModal() {
+  document.getElementById('reset-step-1').style.display='';
+  document.getElementById('reset-step-2').style.display='none';
+  document.getElementById('reset-email').value='';
+  document.getElementById('reset-err').style.display='none';
+  document.getElementById('reset-newpass').value='';
+  document.getElementById('reset-confirm').value='';
+  closeModal('auth-modal');
+  openModal('reset-modal');
+}
+async function startReset() {
+  const email = document.getElementById('reset-email').value.trim().toLowerCase();
+  const errEl = document.getElementById('reset-err');
+  errEl.style.display='none';
+  if (!email) { errEl.textContent='Please enter your email.'; errEl.style.display=''; return; }
+  const btn = document.querySelector('#reset-step-1 .btn-brand');
+  btn.textContent='Looking up...'; btn.disabled=true;
+  try {
+    const user = await getUser(email);
+    if (!user) { errEl.textContent='No account found with that email.'; errEl.style.display=''; btn.textContent='Continue →'; btn.disabled=false; return; }
+    _resetUserId = user.id;
+    document.getElementById('reset-step-1').style.display='none';
+    document.getElementById('reset-step-2').style.display='';
+  } catch(e) { errEl.textContent='Error. Please try again.'; errEl.style.display=''; }
+  btn.textContent='Continue →'; btn.disabled=false;
+}
+async function doReset() {
+  const newpass = document.getElementById('reset-newpass').value;
+  const confirm = document.getElementById('reset-confirm').value;
+  const errEl = document.getElementById('reset-err2');
+  errEl.style.display='none';
+  if (newpass.length < 8) { errEl.textContent='Password must be at least 8 characters.'; errEl.style.display=''; return; }
+  if (newpass !== confirm) { errEl.textContent='Passwords do not match.'; errEl.style.display=''; return; }
+  const btn = document.querySelector('#reset-step-2 .btn-brand');
+  btn.textContent='Saving...'; btn.disabled=true;
+  try {
+    await db.collection('users').doc(_resetUserId).update({ password: newpass });
+    closeModal('reset-modal');
+    _resetUserId = null;
+    showToast('Password updated! You can now sign in.');
+    openModal('auth-modal');
+    switchAuthTab('signin');
+  } catch(e) { errEl.textContent='Error saving. Please try again.'; errEl.style.display=''; }
+  btn.textContent='Save New Password'; btn.disabled=false;
+}
 
 document.addEventListener('keydown',(e)=>{
   if(e.key==='Escape'){const o=document.querySelector('.modal-overlay.open');if(o)closeModal(o.id);closeSideMenu();}
