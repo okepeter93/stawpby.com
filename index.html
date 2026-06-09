@@ -26,18 +26,14 @@ img{max-width:100%}
 .nav-logo-text{font-family:'Dancing Script',cursive;font-size:1.5rem;color:#6B30BF;line-height:1}
 .nav-logo svg.heart{width:18px;height:18px;margin-bottom:2px}
 .nav-logo svg.curve{width:70px;height:8px;margin-top:1px}
-.nav-links{display:flex;align-items:center;gap:4px;flex:1}
-.nav-links a{color:rgba(255,255,255,.82);font-size:.84rem;padding:6px 10px;border-radius:6px;transition:.2s;white-space:nowrap}
-.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
-.nav-links a.active{color:#fff;background:rgba(255,255,255,0.2);border-radius:7px;font-weight:600}
-.nav-links a.cta{color:rgba(255,255,255,.82)}
+.nav-links{display:none}
 .nav-right{display:flex;align-items:center;gap:8px;margin-left:auto}
 .market-toggle{display:flex;background:rgba(255,255,255,.1);border-radius:20px;overflow:hidden}
 .market-btn{padding:4px 12px;font-size:.78rem;color:rgba(255,255,255,.7);background:none;border:none;cursor:pointer;transition:.2s}
 .market-btn.active{background:var(--brand);color:#fff}
 .signin-btn{padding:6px 16px;background:rgba(255,255,255,.15);color:#fff;border-radius:20px;font-size:.82rem;border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:.2s}
 .signin-btn:hover{background:rgba(255,255,255,.25)}
-.hamburger{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:4px 8px}
+.hamburger{display:block;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:4px 8px}
 
 /* MOBILE MENU */
 #mobile-menu{display:none;position:fixed;inset:0;z-index:200;background:var(--dark);flex-direction:column;padding:24px}
@@ -77,19 +73,19 @@ img{max-width:100%}
 .ask-btn-sm{margin-left:auto;background:var(--rose);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer}
 
 /* QA CARD */
-.qa-card{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:14px;display:flex;overflow:hidden;transition:.2s}
-.qa-card:hover{box-shadow:0 4px 16px rgba(92,45,110,.1)}
-.vote-col{display:flex;flex-direction:column;align-items:center;padding:14px 10px;background:var(--gray);gap:4px;min-width:52px}
-.vote-btn{background:none;border:none;font-size:1rem;cursor:pointer;color:var(--muted);transition:.2s;padding:2px}
+.qa-card{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;display:flex;overflow:hidden;transition:.15s}
+.qa-card:hover{box-shadow:0 2px 12px rgba(92,45,110,.12);border-color:rgba(160,80,140,.3)}
+.vote-col{display:flex;flex-direction:column;align-items:center;padding:12px 8px;background:var(--gray);gap:4px;min-width:46px}
+.vote-btn{background:none;border:none;font-size:.95rem;cursor:pointer;color:var(--muted);transition:.2s;padding:2px}
 .vote-btn:hover{color:var(--rose)}
-.vote-count{font-size:.9rem;font-weight:700;color:var(--dark)}
-.qa-body{padding:14px 16px;flex:1;min-width:0}
-.topic-chip{display:inline-block;background:var(--rose-l);color:var(--rose);font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:8px}
-.qa-title{font-size:1rem;font-weight:600;color:var(--dark);line-height:1.4;margin-bottom:10px;cursor:pointer}
+.vote-count{font-size:.85rem;font-weight:700;color:var(--dark)}
+.qa-body{padding:12px 16px;flex:1;min-width:0}
+.topic-chip{display:inline-block;background:var(--rose-l);color:var(--rose);font-size:.7rem;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:7px}
+.qa-title{font-size:1.05rem;font-weight:700;color:var(--dark);line-height:1.45;margin-bottom:8px;cursor:pointer}
 .qa-title:hover{color:var(--rose)}
-.qa-img{border-radius:8px;max-height:140px;width:100%;object-fit:cover;margin-bottom:10px;background:var(--gray)}
-.answer-preview{background:var(--gray);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:.83rem;line-height:1.5}
-.answer-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.qa-img{display:none}
+.answer-preview{background:transparent;border-left:3px solid var(--border);padding:4px 10px;margin-bottom:8px;font-size:.82rem;line-height:1.45;color:var(--muted)}
+.answer-header{display:flex;align-items:center;gap:7px;margin-bottom:4px}
 .answer-avatar{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#fff;flex-shrink:0}
 .top-badge{background:linear-gradient(90deg,#f59e0b,#f97316);color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:10px}
 .comment-list{margin-bottom:8px}
@@ -350,10 +346,20 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
 .checkout-body h1{font-size:1.6rem;font-weight:700;margin-bottom:28px}
 .checkout-grid{display:grid;grid-template-columns:1fr 300px;gap:24px}
 
+/* AUTH */
+.auth-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px}
+.auth-tab{flex:1;padding:10px;text-align:center;border:none;background:none;cursor:pointer;font-size:.9rem;color:var(--muted);transition:.2s;border-bottom:3px solid transparent;margin-bottom:-2px;font-family:'Inter',sans-serif}
+.auth-tab.active{color:var(--rose);border-bottom-color:var(--rose);font-weight:600}
+.auth-panel{}
+.nav-user-pill{display:none;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;color:#fff;font-size:.82rem;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
+.nav-user-pill:hover{background:rgba(255,255,255,.25)}
+.auth-code-input{text-align:center;font-size:1.5rem;letter-spacing:.4em;font-weight:700;padding:12px!important}
+.myq-page-hero{background:linear-gradient(135deg,var(--dark),#3D1550);padding:40px 20px;text-align:center;color:#fff}
+.myq-page-hero h1{font-size:1.8rem;margin-bottom:12px}
+.auth-gate-msg{text-align:center;padding:48px 20px;color:var(--muted);font-size:.95rem}
+
 /* RESPONSIVE */
 @media(max-width:768px){
-  .nav-links,.nav-right{display:none}
-  .hamburger{display:block}
   .feed-layout{grid-template-columns:1fr}
   .sidebar-col{display:none}
   .testimonial-grid{grid-template-columns:1fr}
@@ -390,19 +396,13 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       <span class="nav-logo-text">StawpBy</span>
       <svg class="curve" viewBox="0 0 70 8" fill="none"><path d="M2 6 Q35 1 68 6" stroke="#6B30BF" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
     </div>
-    <div class="nav-links">
-      <a href="#" onclick="showPage('home');return false" id="nav-home">Help Center</a>
-      <a href="#" onclick="showPage('community');return false" id="nav-community">Community Q&amp;A</a>
-      <a href="#" onclick="showPage('connect');return false" id="nav-connect">Connect with a Mom</a>
-      <a href="#" onclick="showPage('how');return false" id="nav-how">How It Works</a>
-      <a href="#" onclick="showPage('signup');return false" id="nav-signup">Become an Expert Mom</a>
-    </div>
     <div class="nav-right">
       <div class="market-toggle">
         <button class="market-btn active" id="btn-us" onclick="setMarket('US')">🇺🇸 US</button>
         <button class="market-btn" id="btn-ca" onclick="setMarket('CA')">🇨🇦 CA</button>
       </div>
-      <button class="signin-btn">Sign In</button>
+      <button class="nav-user-pill" id="nav-user-pill" onclick="toggleMobileMenu()">👤 <span id="nav-user-name"></span></button>
+      <button class="signin-btn" id="nav-signin-btn" onclick="openAuthModal('signin')">Sign In</button>
     </div>
     <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
   </div>
@@ -421,9 +421,13 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
     <a href="#" onclick="toggleMobileMenu();showPage('home');return false">Help Center</a>
     <a href="#" onclick="toggleMobileMenu();showPage('community');return false">Community Q&amp;A</a>
     <a href="#" onclick="toggleMobileMenu();showPage('connect');return false">Connect with a Mom</a>
+    <a href="#" onclick="toggleMobileMenu();showPage('connect');return false">Book an Expert Mom</a>
     <a href="#" onclick="toggleMobileMenu();showPage('how');return false">How It Works</a>
     <a href="#" onclick="toggleMobileMenu();showPage('signup');return false">Become an Expert Mom</a>
-    <a href="#">Sign In</a>
+    <a href="#" onclick="toggleMobileMenu();return false">About Us</a>
+    <a href="#" id="menu-myq-link" style="display:none" onclick="toggleMobileMenu();showPage('myquestions');return false">📋 My Questions</a>
+    <a href="#" id="menu-signin-link" onclick="toggleMobileMenu();openAuthModal('signin');return false">Sign In / Create Account</a>
+    <a href="#" id="menu-signout-link" style="display:none;color:#f87171" onclick="signOut();return false">Sign Out</a>
   </div>
 </div>
 
@@ -433,7 +437,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   <!-- Hero -->
   <div class="hero-strip">
     <div class="hero-badge">🌎 Now in the US &amp; Canada</div>
-    <h1>Get answers from parents<br><span>who've been through it</span></h1>
+    <h1>Get answers from experienced moms<br><span>who've been through it</span></h1>
     <p class="hero-sub">Real questions from new moms and dads — answered free by verified Expert Moms, anytime, post anonymously if you want.</p>
     <div class="hero-btns">
       <button class="btn-white" onclick="openAskModal()">+ Ask a Question</button>
@@ -992,6 +996,16 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   </div>
 </div><!-- /page-checkout -->
 
+<!-- ===== PAGE: MY QUESTIONS ===== -->
+<div id="page-myquestions" class="page">
+  <div class="myq-page-hero">
+    <h1>My Questions</h1>
+    <p style="color:rgba(255,255,255,.75);margin-bottom:16px">Questions you've posted to the community</p>
+    <button class="ask-big-btn" onclick="openAskModal()">+ Ask a Question</button>
+  </div>
+  <div class="qa-full-list" id="my-questions-list"></div>
+</div><!-- /page-myquestions -->
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -1045,7 +1059,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
     <h2>Ask a Question</h2>
     <div class="modal-field">
       <label>Topic</label>
-      <select>
+      <select id="ask-topic-select">
         <option>Newborn Care</option><option>Lactation Support</option><option>Mental Health</option>
         <option>Nutrition</option><option>Recovery</option><option>Cultural Practices</option>
         <option>Baby Sleep</option><option>Other</option>
@@ -1053,7 +1067,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
     </div>
     <div class="modal-field">
       <label>Your Question</label>
-      <textarea placeholder="What would you like to know? Be as specific as you like..."></textarea>
+      <textarea id="ask-question-text" placeholder="What would you like to know? Be as specific as you like..."></textarea>
     </div>
     <div class="anon-toggle">
       <input type="checkbox" id="anon-check"/>
@@ -1080,7 +1094,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
       <label>Add Your Answer</label>
       <textarea placeholder="Share what worked for you..."></textarea>
     </div>
-    <button class="modal-submit" onclick="closeModal('modal-qa')">Post Answer</button>
+    <button class="modal-submit" onclick="requireAuth(()=>{ closeModal('modal-qa'); setTimeout(()=>alert('Your answer has been posted!'),200); })">Post Answer</button>
   </div>
 </div>
 
@@ -1144,6 +1158,84 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   </div>
 </div>
 
+<!-- ===== AUTH MODAL ===== -->
+<div class="modal-overlay" id="modal-auth">
+  <div class="modal" style="max-width:460px">
+    <button class="modal-close" onclick="closeModal('modal-auth')">✕</button>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="auth-tab-signin" onclick="switchAuthTab('signin')">Sign In</button>
+      <button class="auth-tab" id="auth-tab-signup" onclick="switchAuthTab('signup')">Create Account</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <div id="auth-signin-panel" class="auth-panel">
+      <div class="modal-field"><label>Email</label><input type="email" id="si-email" placeholder="you@email.com"/></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="si-password" placeholder="••••••••"/></div>
+      <div id="si-error" style="color:#dc2626;font-size:.82rem;margin-bottom:10px;display:none"></div>
+      <button class="modal-submit" onclick="doSignIn()">Sign In →</button>
+      <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:14px">
+        No account? <a href="#" onclick="switchAuthTab('signup');return false" style="color:var(--rose);font-weight:600">Create one free →</a>
+      </p>
+    </div>
+
+    <!-- SIGN UP Step 1: Basic info -->
+    <div id="auth-signup-1" class="auth-panel" style="display:none">
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:16px;font-weight:600;text-transform:uppercase;letter-spacing:.4px">Step 1 of 3 — Your info</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="modal-field" style="margin:0 0 14px"><label>First Name</label><input type="text" id="su-fname" placeholder="Ana"/></div>
+        <div class="modal-field" style="margin:0 0 14px"><label>Last Name</label><input type="text" id="su-lname" placeholder="Smith"/></div>
+      </div>
+      <div class="modal-field">
+        <label>Username</label>
+        <input type="text" id="su-username" placeholder="e.g. new_mom_ana"/>
+        <span style="font-size:.72rem;color:var(--muted)">How you'll appear on posts (can be changed later)</span>
+      </div>
+      <div class="modal-field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com"/></div>
+      <div class="modal-field"><label>Phone — for 2FA</label><input type="tel" id="su-phone" placeholder="+1 (555) 000-0000"/></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="su-password" placeholder="Min 6 characters"/></div>
+      <div id="su1-error" style="color:#dc2626;font-size:.82rem;margin-bottom:10px;display:none"></div>
+      <button class="modal-submit" onclick="signupStep1()">Continue — Verify Email →</button>
+    </div>
+
+    <!-- SIGN UP Step 2: Email confirmation -->
+    <div id="auth-signup-2" class="auth-panel" style="display:none;text-align:center">
+      <div style="font-size:2.8rem;margin-bottom:12px">📧</div>
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:8px">Check your inbox</h3>
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:20px;line-height:1.5">We sent a 6-digit code to<br><strong id="su-email-display" style="color:var(--dark)"></strong></p>
+      <div class="modal-field" style="text-align:left">
+        <label>Enter code</label>
+        <input type="text" id="su-email-code" class="auth-code-input" placeholder="· · · · · ·" maxlength="6"/>
+      </div>
+      <div id="su2-error" style="color:#dc2626;font-size:.82rem;margin-bottom:10px;display:none"></div>
+      <button class="modal-submit" onclick="verifyEmailCode()">Verify Email →</button>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:12px">
+        <a href="#" onclick="alert('New code sent!');return false" style="color:var(--rose)">Resend code</a>
+        &nbsp;·&nbsp; Demo: enter <strong>123456</strong>
+      </p>
+    </div>
+
+    <!-- SIGN UP Step 3: Phone 2FA -->
+    <div id="auth-signup-3" class="auth-panel" style="display:none;text-align:center">
+      <div style="font-size:2.8rem;margin-bottom:12px">📱</div>
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:8px">Verify your phone</h3>
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:20px;line-height:1.5">We texted a code to<br><strong id="su-phone-display" style="color:var(--dark)"></strong></p>
+      <div class="modal-field" style="text-align:left">
+        <label>Enter SMS code</label>
+        <input type="text" id="su-phone-code" class="auth-code-input" placeholder="· · · · · ·" maxlength="6"/>
+      </div>
+      <div id="su3-error" style="color:#dc2626;font-size:.82rem;margin-bottom:10px;display:none"></div>
+      <button class="modal-submit" onclick="verifyPhoneCode()">Complete Sign Up ✓</button>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:12px">
+        <a href="#" onclick="alert('New SMS sent!');return false" style="color:var(--rose)">Resend SMS</a>
+        &nbsp;·&nbsp; Demo: enter <strong>654321</strong>
+      </p>
+    </div>
+
+  </div>
+</div>
+
 <script>
 // ===== DATA =====
 const expertMoms = [
@@ -1156,33 +1248,34 @@ const expertMoms = [
 ];
 
 const qaQuestions = [
-  {id:1,topic:"Newborn Care",title:"My baby has small white and red bumps all over her cheeks — is this baby acne? She's 3 weeks old.",upvotes:47,userVote:0,
-   hasImage:true,imageType:"acne",
-   answer:{text:"Yes, this is almost certainly baby acne (neonatal acne)! It's very common — about 20% of newborns get it. The bumps are caused by maternal hormones still circulating in your baby's system. It typically appears around 2–4 weeks and clears up on its own within a few weeks. Just keep the area clean with plain warm water, don't squeeze or use any creams, and it will fade. If the bumps spread, look crusty, or your baby seems unwell, check with your pediatrician.",
-    author:"Chidinma O.",rating:"⭐4.9",bgColor:"#E8C870"},
+  {id:1,topic:"Newborn Care",title:"My baby has small white and red bumps all over her cheeks — is this baby acne? She's 3 weeks old.",upvotes:47,userVote:0,hasImage:false,
+   answer:{text:"Yes, almost certainly baby acne (neonatal acne)! About 20% of newborns get it — caused by maternal hormones still in your baby's system. It appears around 2–4 weeks and clears up on its own. Just clean with plain warm water, no creams, no squeezing. If bumps spread or look crusty, check with your pediatrician.",
+    author:"Ana M.",rating:"⭐4.9",bgColor:"#C870A8"},
    comments:[{author:"Sarah M.",text:"My daughter had this too at 3 weeks. Gone by 6 weeks completely!"},
-             {author:"Amaka T.",text:"Same! The doctor said don't use any lotions. Just water."}]},
-  {id:2,topic:"Lactation Support",title:"My baby is 12 days old and not latching well — what finally worked for you?",upvotes:18,userVote:0,
-   hasImage:false,
-   answer:{text:"Latching issues at 12 days are so common, you are not alone! What worked for me: the football hold position was a game-changer — baby's body is tucked under your arm and you have full control of his head. Also try laid-back breastfeeding (you recline at 45°, baby lies on top of you). Make sure you're aiming the nipple toward the baby's upper lip so they open wide. If you can, see a lactation consultant even for one session — they can watch and correct your latch in minutes.",
-    author:"Chidinma O.",rating:"⭐4.9",bgColor:"#E8C870"},
-   comments:[{author:"Yemi A.",text:"Football hold saved us!! Game changer."}]},
-  {id:3,topic:"Mental health",title:"Is it normal to feel really sad and overwhelmed in the first week even if everything went okay?",upvotes:34,userVote:0,
-   hasImage:false,
-   answer:{text:"Yes — completely normal, and I want you to know that. What you're describing sounds like the baby blues, which affect up to 80% of new mothers regardless of how the birth went. It's caused by a massive hormonal drop after delivery. The sadness, crying, and feeling overwhelmed are real and valid. Baby blues typically peak around day 3–5 and resolve within 2 weeks. If these feelings are still very strong after 2 weeks, or if you're having thoughts of harming yourself or not wanting to care for your baby, please reach out to your doctor — it could be postpartum depression, which is very treatable.",
-    author:"Priya S.",rating:"⭐4.9",bgColor:"#C8B860"},
-   comments:[{author:"Temi A.",text:"I felt this deeply. The baby blues hit me on day 4. You are not alone."},
+             {author:"Mary K.",text:"Same! The doctor said don't use any lotions. Just water."}]},
+  {id:2,topic:"Lactation Support",title:"My baby is 12 days old and not latching well — what finally worked for you?",upvotes:31,userVote:0,hasImage:false,
+   answer:{text:"Latching issues at 12 days are so common — you are not alone! The football hold was a game-changer for me: baby's body tucked under your arm, you have full control of the head. Also try laid-back nursing (recline at 45°, baby lies on your chest). Aim the nipple toward the upper lip so they open wide. One session with a lactation consultant can fix things in minutes.",
+    author:"Mary K.",rating:"⭐4.8",bgColor:"#70A8C8"},
+   comments:[{author:"Ana M.",text:"Football hold saved us!! Absolute game changer."},
+             {author:"Rosa H.",text:"The laid-back position worked so well for us in the first weeks."}]},
+  {id:3,topic:"Mental Health",title:"Is it normal to feel really sad and overwhelmed in the first week even if everything went okay?",upvotes:58,userVote:0,hasImage:false,
+   answer:{text:"Yes — completely normal, and I want you to know that. What you're describing sounds like the baby blues, which affect up to 80% of new mothers regardless of how the birth went. It's caused by a massive hormonal drop after delivery. Baby blues typically peak around day 3–5 and resolve within 2 weeks. If feelings are still very strong after 2 weeks, please reach out to your doctor — it could be postpartum depression, which is very treatable.",
+    author:"Ana M.",rating:"⭐4.9",bgColor:"#C870A8"},
+   comments:[{author:"Mary K.",text:"I felt this deeply. The baby blues hit me on day 4. You are not alone."},
              {author:"Anonymous",text:"I thought something was wrong with me. Knowing it was normal helped so much."}]},
-  {id:4,topic:"Nutrition",title:"What foods helped your postpartum recovery the most? Nigerian and West African recipes?",upvotes:42,userVote:0,
-   hasImage:false,
-   answer:{text:"Pepper soup is THE postpartum food in my culture for good reason — it's warming, it boosts milk supply, and the spices (uziza, utazi, ehuru) have anti-inflammatory properties. I make mine with goat meat or catfish. Also: ofe akwu (palm fruit soup) is incredibly nutritious, ogbono soup with lots of fish, and omi obe (the broth leftover from any soup) is gold. For drinks, zobo (hibiscus) and warm pap (akamu/ogi) every morning. Avoid cold drinks for the first 40 days — this is tradition for a reason.",
-    author:"Funmilayo A.",rating:"⭐4.7",bgColor:"#9898C8"},
-   comments:[{author:"Ngozi C.",text:"Pepper soup EVERY day for 6 weeks. I was healed 😂"}]},
-  {id:5,topic:"Recovery",title:"How do I safely do belly binding at home? 2 weeks postpartum, Yoruba tradition.",upvotes:28,userVote:0,
-   hasImage:true,imageType:"binding",
-   answer:{text:"At 2 weeks you can start belly binding — in Yoruba tradition we call it aso-oke tying or oja. The key rules: never bind so tight that you can't take a deep breath. Always wrap from the hips upward (bottom to top), not top to bottom. Use a long, breathable cotton cloth. Wear it for 8–12 hours during the day, remove at night to sleep. If you had a C-section, wait until your incision is fully closed (usually 6 weeks) before binding over that area. Warm your belly with a cloth or hot water bottle before binding — it helps the muscles relax back into position.",
-    author:"Funmilayo A.",rating:"⭐4.7",bgColor:"#9898C8"},
-   comments:[{author:"Adaeze K.",text:"This is exactly what my mum told me. Thank you for writing it out properly!"}]}
+  {id:4,topic:"Nutrition",title:"What foods helped your postpartum recovery the most? Looking for West African recipes.",upvotes:42,userVote:0,hasImage:false,
+   answer:{text:"Pepper soup is THE postpartum food for good reason — warming, boosts milk supply, and the spices have anti-inflammatory properties. Also: palm fruit soup is incredibly nutritious, ogbono with lots of fish, and the broth from any soup is gold. For drinks, zobo (hibiscus) and warm pap every morning. Avoid cold drinks for the first 40 days.",
+    author:"Mary K.",rating:"⭐4.8",bgColor:"#70A8C8"},
+   comments:[{author:"Ana M.",text:"Pepper soup every day for 6 weeks. I genuinely felt healed 😂"},
+             {author:"Rosa H.",text:"We do something similar — warm broths and no cold food. Works so well."}]},
+  {id:5,topic:"Recovery",title:"How do I safely do belly binding at home? 2 weeks postpartum.",upvotes:28,userVote:0,hasImage:false,
+   answer:{text:"At 2 weeks you can start belly binding. Key rules: never bind so tight that you can't take a deep breath. Always wrap from the hips upward (bottom to top). Use a long breathable cotton cloth. Wear 8–12 hours during the day, remove at night. C-section moms: wait until your incision is fully closed — usually 6 weeks. Warm your belly with a cloth before binding to help muscles relax.",
+    author:"Ana M.",rating:"⭐4.9",bgColor:"#C870A8"},
+   comments:[{author:"Mary K.",text:"This is exactly right — start low and work your way up. So important."}]},
+  {id:6,topic:"Newborn Care",title:"How often should I bathe my newborn? I've heard conflicting advice.",upvotes:19,userVote:0,hasImage:false,
+   answer:{text:"2–3 times a week is plenty for a newborn — daily baths can dry out their skin. Sponge baths only until the umbilical cord stump falls off (usually 1–3 weeks). After that, a shallow warm bath is fine. Clean the face, neck folds, diaper area, and hands daily with a warm cloth. The cord stump: keep it dry, let it fall off on its own.",
+    author:"Mary K.",rating:"⭐4.8",bgColor:"#70A8C8"},
+   comments:[{author:"Ana M.",text:"This! My nurse told me the same — less is more with baths."}]}
 ];
 
 // ===== SVG IMAGES =====
@@ -1317,6 +1410,7 @@ function showPage(name){
   if(name==='connect') renderExpertMoms(expertMoms);
   if(name==='community') renderQAFull('all');
   if(name==='profile') renderProfilePage(currentProfileId||1);
+  if(name==='myquestions') renderMyQuestions();
 }
 
 // ===== VOTING =====
@@ -1457,7 +1551,10 @@ function toggleMobileMenu(){
 // ===== MODALS =====
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
-function openAskModal(){openModal('modal-ask');}
+function openAskModal(){
+  if(!currentUser){ openAuthModal('signin', ()=>openModal('modal-ask')); return; }
+  openModal('modal-ask');
+}
 function openBookingModal(){
   const m=expertMoms.find(x=>x.id===(currentProfileId||1));
   if(m){
@@ -1515,7 +1612,31 @@ function sendChat(){
   },1000);
 }
 function submitQuestion(){
+  const topic = (document.getElementById('ask-topic-select')||{}).value || 'General';
+  const questionText = ((document.getElementById('ask-question-text')||{}).value||'').trim();
+  const isAnon = document.getElementById('anon-check')?.checked || false;
+  if(!questionText){ alert('Please enter your question.'); return; }
+  const displayName = isAnon ? 'Anonymous'
+    : (currentUser
+        ? (currentUser.displayPref==='username' ? '@'+currentUser.username : currentUser.firstName+' '+currentUser.lastName.charAt(0)+'.')
+        : 'Anonymous');
+  const newQ = {
+    id: Date.now(),
+    topic,
+    title: questionText,
+    upvotes: 1,
+    userVote: 1,
+    hasImage: false,
+    authorId: currentUser ? currentUser.id : null,
+    isAnon,
+    postedBy: displayName,
+    answer: { text:'Be the first to answer this question!', author:'Community', rating:'', bgColor:'#9A7AAA' },
+    comments: []
+  };
+  qaQuestions.unshift(newQ);
   closeModal('modal-ask');
+  if(document.getElementById('ask-question-text')) document.getElementById('ask-question-text').value='';
+  renderLandingQA();
   setTimeout(()=>alert('Your question has been posted! You\'ll receive answers within 2 hours.'),200);
 }
 
@@ -1544,6 +1665,151 @@ function signupNext(step){
 function selectVerifyTier(tier){
   signupVerifyTier=tier;
   signupNext(4);
+}
+
+// ===== AUTH =====
+let currentUser = null;
+let authCallback = null;
+let tempSignup = {};
+
+function openAuthModal(tab, callback){
+  authCallback = callback || null;
+  switchAuthTab(tab || 'signin');
+  openModal('modal-auth');
+}
+
+function switchAuthTab(tab){
+  ['auth-signin-panel','auth-signup-1','auth-signup-2','auth-signup-3'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display='none';
+  });
+  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+  if(tab==='signin'){
+    document.getElementById('auth-tab-signin').classList.add('active');
+    document.getElementById('auth-signin-panel').style.display='block';
+  } else {
+    document.getElementById('auth-tab-signup').classList.add('active');
+    document.getElementById('auth-signup-1').style.display='block';
+  }
+}
+
+function _authErr(id,msg){ const e=document.getElementById(id); if(e){e.textContent=msg;e.style.display='block';} }
+function _authClear(id){ const e=document.getElementById(id); if(e) e.style.display='none'; }
+
+function doSignIn(){
+  _authClear('si-error');
+  const email=(document.getElementById('si-email').value||'').trim();
+  const pass=(document.getElementById('si-password').value||'');
+  if(!email||!pass){ _authErr('si-error','Please enter your email and password.'); return; }
+  // Demo: accept any credentials
+  const base=email.split('@')[0].replace(/[^a-zA-Z0-9]/g,'_');
+  completeAuth({
+    id:'u_'+Date.now(),
+    firstName: base.charAt(0).toUpperCase()+base.slice(1,12),
+    lastName:'',
+    username: base.toLowerCase().slice(0,20),
+    email, phone:'', displayPref:'username'
+  });
+}
+
+function signupStep1(){
+  _authClear('su1-error');
+  const fname=(document.getElementById('su-fname').value||'').trim();
+  const lname=(document.getElementById('su-lname').value||'').trim();
+  const username=(document.getElementById('su-username').value||'').trim().replace(/\s+/g,'_');
+  const email=(document.getElementById('su-email').value||'').trim();
+  const phone=(document.getElementById('su-phone').value||'').trim();
+  const pass=(document.getElementById('su-password').value||'');
+  if(!fname||!email||!phone||!pass){ _authErr('su1-error','Please fill in all required fields.'); return; }
+  if(!username){ _authErr('su1-error','Please choose a username.'); return; }
+  if(pass.length<6){ _authErr('su1-error','Password must be at least 6 characters.'); return; }
+  tempSignup={fname,lname,username,email,phone};
+  document.getElementById('auth-signup-1').style.display='none';
+  document.getElementById('auth-signup-2').style.display='block';
+  document.getElementById('su-email-display').textContent=email;
+}
+
+function verifyEmailCode(){
+  _authClear('su2-error');
+  const code=(document.getElementById('su-email-code').value||'').trim();
+  if(code!=='123456'){ _authErr('su2-error','Incorrect code — demo code is 123456'); return; }
+  document.getElementById('auth-signup-2').style.display='none';
+  document.getElementById('auth-signup-3').style.display='block';
+  document.getElementById('su-phone-display').textContent=tempSignup.phone;
+}
+
+function verifyPhoneCode(){
+  _authClear('su3-error');
+  const code=(document.getElementById('su-phone-code').value||'').trim();
+  if(code!=='654321'){ _authErr('su3-error','Incorrect code — demo SMS code is 654321'); return; }
+  completeAuth({
+    id:'u_'+Date.now(),
+    firstName:tempSignup.fname,
+    lastName:tempSignup.lname,
+    username:tempSignup.username,
+    email:tempSignup.email,
+    phone:tempSignup.phone,
+    displayPref:'username'
+  });
+}
+
+function completeAuth(user){
+  currentUser=user;
+  _updateAuthUI();
+  closeModal('modal-auth');
+  if(authCallback){ const cb=authCallback; authCallback=null; cb(); }
+}
+
+function signOut(){
+  currentUser=null;
+  _updateAuthUI();
+  const menu=document.getElementById('mobile-menu');
+  if(menu) menu.classList.remove('open');
+  showPage('home');
+}
+
+function requireAuth(callback){
+  if(currentUser) callback();
+  else openAuthModal('signin', callback);
+}
+
+function _updateAuthUI(){
+  const signinBtn=document.getElementById('nav-signin-btn');
+  const userPill=document.getElementById('nav-user-pill');
+  const nameSpan=document.getElementById('nav-user-name');
+  const menuSignin=document.getElementById('menu-signin-link');
+  const menuMyQ=document.getElementById('menu-myq-link');
+  const menuSignout=document.getElementById('menu-signout-link');
+  if(currentUser){
+    const display=currentUser.displayPref==='username'?'@'+currentUser.username:currentUser.firstName;
+    if(signinBtn) signinBtn.style.display='none';
+    if(userPill) userPill.style.display='flex';
+    if(nameSpan) nameSpan.textContent=display;
+    if(menuSignin) menuSignin.style.display='none';
+    if(menuMyQ) menuMyQ.style.display='block';
+    if(menuSignout) menuSignout.style.display='block';
+  } else {
+    if(signinBtn) signinBtn.style.display='';
+    if(userPill) userPill.style.display='none';
+    if(menuSignin) menuSignin.style.display='block';
+    if(menuMyQ) menuMyQ.style.display='none';
+    if(menuSignout) menuSignout.style.display='none';
+  }
+}
+
+// ===== MY QUESTIONS =====
+function renderMyQuestions(){
+  const list=document.getElementById('my-questions-list');
+  if(!list) return;
+  if(!currentUser){
+    list.innerHTML='<div class="auth-gate-msg">Please <a href="#" onclick="openAuthModal(\'signin\');return false" style="color:var(--rose);font-weight:600">sign in</a> to see your questions.</div>';
+    return;
+  }
+  const myQs=qaQuestions.filter(q=>q.authorId===currentUser.id);
+  if(!myQs.length){
+    list.innerHTML='<div class="auth-gate-msg">You haven\'t posted any questions yet.<br><br><button class="btn-brand" onclick="openAskModal()">+ Ask your first question</button></div>';
+    return;
+  }
+  list.innerHTML=myQs.map(q=>renderQACard(q,true)).join('');
 }
 
 // ===== CLOSE MODAL ON OVERLAY CLICK =====
