@@ -75,8 +75,16 @@ img{max-width:100%}
 .ask-btn-sm{margin-left:auto;background:var(--rose);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer}
 
 /* QA CARD */
-.qa-card{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:14px;display:flex;overflow:hidden;transition:.2s}
+.qa-card{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:14px;padding:16px 20px;display:flex;flex-direction:column;gap:10px;transition:.2s;cursor:default}
 .qa-card:hover{box-shadow:0 4px 16px rgba(92,45,110,.1)}
+.qa-card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.qa-badge{font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:10px;background:var(--rose-l);color:var(--rose)}
+.qa-card-question{font-size:15px;font-weight:600;color:var(--dark);line-height:1.4;cursor:pointer}
+.qa-card-question:hover{color:var(--rose)}
+.qa-card-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
+.qa-author{font-size:13px;color:var(--muted)}
+.reply-btn{background:none;border:none;font-size:13px;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:6px}
+.reply-btn:hover{color:var(--rose);background:var(--rose-l)}
 .vote-col{display:flex;flex-direction:column;align-items:center;padding:14px 10px;background:var(--gray);gap:4px;min-width:52px}
 .vote-btn{background:none;border:none;font-size:1rem;cursor:pointer;color:var(--muted);transition:.2s;padding:2px}
 .vote-btn:hover{color:var(--rose)}
