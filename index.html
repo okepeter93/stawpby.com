@@ -897,7 +897,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
         <label>Phone Number (for 2FA)</label>
         <input type="tel" id="su-phone" placeholder="+1 234 567 8900"/>
       </div>
-      <div class="form-field" style="margin-bottom:20px">
+      <div class="form-field" style="margin-bottom:14px">
         <label>Password</label>
         <div class="pass-wrap">
           <input type="password" id="su-pass" placeholder="Min 8 characters" oninput="checkStrength(this)"/>
@@ -905,6 +905,14 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
         </div>
         <div class="strength-bar"><div id="strength-fill" style="height:100%;border-radius:4px;width:0%;transition:width .3s,background .3s"></div></div>
         <span id="strength-label" style="font-size:12px;color:var(--muted)"></span>
+      </div>
+      <div class="form-field" style="margin-bottom:20px">
+        <label>Retype Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="su-pass-confirm" placeholder="Repeat your password" oninput="checkConfirm(this)"/>
+          <span class="pass-eye" onclick="togglePass('su-pass-confirm',this)">👁</span>
+        </div>
+        <span id="confirm-match" style="font-size:12px;color:var(--muted)"></span>
       </div>
       <div id="signup-err" style="color:#e05a7a;font-size:13px;margin-bottom:12px;display:none"></div>
       <button class="btn-brand" style="width:100%" onclick="doSignup()">Create Account →</button>
@@ -1215,6 +1223,8 @@ async function doSignup() {
   if (!email||!email.includes('@')) { errEl.textContent='Please enter a valid email.'; errEl.style.display=''; return; }
   if (!phone) { errEl.textContent='Phone number required for 2FA.'; errEl.style.display=''; return; }
   if (pass.length<8) { errEl.textContent='Password must be at least 8 characters.'; errEl.style.display=''; return; }
+  const confirm = document.getElementById('su-pass-confirm').value;
+  if (pass !== confirm) { errEl.textContent='Passwords do not match.'; errEl.style.display=''; return; }
   const btn = document.querySelector('#signup-form .btn-brand');
   btn.textContent='Checking...'; btn.disabled=true;
   try {
@@ -1293,6 +1303,14 @@ function checkStrength(input) {
 }
 
 function togglePass(id,eye) { const i=document.getElementById(id); i.type=i.type==='password'?'text':'password'; eye.textContent=i.type==='password'?'👁':'🙈'; }
+
+function checkConfirm(input) {
+  const pass = document.getElementById('su-pass').value;
+  const hint = document.getElementById('confirm-match');
+  if (!input.value) { hint.textContent=''; return; }
+  if (input.value === pass) { hint.textContent='✓ Passwords match'; hint.style.color='#3aaa6d'; }
+  else { hint.textContent='✗ Passwords do not match'; hint.style.color='#e05a7a'; }
+}
 
 
 // ============================================================
@@ -1487,15 +1505,43 @@ async function submitReply(postId) {
   const text=textEl?textEl.value.trim():'';
   if(!text) { showToast('Please write something before posting.'); return; }
   const reply = { author:s.fname+' '+s.lname.charAt(0)+'.', username:'@'+s.username, text, timestamp:Date.now() };
-  const btn=document.querySelector('#qa-modal-body .btn-brand'); if(btn){btn.textContent='Posting...';btn.disabled=true;}
+
+  // ── Optimistic UI: append reply instantly ──
+  const repliesList = document.querySelector('#qa-modal-body .replies-list');
+  const emptyMsg = repliesList ? repliesList.querySelector('div[style*="text-align:center"]') : null;
+  if (emptyMsg) emptyMsg.remove();
+  const initials = reply.author.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const tempId = 'optimistic-reply-' + Date.now();
+  if (repliesList) {
+    repliesList.insertAdjacentHTML('beforeend',
+      '<div class="reply-card" id="'+tempId+'">' +
+        '<div class="reply-author-row">' +
+          '<div class="reply-avatar">'+initials+'</div>' +
+          '<div><div class="reply-author-name">'+escHtml(reply.author)+'</div>' +
+          '<div class="reply-username">'+reply.username+' · just now</div></div>' +
+        '</div>' +
+        '<div class="reply-text">'+escHtml(reply.text)+'</div>' +
+      '</div>'
+    );
+  }
+  // Clear textarea immediately
+  if (textEl) textEl.value = '';
+  // Update reply count on the feed card
+  const replyBtn = document.querySelector('#card-'+postId+' .reply-btn');
+  if (replyBtn) {
+    const cur = parseInt(replyBtn.textContent.match(/\d+/)?.[0]||'0') + 1;
+    replyBtn.textContent = '💬 ' + cur + (cur===1?' reply':' replies');
+  }
+  showToast('Reply posted!');
+
+  // ── Background Firestore write ──
   try {
-    const ref=db.collection('posts').doc(postId);
-    await ref.update({ replies: firebase.firestore.FieldValue.arrayUnion(reply) });
-    showToast('Reply posted!');
-    closeModal('qa-modal');
-    openQAPost(postId);
-    loadLandingQA(); loadQAFull(_activeTopic);
-  } catch(e) { showToast('Error posting reply. Please try again.'); if(btn){btn.textContent='Post Reply';btn.disabled=false;} }
+    await db.collection('posts').doc(postId).update({ replies: firebase.firestore.FieldValue.arrayUnion(reply) });
+  } catch(e) {
+    // Roll back on failure
+    const el = document.getElementById(tempId); if(el) el.remove();
+    showToast('Failed to save reply. Please try again.');
+  }
 }
 
 // ============================================================
@@ -1509,31 +1555,52 @@ async function submitQuestion() {
   const topic=document.getElementById('ask-topic').value;
   const errEl=document.getElementById('ask-err'); errEl.style.display='none';
   if(!question||question.length<10) { errEl.textContent='Please write at least a 10-character question.'; errEl.style.display=''; return; }
-  const btn=document.querySelector('#ask-modal .btn-brand'); btn.textContent='Posting...'; btn.disabled=true;
+  const imgFile = document.getElementById('ask-image').files[0];
+  const btn=document.querySelector('#ask-modal .btn-brand');
+
+  // Build optimistic post object (local preview URL for image)
+  const localImgUrl = imgFile ? URL.createObjectURL(imgFile) : null;
+  const tempId = 'temp_' + Date.now();
+  const optimisticPost = {
+    id: tempId, userId:s.userId,
+    author:s.fname+' '+s.lname.charAt(0)+'.',
+    username:'@'+s.username,
+    anonymous:false, topic, question,
+    imageUrl: localImgUrl,
+    timestamp:Date.now(), votes:0, replies:[]
+  };
+
+  // ── Optimistic UI: show post instantly, close modal ──
+  document.getElementById('ask-question').value='';
+  clearAskImage();
+  closeModal('ask-modal');
+  showToast('Question posted! 🎉');
+  showPage('community');
+  const feed = document.getElementById('qa-full-list');
+  if (feed) feed.insertAdjacentHTML('afterbegin', renderQACard(optimisticPost));
+
+  // ── Background: upload image (if any) then write to Firestore ──
   try {
-    // Upload image if selected
     let imageUrl = null;
-    const imgFile = document.getElementById('ask-image').files[0];
     if (imgFile) {
-      btn.textContent='Uploading image...';
-      const ref = storage.ref('question-images/' + Date.now() + '_' + imgFile.name);
-      await ref.put(imgFile);
-      imageUrl = await ref.getDownloadURL();
+      const storageRef = storage.ref('question-images/' + Date.now() + '_' + imgFile.name);
+      await storageRef.put(imgFile);
+      imageUrl = await storageRef.getDownloadURL();
     }
-    await db.collection('posts').add({
-      userId:s.userId,
-      author:s.fname+' '+s.lname.charAt(0)+'.',
-      username:'@'+s.username,
-      anonymous:false, topic, question,
-      imageUrl: imageUrl || null,
-      timestamp:Date.now(), votes:0, replies:[]
+    const docRef = await db.collection('posts').add({
+      userId:s.userId, author:optimisticPost.author, username:optimisticPost.username,
+      anonymous:false, topic, question, imageUrl: imageUrl||null,
+      timestamp:optimisticPost.timestamp, votes:0, replies:[]
     });
-    document.getElementById('ask-question').value='';
-    clearAskImage();
-    closeModal('ask-modal');
-    showToast('Question posted! 🎉');
-    showPage('community');
-  } catch(e) { errEl.textContent='Error posting. Please try again.'; errEl.style.display=''; console.error(e); }
+    // Replace temp card with real one (update id so voting/replies work)
+    const tempCard = document.getElementById('card-'+tempId);
+    if (tempCard) tempCard.id = 'card-'+docRef.id;
+  } catch(e) {
+    // Roll back on failure
+    const tempCard = document.getElementById('card-'+tempId); if(tempCard) tempCard.remove();
+    showToast('Failed to save question. Please try again.');
+    console.error(e);
+  }
   btn.textContent='Post Question'; btn.disabled=false;
 }
 
@@ -1560,15 +1627,26 @@ async function vote(postId, inModal) {
   const s=getSession(); if(!s) { requireAuth(()=>{}); return; }
   const voted=getVoted();
   if(voted.includes(postId)) { showToast('You already voted on this one.'); return; }
+
+  // ── Optimistic UI: increment instantly ──
+  voted.push(postId); saveVoted(voted);
+  const vEl=document.getElementById('votes-'+postId);
+  const mvEl=document.getElementById('modal-votes-'+postId);
+  const curVal = parseInt(vEl?.textContent||mvEl?.textContent||'0');
+  if(vEl){vEl.textContent=curVal+1;vEl.closest('.vote-btn').classList.add('voted');}
+  if(mvEl){mvEl.textContent=curVal+1;mvEl.closest('.vote-btn').classList.add('voted');}
+  showToast('Vote counted! ▲');
+
+  // ── Background Firestore write ──
   try {
     await db.collection('posts').doc(postId).update({ votes: firebase.firestore.FieldValue.increment(1) });
-    voted.push(postId); saveVoted(voted);
-    const doc=await db.collection('posts').doc(postId).get();
-    const v=doc.data().votes;
-    const vEl=document.getElementById('votes-'+postId); if(vEl){vEl.textContent=v;vEl.closest('.vote-btn').classList.add('voted');}
-    const mvEl=document.getElementById('modal-votes-'+postId); if(mvEl){mvEl.textContent=v;mvEl.closest('.vote-btn').classList.add('voted');}
-    showToast('Vote counted! ▲');
-  } catch(e) { showToast('Error voting. Please try again.'); }
+  } catch(e) {
+    // Roll back
+    const idx=voted.indexOf(postId); if(idx>-1)voted.splice(idx,1); saveVoted(voted);
+    if(vEl){vEl.textContent=curVal;vEl.closest('.vote-btn').classList.remove('voted');}
+    if(mvEl){mvEl.textContent=curVal;mvEl.closest('.vote-btn').classList.remove('voted');}
+    showToast('Vote failed. Please try again.');
+  }
 }
 
 
