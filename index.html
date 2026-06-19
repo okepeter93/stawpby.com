@@ -392,6 +392,28 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
 .footer-col a:hover{color:#fff}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:.78rem;color:rgba(255,255,255,.45)}
 
+/* MY PROFILE — TIER SYSTEM */
+.tier-step-card{background:var(--gray);border:2px solid var(--border);border-radius:12px;padding:16px;text-align:center;transition:.2s}
+.tier-step-card.tier-active{border-color:var(--rose);background:var(--rose-l)}
+.tier-step-icon{font-size:1.6rem;margin-bottom:6px}
+.tier-step-label{font-size:.7rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px}
+.tier-step-name{font-weight:700;font-size:.88rem;color:var(--dark);margin-bottom:8px}
+.tier-step-check{font-size:.78rem;font-weight:600;color:var(--muted)}
+.tier-step-card.tier-active .tier-step-check{color:var(--rose)}
+.myprofile-body{max-width:900px;margin:0 auto;padding:28px 20px}
+.myprofile-grid{display:grid;grid-template-columns:1fr 300px;gap:24px}
+.capability-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.capability-row:last-child{border-bottom:none}
+.upgrade-card{background:linear-gradient(135deg,var(--dark),#3D1550);color:#fff;border:none;border-radius:12px;padding:20px;position:sticky;top:80px}
+.upgrade-card h3{color:#fff;margin-bottom:8px;font-size:1rem}
+.upgrade-card p{color:rgba(255,255,255,.75);font-size:.85rem;margin-bottom:16px}
+.upgrade-card ul{color:rgba(255,255,255,.8);font-size:.82rem;padding-left:18px;margin-bottom:20px;line-height:1.9}
+.upgrade-card .btn-white{background:#fff;color:var(--dark);width:100%;padding:12px;border-radius:8px;font-weight:700;font-size:.9rem;border:none;cursor:pointer}
+.upgrade-card .btn-white:hover{background:var(--rose-l)}
+.progress-bar-track{height:10px;background:var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--brand));border-radius:10px;transition:width .6s ease}
+.profile-tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:0}
+
 @media(max-width:768px){
   .feed-layout{grid-template-columns:1fr}
   .sidebar-col{display:none}
@@ -401,6 +423,9 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   .profile-body{grid-template-columns:1fr}
   .profile-hero-inner{flex-direction:column;align-items:center;text-align:center}
   .booking-box{position:static}
+  .myprofile-grid{grid-template-columns:1fr}
+  .upgrade-card{position:static}
+  .profile-tier-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr 1fr}
   .search-card{flex-direction:column}
   .form-grid{grid-template-columns:1fr}
@@ -437,10 +462,10 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
 </nav>
 
 <!-- SIDE MENU OVERLAY -->
-<div class="menu-overlay" id="menuOverlay" onclick="closeSideMenu()"></div>
+<div class="menu-overlay" id="menu-overlay" onclick="closeSideMenu()"></div>
 
 <!-- SIDE MENU -->
-<div class="side-menu" id="sideMenu">
+<div class="side-menu" id="side-menu">
   <div class="side-menu-header">
     <div class="nav-logo" style="cursor:default">
       <svg class="heart" viewBox="0 0 24 24" fill="#6B30BF"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -449,19 +474,20 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
     <button class="side-menu-close" onclick="closeSideMenu()">✕</button>
   </div>
   <nav>
-    <a href="#" onclick="closeSideMenu();showPage('home');return false">🏠 &nbsp;Help Center</a>
+    <a href="#" onclick="closeSideMenu();showPage('home');return false">🏠 &nbsp;Home</a>
     <a href="#" onclick="closeSideMenu();showPage('community');return false">💬 &nbsp;Community Q&amp;A</a>
     <a href="#" onclick="closeSideMenu();showPage('connect');return false">🤝 &nbsp;Connect with a Mom</a>
     <a href="#" onclick="closeSideMenu();showPage('connect');return false">📅 &nbsp;Book an Expert Mom</a>
     <a href="#" onclick="closeSideMenu();showPage('how');return false">❓ &nbsp;How It Works</a>
     <a href="#" onclick="closeSideMenu();showPage('signup');return false">⭐ &nbsp;Become an Expert Mom</a>
     <div class="smenu-divider"></div>
-    <button class="smenu-btn" id="smenu-my-posts" onclick="closeSideMenu();requireAuth('profile')" style="display:none">📋 &nbsp;My Questions</button>
-    <button class="smenu-btn" id="smenu-signin" onclick="closeSideMenu();openModal('modal-auth')">🔑 &nbsp;Sign In / Log In</button>
+    <button class="smenu-btn" id="smenu-my-profile" onclick="closeSideMenu();requireAuth(()=>showPage('myprofile'))" style="display:none">👤 &nbsp;My Profile</button>
+    <button class="smenu-btn" id="smenu-my-posts" onclick="closeSideMenu();requireAuth(()=>showPage('myquestions'))" style="display:none">📋 &nbsp;My Questions</button>
+    <button class="smenu-btn" id="smenu-signin" onclick="closeSideMenu();openModal('auth-modal')">🔑 &nbsp;Sign In / Log In</button>
     <button class="smenu-btn" id="smenu-signout" onclick="closeSideMenu();signOut()" style="display:none">🚪 &nbsp;Sign Out</button>
   </nav>
   <div class="side-menu-footer">
-    <button class="smenu-cta" id="smenu-join-btn" onclick="closeSideMenu();openAuthTab('signup')">Create Account — It's Free</button>
+    <button class="smenu-cta" id="smenu-join-btn" onclick="closeSideMenu();openModal('auth-modal');switchAuthTab('signup')">Create Account — It's Free</button>
   </div>
 </div>
 
@@ -615,6 +641,85 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   <div class="qa-full-list" id="qa-my-list"></div>
 </div>
 
+<!-- ===== PAGE: MY PROFILE ===== -->
+<div id="page-myprofile" class="page">
+  <div class="profile-hero">
+    <div class="profile-hero-inner">
+      <div class="profile-avatar-lg" id="myprofile-avatar" style="background:var(--rose);font-size:2rem">?</div>
+      <div class="profile-info">
+        <h1 id="myprofile-name">My Profile</h1>
+        <div id="myprofile-username" style="color:rgba(255,255,255,.7);font-size:.9rem;margin-top:4px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <span id="myprofile-tier-badge" style="background:var(--brand);color:#fff;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:12px">💬 Tier 1 — Community</span>
+        </div>
+        <div class="profile-meta" style="margin-top:12px">
+          <span id="myprofile-email"></span>
+          <span id="myprofile-joined"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="myprofile-body">
+
+    <!-- Tier Progress Card -->
+    <div class="section-card" style="margin-bottom:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <h3 style="margin:0">Account Progress</h3>
+        <span id="myprofile-pct" style="font-weight:700;color:var(--rose);font-size:1.15rem">33%</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="myprofile-progress-bar" style="width:33%"></div>
+      </div>
+      <div class="profile-tier-grid">
+        <div class="tier-step-card tier-active" id="tier1-step">
+          <div class="tier-step-icon">💬</div>
+          <div class="tier-step-label">Tier 1</div>
+          <div class="tier-step-name">Community</div>
+          <div class="tier-step-check">✅ Active</div>
+        </div>
+        <div class="tier-step-card" id="tier2-step">
+          <div class="tier-step-icon">📹</div>
+          <div class="tier-step-label">Tier 2</div>
+          <div class="tier-step-name">Video Verified</div>
+          <div class="tier-step-check" id="tier2-status">🔒 Locked</div>
+        </div>
+        <div class="tier-step-card" id="tier3-step">
+          <div class="tier-step-icon">🛡️</div>
+          <div class="tier-step-label">Tier 3</div>
+          <div class="tier-step-name">Home Certified</div>
+          <div class="tier-step-check" id="tier3-status">🔒 Locked</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="myprofile-grid">
+      <div>
+        <!-- Capabilities -->
+        <div class="section-card" style="margin-bottom:20px">
+          <h3>What your tier unlocks</h3>
+          <div id="myprofile-capabilities"></div>
+        </div>
+        <!-- My Questions -->
+        <div class="section-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <h3 style="margin:0">My Questions</h3>
+            <button class="btn-brand" style="padding:8px 16px;font-size:.85rem" onclick="openAskModal()">+ Ask</button>
+          </div>
+          <div id="myprofile-questions"></div>
+        </div>
+      </div>
+      <!-- Upgrade card -->
+      <div>
+        <div class="upgrade-card" id="upgrade-card">
+          <div id="upgrade-card-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ===== PAGE: PROFILE ===== -->
 <div id="page-profile" class="page">
   <div class="profile-hero">
@@ -676,6 +781,7 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
     <div class="tab-toggle">
       <button class="tab-btn active" onclick="setHowTab(this,'families')">👶 For Families</button>
       <button class="tab-btn" onclick="setHowTab(this,'experts')">💛 For Expert Moms</button>
+
     </div>
     <div class="tab-content active" id="how-families">
       <div class="steps">
@@ -1088,6 +1194,14 @@ footer{background:var(--dark);color:#fff;padding:48px 20px 24px}
   </div>
 </div>
 
+<!-- Tier Upgrade Modal -->
+<div id="upgrade-modal" class="modal-overlay" onclick="if(event.target===this)closeModal('upgrade-modal')">
+  <div class="modal-box" style="max-width:480px">
+    <button class="modal-close" onclick="closeModal('upgrade-modal')">✕</button>
+    <div id="upgrade-modal-body"></div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div id="toast" class="toast"></div>
 
@@ -1339,23 +1453,30 @@ function showPage(id) {
   if (id==='home') loadLandingQA();
   if (id==='community') loadQAFull();
   if (id==='myquestions') loadMyQuestions();
+  if (id==='myprofile') loadMyProfile();
   if (id==='connect') renderExpertMoms();
 }
 
 // ============================================================
 // SIDE MENU
 // ============================================================
-function openSideMenu() { document.getElementById('side-menu').classList.add('open'); document.getElementById('menu-overlay').style.display='block'; document.body.style.overflow='hidden'; }
-function closeSideMenu() { document.getElementById('side-menu').classList.remove('open'); document.getElementById('menu-overlay').style.display='none'; document.body.style.overflow=''; }
+function openSideMenu() { document.getElementById('side-menu').classList.add('open'); document.getElementById('menu-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeSideMenu() { document.getElementById('side-menu').classList.remove('open'); document.getElementById('menu-overlay').classList.remove('open'); document.body.style.overflow=''; }
 function updateSideMenuAuth() {
   const s=getSession();
-  const si=document.getElementById('smenu-signin'); const so=document.getElementById('smenu-signout'); const mp=document.getElementById('smenu-my-posts');
-  if (s) { if(si)si.style.display='none'; if(so)so.style.display=''; if(mp)mp.style.display=''; const cta=document.querySelector('.smenu-cta'); if(cta)cta.style.display='none'; }
-  else { if(si)si.style.display=''; if(so)so.style.display='none'; if(mp)mp.style.display='none'; const cta=document.querySelector('.smenu-cta'); if(cta)cta.style.display=''; }
+  const si=document.getElementById('smenu-signin'); const so=document.getElementById('smenu-signout');
+  const mp=document.getElementById('smenu-my-posts'); const myp=document.getElementById('smenu-my-profile');
+  if (s) {
+    if(si)si.style.display='none'; if(so)so.style.display=''; if(mp)mp.style.display=''; if(myp)myp.style.display='';
+    const cta=document.querySelector('.smenu-cta'); if(cta)cta.style.display='none';
+  } else {
+    if(si)si.style.display=''; if(so)so.style.display='none'; if(mp)mp.style.display='none'; if(myp)myp.style.display='none';
+    const cta=document.querySelector('.smenu-cta'); if(cta)cta.style.display='';
+  }
 }
 function renderHeaderUser() {
   const s=getSession(); const a=document.getElementById('nav-user-area'); if (!a) return;
-  if (s) { a.innerHTML='<div class="nav-user-chip" onclick="showPage(\'myquestions\')"><div class="nav-user-avatar">'+s.fname.charAt(0).toUpperCase()+'</div><span>'+s.fname+'</span></div>'; }
+  if (s) { a.innerHTML='<div class="nav-user-chip" onclick="showPage(\'myprofile\')" title="My Profile"><div class="nav-user-avatar" style="background:var(--brand)">'+s.fname.charAt(0).toUpperCase()+'</div><span>'+s.fname+'</span></div>'; }
   else { a.innerHTML='<button class="btn-brand" style="padding:8px 18px;font-size:13px" onclick="openModal(\'auth-modal\')">Sign In</button>'; }
 }
 
@@ -1444,6 +1565,171 @@ async function loadMyQuestions() {
   } catch(e) { setFeedLoading('qa-my-list','Could not load your questions.'); }
 }
 
+
+// ============================================================
+// MY PROFILE
+// ============================================================
+async function loadMyProfile() {
+  const s = getSession();
+  if (!s) { showPage('home'); return; }
+
+  // Populate from session immediately
+  const av = document.getElementById('myprofile-avatar');
+  if (av) { av.textContent = s.fname.charAt(0).toUpperCase(); av.style.background = 'var(--brand)'; }
+  const nameEl = document.getElementById('myprofile-name');
+  if (nameEl) nameEl.textContent = s.fname + ' ' + s.lname;
+  const usernameEl = document.getElementById('myprofile-username');
+  if (usernameEl) usernameEl.textContent = '@' + s.username;
+  const emailEl = document.getElementById('myprofile-email');
+  if (emailEl) emailEl.textContent = '✉️ ' + s.email;
+
+  // Load Firestore user doc for tier + joined date
+  try {
+    const snap = await db.collection('users').doc(s.userId).get();
+    const userData = snap.exists ? snap.data() : {};
+    const tier = userData.tier || 1;
+    const joined = userData.joined;
+    const joinedEl = document.getElementById('myprofile-joined');
+    if (joinedEl && joined) joinedEl.textContent = '📅 Joined ' + new Date(joined).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+    renderTierUI(tier);
+  } catch(e) { renderTierUI(1); }
+
+  loadMyProfileQuestions(s.userId);
+}
+
+function renderTierUI(tier) {
+  const pct = tier >= 3 ? 100 : tier >= 2 ? 66 : 33;
+  const pctEl = document.getElementById('myprofile-pct');
+  const barEl = document.getElementById('myprofile-progress-bar');
+  if (pctEl) pctEl.textContent = pct + '%';
+  if (barEl) barEl.style.width = pct + '%';
+
+  const badges = { 1:'💬 Tier 1 — Community', 2:'📹 Tier 2 — Video Verified', 3:'🛡️ Tier 3 — Home Certified' };
+  const badgeEl = document.getElementById('myprofile-tier-badge');
+  if (badgeEl) badgeEl.textContent = badges[tier] || badges[1];
+
+  // Tier step cards
+  [1,2,3].forEach(t => {
+    const el = document.getElementById('tier'+t+'-step');
+    if (el) el.classList.toggle('tier-active', t <= tier);
+  });
+  const t2s = document.getElementById('tier2-status');
+  const t3s = document.getElementById('tier3-status');
+  if (t2s) t2s.textContent = tier >= 2 ? '✅ Verified' : '🔒 Locked';
+  if (t3s) t3s.textContent = tier >= 3 ? '✅ Certified' : '🔒 Locked';
+
+  // Capabilities list
+  const caps = document.getElementById('myprofile-capabilities');
+  if (caps) {
+    const list = [
+      { label:'Community Q&A — ask & answer questions', ok: true },
+      { label:'Reply with your username', ok: true },
+      { label:'Vote on questions', ok: true },
+      { label:'Video call sessions with Expert Moms ($40–$75)', ok: tier >= 2 },
+      { label:'Background-checked providers guaranteed', ok: tier >= 2 },
+      { label:'In-home postpartum care visits', ok: tier >= 3 },
+    ];
+    caps.innerHTML = list.map(c =>
+      '<div class="capability-row">' +
+        '<span style="font-size:1rem">'+(c.ok?'✅':'🔒')+'</span>' +
+        '<span style="color:'+(c.ok?'var(--dark)':'var(--muted)')+'">'+c.label+'</span>' +
+      '</div>'
+    ).join('');
+  }
+
+  // Upgrade card
+  const uc = document.getElementById('upgrade-card-content');
+  if (!uc) return;
+  if (tier === 1) {
+    uc.innerHTML =
+      '<h3>Upgrade to Tier 2</h3>' +
+      '<p>Get video-verified to book private sessions with Expert Moms.</p>' +
+      '<ul><li>Photo ID match</li><li>Checkr background check</li><li>Unlocks video bookings ($40–$75/session)</li></ul>' +
+      '<button class="btn-white" onclick="openUpgradeModal(2)">Get Verified →</button>';
+  } else if (tier === 2) {
+    uc.innerHTML =
+      '<h3>Upgrade to Tier 3</h3>' +
+      '<p>Get home-certified for in-home postpartum care.</p>' +
+      '<ul><li>Third-party KYC (Smile Identity / Youverify)</li><li>Annual re-verification</li><li>Real-time visit tracking</li></ul>' +
+      '<button class="btn-white" onclick="openUpgradeModal(3)">Get Certified →</button>';
+  } else {
+    uc.innerHTML =
+      '<div style="text-align:center;padding:16px">' +
+      '<div style="font-size:3rem;margin-bottom:12px">🎉</div>' +
+      '<h3>Fully Certified</h3>' +
+      '<p>You have access to every StawpBy feature — community Q&A, video calls, and in-home visits.</p>' +
+      '</div>';
+  }
+}
+
+async function loadMyProfileQuestions(userId) {
+  const el = document.getElementById('myprofile-questions'); if (!el) return;
+  el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted)">Loading...</div>';
+  try {
+    const snap = await db.collection('posts').where('userId','==',userId).orderBy('timestamp','desc').get();
+    const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
+    el.innerHTML = posts.length ? posts.map(renderQACard).join('') :
+      '<div style="text-align:center;padding:40px;color:var(--muted)"><div style="font-size:2.5rem;margin-bottom:12px">📝</div><p>No questions yet.</p><button class="btn-brand" style="margin-top:12px" onclick="openAskModal()">Ask Your First Question</button></div>';
+  } catch(e) {
+    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted)">Could not load questions.</div>';
+  }
+}
+
+// ---- Upgrade modal ----
+let _upgradeTier = 1;
+function openUpgradeModal(tier) {
+  _upgradeTier = tier;
+  const body = document.getElementById('upgrade-modal-body');
+  if (tier === 2) {
+    body.innerHTML =
+      '<div style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">📹</div>' +
+      '<h2 style="margin-bottom:8px">Tier 2 — Video Verified</h2>' +
+      '<p style="color:var(--muted);font-size:.88rem;margin-bottom:24px">Two quick steps to unlock video sessions with Expert Moms.</p></div>' +
+      '<div style="background:var(--gray);border-radius:10px;padding:16px;margin-bottom:12px">' +
+        '<div style="font-weight:700;margin-bottom:8px;font-size:.9rem">Step 1 — Photo ID Upload</div>' +
+        '<p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">Upload a photo of your government-issued ID (passport, driver\'s license).</p>' +
+        '<input type="file" id="upgrade-id-upload" accept="image/*" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px;font-size:.85rem"/>' +
+      '</div>' +
+      '<div style="background:var(--gray);border-radius:10px;padding:16px;margin-bottom:24px">' +
+        '<div style="font-weight:700;margin-bottom:8px;font-size:.9rem">Step 2 — Background Check</div>' +
+        '<p style="font-size:.82rem;color:var(--muted)">Powered by Checkr. A consent form is emailed to you after submission.</p>' +
+      '</div>' +
+      '<button class="btn-brand" style="width:100%" onclick="submitUpgrade()">Submit for Verification →</button>' +
+      '<p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:12px">Demo mode: submitting instantly upgrades your tier</p>';
+  } else if (tier === 3) {
+    body.innerHTML =
+      '<div style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">🛡️</div>' +
+      '<h2 style="margin-bottom:8px">Tier 3 — Home Certified</h2>' +
+      '<p style="color:var(--muted);font-size:.88rem;margin-bottom:24px">Third-party identity verification covered by StawpBy.</p></div>' +
+      '<div style="background:var(--gray);border-radius:10px;padding:16px;margin-bottom:24px">' +
+        '<div style="font-weight:700;margin-bottom:8px;font-size:.9rem">What\'s included:</div>' +
+        '<ul style="font-size:.85rem;color:var(--muted);padding-left:18px;line-height:1.9">' +
+        '<li>Third-party KYC via Smile Identity / Youverify</li>' +
+        '<li>Annual re-verification required</li>' +
+        '<li>Real-time visit tracking on all in-home sessions</li>' +
+        '<li>One-tap 911 emergency access</li>' +
+        '</ul>' +
+      '</div>' +
+      '<button class="btn-brand" style="width:100%" onclick="submitUpgrade()">Begin Certification →</button>' +
+      '<p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:12px">Demo mode: submitting instantly upgrades your tier</p>';
+  }
+  openModal('upgrade-modal');
+}
+
+async function submitUpgrade() {
+  const s = getSession(); if (!s) return;
+  const btn = document.querySelector('#upgrade-modal .btn-brand');
+  btn.textContent = 'Processing...'; btn.disabled = true;
+  try {
+    await db.collection('users').doc(s.userId).update({ tier: _upgradeTier });
+    closeModal('upgrade-modal');
+    showToast('🎉 Tier ' + _upgradeTier + ' verified! Updating your profile...');
+    setTimeout(() => loadMyProfile(), 400);
+  } catch(e) {
+    showToast('Error. Please try again.');
+    btn.textContent = 'Submit'; btn.disabled = false;
+  }
+}
 
 // ============================================================
 // Q&A POST MODAL
@@ -1578,6 +1864,11 @@ async function submitQuestion() {
   showPage('community');
   const feed = document.getElementById('qa-full-list');
   if (feed) feed.insertAdjacentHTML('afterbegin', renderQACard(optimisticPost));
+  // Also insert into My Questions and My Profile feeds if visible
+  const myList = document.getElementById('qa-my-list');
+  if (myList) { const empty = myList.querySelector('[style*="text-align:center"]'); if(empty) empty.remove(); myList.insertAdjacentHTML('afterbegin', renderQACard(optimisticPost)); }
+  const mpQ = document.getElementById('myprofile-questions');
+  if (mpQ) { const empty2 = mpQ.querySelector('[style*="text-align:center"]'); if(empty2) empty2.remove(); mpQ.insertAdjacentHTML('afterbegin', renderQACard(optimisticPost)); }
 
   // ── Background: upload image (if any) then write to Firestore ──
   try {
@@ -1592,12 +1883,11 @@ async function submitQuestion() {
       anonymous:false, topic, question, imageUrl: imageUrl||null,
       timestamp:optimisticPost.timestamp, votes:0, replies:[]
     });
-    // Replace temp card with real one (update id so voting/replies work)
-    const tempCard = document.getElementById('card-'+tempId);
-    if (tempCard) tempCard.id = 'card-'+docRef.id;
+    // Replace temp card IDs with real Firestore doc ID
+    document.querySelectorAll('#card-'+tempId).forEach(c=>c.id='card-'+docRef.id);
   } catch(e) {
     // Roll back on failure
-    const tempCard = document.getElementById('card-'+tempId); if(tempCard) tempCard.remove();
+    document.querySelectorAll('#card-'+tempId).forEach(c=>c.remove());
     showToast('Failed to save question. Please try again.');
     console.error(e);
   }
@@ -1707,31 +1997,44 @@ function filterTopic(el,topic){document.querySelectorAll('#topic-filters .chip')
 // ============================================================
 function openProfile(expertId) {
   const mom=EXPERT_MOMS.find(m=>m.id===expertId); if(!mom) return;
-  const page=document.getElementById('page-profile');
-  page.querySelector('.profile-name').textContent=mom.name;
-  page.querySelector('.profile-title').textContent=mom.title;
-  page.querySelector('.profile-bio').textContent=mom.bio;
-  page.querySelector('.profile-years').textContent=mom.years+' years experience';
-  page.querySelector('.profile-rating').textContent='⭐ '+mom.rating+' ('+mom.reviews+' reviews)';
-  const tagsEl=page.querySelector('.profile-tags'); if(tagsEl) tagsEl.innerHTML=mom.tags.map(t=>'<span class="expert-tag">'+t+'</span>').join('');
-  const avatarEl=page.querySelector('.profile-avatar'); if(avatarEl) avatarEl.textContent=mom.flag;
-  const priceEl=page.querySelector('.profile-base-price'); if(priceEl) priceEl.textContent='$'+mom.price;
+  // Populate profile page with this expert's data
+  const avEl=document.getElementById('profile-avatar-lg');
+  if(avEl){avEl.textContent=mom.flag;avEl.style.background='var(--rose)';avEl.style.fontSize='2.2rem';}
+  const nameEl=document.getElementById('profile-name'); if(nameEl) nameEl.textContent=mom.name;
+  const rateEl=document.getElementById('profile-rating'); if(rateEl) rateEl.textContent='⭐ '+mom.rating+' · '+mom.reviews+' reviews';
+  const cultEl=document.getElementById('profile-culture'); if(cultEl) cultEl.textContent=mom.flag+' '+mom.title;
+  const locEl=document.getElementById('profile-loc'); if(locEl) locEl.textContent='📍 Houston, TX';
+  const expEl=document.getElementById('profile-exp'); if(expEl) expEl.textContent=mom.years+' yrs experience';
+  const tierEl=document.getElementById('profile-tier-badge'); if(tierEl) tierEl.textContent='📹 Tier 2 — Video Verified';
+  const aboutEl=document.getElementById('profile-about'); if(aboutEl) aboutEl.textContent=mom.bio;
+  const svcEl=document.getElementById('profile-services');
+  if(svcEl) svcEl.innerHTML=mom.tags.map(t=>'<div class="service-item"><div class="service-name">'+t+'</div><div class="service-price">From $'+mom.price+'/hr</div></div>').join('');
+  // Build mini calendar
+  const calEl=document.getElementById('profile-calendar');
+  if(calEl){const days=['S','M','T','W','T','F','S'];calEl.innerHTML=days.map(d=>'<div class="cal-day-name">'+d+'</div>').join('')+Array.from({length:14},(_,i)=>'<div class="cal-day '+(i%3!==0?'available':'booked')+'"><div class="cal-day-num">'+(i+1)+'</div></div>').join('');}
+  const revEl=document.getElementById('profile-reviews');
+  if(revEl) revEl.innerHTML='<div class="review-card"><div class="review-header"><div class="review-avatar" style="background:var(--rose)">AN</div><div><div class="review-name">Ana N.</div><div class="review-date">2 weeks ago</div></div><div class="review-stars" style="margin-left:auto">★★★★★</div></div><div class="review-text">"Absolutely wonderful experience. Would book again!"</div></div>';
   window._profileMom=mom;
-  showPage('profile'); setBookingTab('text');
+  calcPrice();
+  showPage('profile');
 }
 
 function calcPrice() {
   const mom=window._profileMom; if(!mom) return;
-  const type=document.getElementById('session-type')?document.getElementById('session-type').value:'text';
-  const dur=parseInt(document.getElementById('session-dur')?document.getElementById('session-dur').value:'30');
-  const mult=type==='text'?0.5:type==='audio'?0.75:1;
-  const price=Math.round(mom.price*mult*(dur/60));
-  const el=document.getElementById('booking-price'); if(el) el.textContent='$'+price;
+  const durEl=document.getElementById('booking-duration');
+  const dur=durEl?parseInt(durEl.value):1;
+  const svc=mom.price*dur;
+  const platform=Math.round(svc*0.18*100)/100;
+  const total=svc+platform;
+  const svcEl=document.getElementById('price-service'); if(svcEl) svcEl.textContent='$'+svc.toFixed(2);
+  const platEl=document.getElementById('price-platform'); if(platEl) platEl.textContent='$'+platform.toFixed(2);
+  const totEl=document.getElementById('price-total'); if(totEl) totEl.textContent='$'+total.toFixed(2);
 }
 
-function setBookingTab(type) {
-  document.querySelectorAll('.booking-tab').forEach(t=>t.classList.toggle('active',t.dataset.type===type));
-  const s=document.getElementById('session-type'); if(s) s.value=type; calcPrice();
+function setBookingTab(el, type) {
+  document.querySelectorAll('.booking-tab').forEach(t=>t.classList.remove('active'));
+  if(el && el.classList) el.classList.add('active');
+  calcPrice();
 }
 
 function openBookingModal() {
@@ -1745,7 +2048,7 @@ function openBookingModal() {
 }
 
 function openSuccessModal(){closeModal('booking-modal');openModal('success-modal');}
-function setHowTab(tab){document.querySelectorAll('.how-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.getElementById('how-families').style.display=tab==='families'?'':'none';document.getElementById('how-experts').style.display=tab==='experts'?'':'none';}
+function setHowTab(el,tab){document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');document.getElementById('how-families').style.display=tab==='families'?'':'none';document.getElementById('how-experts').style.display=tab==='experts'?'':'none';}
 function signupNext(step){document.querySelectorAll('[id^="signup-step-"]').forEach(s=>s.style.display='none');const t=document.getElementById('signup-step-'+step);if(t)t.style.display='';window.scrollTo(0,0);}
 function selectVerifyTier(tier){document.querySelectorAll('.verify-option').forEach(v=>v.classList.remove('selected'));const o=document.querySelectorAll('.verify-option');if(o[tier-1])o[tier-1].classList.add('selected');signupNext(4);}
 
