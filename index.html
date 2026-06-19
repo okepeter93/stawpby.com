@@ -1558,8 +1558,8 @@ async function loadMyQuestions() {
   if (!s) { el.innerHTML='<div style="text-align:center;padding:60px;color:var(--muted)"><p>Sign in to see your questions.</p><button class="btn-brand" style="margin-top:16px" onclick="openModal(\'auth-modal\')">Sign In</button></div>'; return; }
   setFeedLoading('qa-my-list','Loading your questions...');
   try {
-    const snap = await db.collection('posts').where('userId','==',s.userId).orderBy('timestamp','desc').get();
-    const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const snap = await db.collection('posts').where('userId','==',s.userId).get();
+    const posts = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.timestamp-a.timestamp);
     el.innerHTML = posts.length ? posts.map(renderQACard).join('') :
       '<div style="text-align:center;padding:60px;color:var(--muted)"><div style="font-size:48px;margin-bottom:12px">📝</div><p>You haven\'t asked anything yet.</p><button class="btn-brand" style="margin-top:16px" onclick="openAskModal()">Ask Your First Question</button></div>';
   } catch(e) { setFeedLoading('qa-my-list','Could not load your questions.'); }
@@ -1666,8 +1666,8 @@ async function loadMyProfileQuestions(userId) {
   const el = document.getElementById('myprofile-questions'); if (!el) return;
   el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted)">Loading...</div>';
   try {
-    const snap = await db.collection('posts').where('userId','==',userId).orderBy('timestamp','desc').get();
-    const posts = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const snap = await db.collection('posts').where('userId','==',userId).get();
+    const posts = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.timestamp-a.timestamp);
     el.innerHTML = posts.length ? posts.map(renderQACard).join('') :
       '<div style="text-align:center;padding:40px;color:var(--muted)"><div style="font-size:2.5rem;margin-bottom:12px">📝</div><p>No questions yet.</p><button class="btn-brand" style="margin-top:12px" onclick="openAskModal()">Ask Your First Question</button></div>';
   } catch(e) {
